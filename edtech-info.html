@@ -3,273 +3,757 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Details | EduMentor</title>
+    <title>EduMentor | Find Your Dream College</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
-        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #312e81 100%); }
-        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #f1f5f9; }
-        .spec-badge { background: #f1f5f9; color: #475569; padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #e2e8f0; display: inline-block; margin: 4px 4px 0 0;}
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; scroll-behavior: smooth; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9; }
+        
+        /* Dream Tab Styles */
+        .dream-tab { transition: all 0.3s ease; }
+        .dream-tab.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Slider Animation */
+        @keyframes fade {
+            from {opacity: 0.4} 
+            to {opacity: 1}
+        }
+        .slide { display: none; animation: fade 1.5s; }
+        .slide.active { display: block; }
+
+        /* Premium Mega Menu Styles */
+        .mega-menu {
+            opacity: 0; visibility: hidden; transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-group:hover .mega-menu {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        
+        .mega-sidebar::-webkit-scrollbar { width: 4px; }
+        .mega-sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        
+        .mega-item { border-left: 3px solid transparent; transition: all 0.2s; }
+        .mega-item.active { background-color: #f8fafc; color: #4f46e5; border-left-color: #4f46e5; font-weight: 800; }
+        .mega-item:hover:not(.active) { background-color: #f1f5f9; color: #4f46e5; }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(-5px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .mega-content-fade { animation: fadeInRight 0.3s ease forwards; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* NAYA: Live News Ticker Animation */
+        @keyframes scrollTicker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollTicker 30s linear infinite;
+        }
+        .ticker-content:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <!-- Top Navigation -->
-    <nav class="fixed w-full z-40 glass-nav top-0 transition-all duration-300">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center h-20 justify-between">
-                <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='edtech-universities.html'">
-                    <div class="w-10 h-10 bg-indigo-50 hover:bg-indigo-100 transition rounded-xl flex items-center justify-center text-indigo-600 font-black shadow-inner"><i class="fa-solid fa-arrow-left"></i></div>
-                    <span class="font-extrabold text-xl tracking-tight text-slate-900 hidden sm:block hover:text-indigo-600 transition">Back to Search</span>
-                </div>
+    <nav class="fixed w-full z-50 glass-nav top-0 transition-all duration-300">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative h-20">
+            <div class="flex items-center h-full justify-between">
                 <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
-                    <span class="text-2xl font-extrabold tracking-tight text-slate-900">EduMentor</span>
+                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-200">E</div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">EduMentor</span>
+                </div>
+                
+                <div class="flex items-center gap-4 lg:gap-6 h-full">
+                    
+                    <!-- Free Counselling Lead Gen Button -->
+                    <a href="#" class="hidden xl:flex text-orange-500 font-bold hover:text-orange-600 transition items-center h-full gap-1.5">
+                        <i class="fa-solid fa-headset"></i> Free Counselling
+                    </a>
+
+                    <!-- Jump to Career Section (Highlighted) -->
+                    <a href="#career-explorer" class="hidden lg:flex bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full font-extrabold hover:bg-indigo-100 transition items-center gap-2 shadow-sm border border-indigo-100">
+                        <i class="fa-solid fa-compass text-indigo-500"></i> Find Career
+                    </a>
+
+                    <div class="hidden md:flex items-center h-full nav-group">
+                        <a href="edtech-universities.html" class="text-slate-600 font-bold hover:text-indigo-600 transition flex items-center gap-1.5 h-full">
+                            Explore Colleges <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300 nav-group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- MEGA MENU DROPDOWN -->
+                        <div class="mega-menu absolute top-20 left-0 w-full bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] border border-slate-100 cursor-default flex h-[500px] rounded-b-2xl overflow-hidden">
+                            <div class="w-1/4 bg-slate-50 border-r border-slate-200 overflow-y-auto mega-sidebar py-4">
+                                <ul id="mega-sidebar-list" class="flex flex-col"></ul>
+                            </div>
+                            <div class="w-3/4 p-8 bg-white overflow-y-auto mega-sidebar" id="mega-content-area">
+                                <div class="grid grid-cols-3 gap-10 mega-content-fade">
+                                    <div>
+                                        <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> Colleges By Degrees</h4>
+                                        <ul class="space-y-4" id="mega-degrees"></ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-fire text-orange-500"></i> Popular Colleges</h4>
+                                        <ul class="space-y-4" id="mega-popular"></ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-award text-amber-500"></i> Top Colleges</h4>
+                                        <ul class="space-y-4" id="mega-top"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="edtech-auth.html" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-indigo-600 transition shadow-lg hover:-translate-y-0.5">Student Login</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content Area -->
-    <div id="content-area" class="pb-20 pt-20">
-        <div class="text-center py-40">
-            <div class="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
-            <p class="text-slate-500 font-bold text-lg">Fetching Verified Details...</p>
+    <!-- Flash News Ticker -->
+    <div class="mt-[80px] bg-gradient-to-r from-slate-900 to-indigo-950 border-b border-indigo-500/30 text-white text-sm font-bold py-2.5 overflow-hidden relative flex items-center z-30 shadow-md">
+        <!-- Static Label -->
+        <div class="bg-indigo-600 px-4 md:px-6 py-2.5 absolute left-0 z-10 h-full flex items-center shadow-[10px_0_20px_rgba(0,0,0,0.5)]">
+            <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse mr-2"></span> <span class="hidden md:inline uppercase tracking-widest text-xs">Breaking</span>
+        </div>
+        <!-- Scrolling Content -->
+        <div class="ticker-content pl-[120px] md:pl-[180px] text-indigo-100 flex items-center w-full">
+            <span class="mx-6 hover:text-white cursor-pointer transition">🚀 <b class="text-white">CUET UG 2026:</b> Registration Forms Out Now! Last Date: 30th April</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">🏆 <b class="text-white">JEE Main:</b> Session 1 Results Declared. Check Your Percentile!</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">💼 <b class="text-white">TCS Ninja:</b> Mass Off-Campus Hiring for 2025/2026 Batch</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">🏛️ <b class="text-white">UPSC CSE:</b> Official Notification Released for 1056 Posts</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">🩺 <b class="text-white">NEET UG:</b> Correction Window Opened Today</span>
         </div>
     </div>
 
-    <!-- Lead Modal - High Conversion Design -->
-    <div id="lead-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 transition-opacity">
-        <div class="bg-white rounded-[2rem] p-8 max-w-md w-full relative shadow-2xl border border-white">
-            <button onclick="document.getElementById('lead-modal').classList.add('hidden')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <!-- Collegedunia Inspired Hero Section -->
+    <section class="relative h-[650px] md:h-[750px] w-full overflow-hidden bg-slate-900 flex items-center justify-center">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" class="slide active w-full h-full object-cover opacity-30">
+            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-30">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-30">
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto w-full">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">Find Over 11000+ Colleges <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">in India & Abroad.</span></h1>
             
-            <div class="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 shadow-inner"><i class="fa-solid fa-lock"></i></div>
-            <h3 class="text-2xl font-extrabold mb-2 text-center text-slate-900">Unlock Official Link 🎓</h3>
-            <p class="text-sm text-center text-slate-500 mb-6 font-medium">To protect you from fake portals, we verify all students before redirecting to the official website.</p>
-            
-            <form id="lead-form" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Full Name</label>
-                    <input type="text" id="lead-name" required placeholder="e.g. Rahul Sharma" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 focus:bg-white transition font-bold text-sm text-slate-800">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Mobile Number</label>
-                    <input type="tel" id="lead-phone" required placeholder="+91 XXXXX XXXXX" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 focus:bg-white transition font-bold text-sm text-slate-800">
-                </div>
+            <!-- Advanced Search Bar with Goal Selection & Counselling Button -->
+            <form action="edtech-universities.html" method="GET" class="bg-white p-2 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row gap-2 max-w-4xl mx-auto border-4 border-white/20 mt-10">
                 
-                <button type="submit" id="lead-submit-btn" class="w-full mt-2 py-4 bg-slate-900 text-white font-extrabold rounded-xl hover:bg-indigo-600 transition-all flex justify-center items-center gap-2 shadow-lg hover:-translate-y-0.5 text-lg">
-                    Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>
-                </button>
-                <p class="text-[10px] text-center text-slate-400 font-bold uppercase tracking-wider mt-3"><i class="fa-solid fa-shield-halved text-emerald-500"></i> Your data is 100% Secure & Encrypted</p>
+                <!-- Goal Dropdown -->
+                <div class="md:w-1/3 border-b md:border-b-0 md:border-r border-slate-200">
+                    <select name="goal" class="w-full h-full px-6 py-3 bg-transparent outline-none font-bold text-slate-700 cursor-pointer appearance-none">
+                        <option value="">🎯 Select Goal</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="management">Management</option>
+                        <option value="medical">Medical</option>
+                        <option value="design">Design & Arts</option>
+                    </select>
+                </div>
+
+                <!-- Search Input -->
+                <div class="flex-1 flex items-center bg-transparent px-4 py-3">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
+                    <input type="text" placeholder="Search for colleges, exams, courses and more.." class="bg-transparent w-full outline-none font-bold text-slate-800 placeholder:text-slate-400">
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-2">
+                    <button type="submit" class="flex-1 md:flex-none bg-indigo-600 text-white px-8 py-4 rounded-xl md:rounded-full font-black hover:bg-indigo-700 transition">
+                        Search
+                    </button>
+                    <button type="button" class="flex-1 md:flex-none bg-orange-500 text-white px-6 py-4 rounded-xl md:rounded-full font-black hover:bg-orange-600 transition shadow-lg shadow-orange-500/30 whitespace-nowrap">
+                        Need Counselling
+                    </button>
+                </div>
             </form>
+
+            <!-- Quick Course Links (Sub-nav Pill tags) -->
+            <div class="mt-8 flex flex-wrap justify-center gap-3 md:gap-4 max-w-4xl mx-auto">
+                <span class="text-slate-300 text-sm font-bold flex items-center mr-2"><i class="fa-solid fa-fire text-orange-500 mr-1"></i> Trending:</span>
+                <a href="edtech-universities.html?stream=Engineering" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">B.Tech</a>
+                <a href="edtech-universities.html?stream=Management" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">MBA</a>
+                <a href="edtech-universities.html?stream=Medical" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">MBBS</a>
+                <a href="edtech-universities.html?stream=Design" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">B.Design</a>
+                <a href="edtech-universities.html?stream=Law" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">BA LLB</a>
+                <a href="edtech-universities.html?stream=Abroad" class="px-4 py-1.5 bg-indigo-500/30 hover:bg-indigo-500/50 backdrop-blur-md border border-indigo-400/30 text-white text-sm font-bold rounded-full transition flex items-center gap-1"><i class="fa-solid fa-plane-departure"></i> Study Abroad</a>
+            </div>
+
         </div>
-    </div>
+    </section>
 
-    <!-- Firebase Scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAyxEZ4ukI8WRhV71RyS8JYJcXAICGAbto",
-            authDomain: "edtech-7d520.firebaseapp.com",
-            projectId: "edtech-7d520",
-            storageBucket: "edtech-7d520.firebasestorage.app",
-            messagingSenderId: "78074698553",
-            appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
-        };
-        const app = initializeApp(firebaseConfig); 
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUni = null;
-        // URL se University ID nikalna
-        const urlParams = new URLSearchParams(window.location.search);
-        let uniId = urlParams.get('id');
-
-        // Anonymous login taaki koi bhi user detail dekh sake
-        signInAnonymously(auth).catch(e => console.error("Auth error", e));
-
-        onAuthStateChanged(auth, async (user) => {
-            if (!uniId) {
-                document.getElementById('content-area').innerHTML = `
-                    <div class='text-center py-40'>
-                        <div class='text-6xl mb-4'>⚠️</div>
-                        <h2 class='text-2xl font-extrabold text-slate-800'>Invalid Link</h2>
-                        <p class='text-slate-500 font-medium mt-2'>Please select a university from the search page.</p>
-                        <button onclick="window.location.href='edtech-universities.html'" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold">Go to Search</button>
-                    </div>`;
-                return;
-            }
+    <!-- Premium Updates Hub -->
+    <section id="updates-hub" class="w-full bg-slate-50 py-20 relative z-20 -mt-10 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
+        <div class="max-w-[1400px] mx-auto px-6">
             
-            try {
-                // Fetch data from Firebase
-                const docSnap = await getDoc(doc(db, 'universities', uniId));
-                if (docSnap.exists()) {
-                    currentUni = docSnap.data();
-                    renderPage(currentUni);
-                } else {
-                    document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-red-500'>University Not Found!</h2></div>";
-                }
-            } catch(e) {
-                console.error("Fetch Error:", e);
-                document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-red-500'>Error loading data.</h2></div>";
-            }
-        });
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+                <div>
+                    <span class="text-red-500 font-black tracking-widest uppercase text-sm mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Trending Board
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900">Live <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Updates & Forms</span></h2>
+                    <p class="text-slate-500 font-medium mt-2">All major university admissions, exam results, and job notifications in one place.</p>
+                </div>
+                <a href="#" class="bg-white border border-slate-200 text-slate-700 font-bold px-6 py-3 rounded-xl hover:border-indigo-500 hover:text-indigo-600 transition-all mt-6 md:mt-0 flex items-center gap-2 shadow-sm">
+                    View All Updates <i class="fa-solid fa-arrow-right text-sm"></i>
+                </a>
+            </div>
 
-        function renderPage(uni) {
-            let nirfHtml = uni.nirf && uni.nirf !== "N/A" ? `<span class="bg-yellow-400 text-yellow-900 px-3 py-1.5 rounded-lg font-extrabold text-sm shadow-sm border border-yellow-500"><i class="fa-solid fa-trophy mr-1"></i> NIRF Rank: ${uni.nirf}</span>` : '';
-            let naacHtml = uni.naac && uni.naac !== "N/A" ? `<span class="bg-white/20 px-3 py-1.5 rounded-lg font-bold text-sm backdrop-blur-md border border-white/30 text-white">NAAC ${uni.naac}</span>` : '';
-            
-            // Render Courses based on the new admin panel data structure
-            let programsHtml = "";
-            if(uni.coursesList && uni.coursesList.length > 0) {
-                uni.coursesList.forEach(course => {
-                    programsHtml += `
-                        <div class="border border-slate-200 rounded-2xl p-5 bg-white hover:border-indigo-400 hover:shadow-lg transition-all mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <!-- Column 1: Admissions -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg"><i class="fa-solid fa-graduation-cap"></i></div>
+                        Admissions
+                    </h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
                             <div>
-                                <h4 class="font-extrabold text-slate-900 text-lg flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> ${course.name}</h4>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug mb-1">CUET UG 2026 Online Form</span>
+                                <span class="text-[10px] font-black text-white bg-red-500 px-2 py-0.5 rounded shadow-sm">Last Date: 30 Apr</span>
                             </div>
-                            <div class="bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 text-center sm:text-right">
-                                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-0.5">Estimated Fees</span> 
-                                <span class="font-extrabold text-indigo-700">${course.fees || 'Check Website'}</span>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug mb-1">NEET UG 2026 Registration</span>
+                                <span class="text-[10px] font-black text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">Ends Soon</span>
                             </div>
-                        </div>
-                    `;
-                });
-            } else {
-                programsHtml = `
-                    <div class="border border-slate-200 rounded-2xl p-5 bg-white">
-                        <h4 class="font-extrabold text-slate-900 text-lg mb-2"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-2"></i> ${uni.courses || 'Various Programs'}</h4>
-                        <p class="text-sm text-slate-500 font-medium">Detailed fee structure is available on the official website.</p>
-                    </div>`;
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug">Delhi University PG Admission Form</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug mb-1">Chandigarh University Phase 2</span>
+                                <span class="text-[10px] font-black text-emerald-700 bg-emerald-100 border border-emerald-200 px-2 py-0.5 rounded">CUCET Open</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Exam Results -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-trophy"></i></div>
+                        Exam Results
+                    </h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug mb-1">JEE Main 2026 Session 1 Result</span>
+                                <span class="text-[10px] font-black text-white bg-emerald-500 px-2 py-0.5 rounded shadow-sm animate-pulse">Declared</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug">CBSE Class 12th Board Result 2026</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug">GATE 2026 Scorecard Released</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug mb-1">CAT 2025 Final Cutoffs</span>
+                                <span class="text-[10px] font-black text-blue-700 bg-blue-100 border border-blue-200 px-2 py-0.5 rounded">Check Score</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Govt Jobs -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-orange-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-lg"><i class="fa-solid fa-building-columns"></i></div>
+                        Govt Jobs
+                    </h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug mb-1">SSC CGL 2026 Notification</span>
+                                <span class="text-[10px] font-black text-white bg-orange-500 px-2 py-0.5 rounded shadow-sm">15,000+ Posts</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug">UPSC NDA / NA Apply Online</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug">IBPS PO Prelims Admit Card</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug">RRB NTPC Final Status</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Private & IT Jobs -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg"><i class="fa-solid fa-briefcase"></i></div>
+                        Top Private Jobs
+                    </h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug mb-1">TCS Ninja Off-Campus Drive</span>
+                                <span class="text-[10px] font-black text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">Batch: 2025/26</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug mb-1">Infosys System Engineer Hiring</span>
+                                <span class="text-[10px] font-black text-purple-700 bg-purple-100 border border-purple-200 px-2 py-0.5 rounded">Mass Hiring</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug">Wipro WILP Registration Open</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug">Google Summer Internship 2026</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DREAM BUILDER APP -->
+    <section id="dream-builder-app" class="w-full bg-white py-20 relative z-20">
+        <div class="max-w-6xl mx-auto px-6">
+            
+            <div class="text-center mb-12">
+                <span class="text-indigo-600 font-black tracking-widest uppercase text-sm mb-2 block">Confused about courses?</span>
+                <h3 class="text-3xl md:text-5xl font-black text-slate-900">What is your <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Ultimate Goal?</span></h3>
+                <p class="text-slate-500 font-medium mt-4">Select what you want to BECOME, and we'll show you the exact roadmap to get there.</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-12" id="dreamTabs">
+                <button onclick="updateRoadmap('startup', this)" class="dream-tab active px-6 py-3.5 rounded-2xl border-2 border-indigo-100 bg-indigo-50 text-indigo-700 font-extrabold hover:bg-indigo-100 transition shadow-sm text-sm md:text-base">🚀 Build a Startup</button>
+                <button onclick="updateRoadmap('tech', this)" class="dream-tab px-6 py-3.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-extrabold hover:border-indigo-200 transition shadow-sm text-sm md:text-base">👨‍💻 Work in FAANG</button>
+                <button onclick="updateRoadmap('abroad', this)" class="dream-tab px-6 py-3.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-extrabold hover:border-indigo-200 transition shadow-sm text-sm md:text-base">🌍 Settle Abroad</button>
+                <button onclick="updateRoadmap('finance', this)" class="dream-tab px-6 py-3.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-extrabold hover:border-indigo-200 transition shadow-sm text-sm md:text-base">💰 Finance Guru</button>
+            </div>
+
+            <div id="displayCard" class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl flex flex-col md:flex-row gap-10 items-center transition-all duration-500 relative overflow-hidden">
+                <div class="absolute -top-20 -right-20 w-96 h-96 bg-indigo-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+
+                <div class="md:w-3/5 relative z-10">
+                    <div id="r-icon" class="text-6xl mb-4 bg-white/10 w-20 h-20 flex items-center justify-center rounded-2xl border border-white/20 shadow-inner">🚀</div>
+                    <h2 id="r-title" class="text-3xl md:text-4xl font-black mb-4 tracking-tight">Future Startup Founder</h2>
+                    <p id="r-desc" class="text-indigo-200 text-lg mb-8 font-medium leading-relaxed">Build the next unicorn. Connect with top investors and learn entrepreneurship from the best business schools.</p>
+                    
+                    <div class="space-y-4 mb-10">
+                        <div class="flex items-center gap-4 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50"><div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-check"></i></div> <span id="s1" class="font-bold text-slate-200">Top Tier MBA / BBA Programs</span></div>
+                        <div class="flex items-center gap-4 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50"><div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-check"></i></div> <span id="s2" class="font-bold text-slate-200">Incubation & Mentorship Access</span></div>
+                        <div class="flex items-center gap-4 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50"><div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-check"></i></div> <span id="s3" class="font-bold text-slate-200">Fund-raising workshops</span></div>
+                    </div>
+
+                    <button onclick="triggerLead()" class="bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white w-full md:w-auto px-10 py-4 rounded-xl font-black text-lg shadow-lg hover:shadow-indigo-500/30 transition-all flex items-center justify-center gap-3">
+                        Get Free Guidance <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="md:w-2/5 w-full space-y-4 relative z-10">
+                    <div class="bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition cursor-default">
+                        <div class="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <p class="text-xs text-slate-400 uppercase font-black tracking-widest mb-1">Potential Earnings</p>
+                        <p id="r-sal" class="text-2xl font-black text-white">₹15L - Unlimited</p>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition cursor-default">
+                        <div class="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-brain"></i></div>
+                        <p class="text-xs text-slate-400 uppercase font-black tracking-widest mb-1">Required Core Skills</p>
+                        <p id="r-skills" class="text-base mt-1 font-bold text-slate-200 leading-snug">Leadership, Scaling, Product Market Fit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCALABLE CAREER EXPLORER BY JOB PROFILES -->
+    <section class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200" id="career-explorer">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none"></div>
+
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-indigo-600 font-black tracking-widest uppercase text-sm mb-2 block">Career Compass</span>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900">Explore Careers by <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500">Job Profiles</span></h2>
+                <p class="text-slate-500 font-medium mt-4 max-w-2xl mx-auto">Not sure what to study? Browse through popular job roles, see their salaries, and find the right courses to get you there.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10">
+                <div class="lg:w-1/4 shrink-0">
+                    <div class="bg-white rounded-3xl p-3 shadow-xl border border-slate-100 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible no-scrollbar sticky top-28" id="career-categories">
+                    </div>
+                </div>
+
+                <div class="lg:w-3/4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="career-grid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition">
+                <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                <h4 class="text-xl font-extrabold text-slate-900 mb-2">100% Verified Links</h4>
+                <p class="text-slate-500 font-medium text-sm">We redirect you only to official university portals. No fake agents.</p>
+            </div>
+            <div class="text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h4 class="text-xl font-extrabold text-slate-900 mb-2">Zero Hidden Fees</h4>
+                <p class="text-slate-500 font-medium text-sm">Our counseling and platform is completely free for students.</p>
+            </div>
+            <div class="text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-user-graduate"></i></div>
+                <h4 class="text-xl font-extrabold text-slate-900 mb-2">Expert Counseling</h4>
+                <p class="text-slate-500 font-medium text-sm">Get personalized roadmap according to your career goals.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-white py-12 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-black mb-4">EduMentor</h2>
+            <p class="text-slate-400 font-medium mb-6">Guiding students to the right path, avoiding fake promises.</p>
+            <p class="text-slate-600 text-sm font-bold">&copy; 2026 EduMentor. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hero Slider Logic
+        let slideIndex = 0;
+        showSlides();
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");  
             }
-
-            let feesDisplay = uni.fees && uni.fees !== "Pending" ? uni.fees : "<span class='text-sm text-orange-500 font-bold'>Update pending</span>";
-            let placementDisplay = uni.highest_placement && uni.highest_placement !== "Pending" ? uni.highest_placement : (uni.placement !== "Pending" ? uni.placement : "<span class='text-sm text-orange-500 font-bold'>Update pending</span>");
-
-            document.getElementById('content-area').innerHTML = `
-                <!-- Dynamic Hero Section -->
-                <div class="hero-gradient text-white pt-12 pb-20 px-6 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                    
-                    <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start md:items-center relative z-10">
-                        <div class="w-32 h-32 md:w-40 md:h-40 bg-white rounded-3xl flex items-center justify-center text-5xl md:text-7xl font-black text-indigo-600 shadow-2xl shrink-0 border-4 border-white/20">
-                            ${(uni.name || "U").substring(0,2).toUpperCase()}
-                        </div>
-                        <div>
-                            <div class="flex flex-wrap gap-3 mb-4">
-                                ${nirfHtml} 
-                                ${naacHtml}
-                                ${uni.ai_verified ? '<span class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg font-bold text-sm shadow border border-emerald-600 flex items-center gap-1"><i class="fa-solid fa-shield-check"></i> AI Verified</span>' : ''}
-                            </div>
-                            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-3 leading-tight tracking-tight text-white">${uni.name}</h1>
-                            <p class="text-indigo-200 font-bold text-lg md:text-xl flex items-center gap-2"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${uni.state || 'Location not specified'}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Grid -->
-                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col lg:flex-row gap-8 relative z-20 -mt-10">
-                    
-                    <!-- Left Content -->
-                    <div class="lg:w-2/3 space-y-8">
-                        
-                        <!-- High Level Stats -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="bg-white p-8 rounded-[2rem] border border-emerald-100 text-center shadow-xl shadow-emerald-100/40 relative overflow-hidden group hover:-translate-y-1 transition">
-                                <div class="absolute -right-4 -bottom-4 text-emerald-50 opacity-50 text-8xl transition group-hover:scale-110"><i class="fa-solid fa-chart-line"></i></div>
-                                <div class="relative z-10">
-                                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"><i class="fa-solid fa-briefcase"></i></div>
-                                    <p class="text-xs text-emerald-600 uppercase font-black tracking-widest mb-1">Highest Package</p>
-                                    <p class="text-3xl font-extrabold text-slate-900">${placementDisplay}</p>
-                                </div>
-                            </div>
-                            <div class="bg-white p-8 rounded-[2rem] border border-indigo-100 text-center shadow-xl shadow-indigo-100/40 relative overflow-hidden group hover:-translate-y-1 transition">
-                                <div class="absolute -left-4 -bottom-4 text-indigo-50 opacity-50 text-8xl transition group-hover:scale-110"><i class="fa-solid fa-money-check-dollar"></i></div>
-                                <div class="relative z-10">
-                                    <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"><i class="fa-solid fa-wallet"></i></div>
-                                    <p class="text-xs text-indigo-600 uppercase font-black tracking-widest mb-1">Starting Fees From</p>
-                                    <p class="text-3xl font-extrabold text-slate-900">${feesDisplay}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Programs Listing -->
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-200 shadow-inner">
-                            <h2 class="text-2xl font-extrabold mb-6 text-slate-900 border-b border-slate-200 pb-4 flex items-center gap-3"><i class="fa-solid fa-book-open text-indigo-500"></i> Top Courses & Fees</h2>
-                            <div>${programsHtml}</div>
-                        </div>
-
-                        <!-- Approvals section -->
-                        <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
-                            <h2 class="text-2xl font-extrabold mb-4 text-slate-900 flex items-center gap-3"><i class="fa-solid fa-award text-indigo-500"></i> Accreditations & Approvals</h2>
-                            <div class="flex flex-wrap gap-2 mt-4">
-                                ${uni.approvals ? uni.approvals.split(',').map(app => `<span class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl font-bold border border-indigo-100">${app.trim()}</span>`).join('') : '<span class="text-slate-500 font-medium">Standard University Approvals</span>'}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Sticky Action Bar -->
-                    <div class="lg:w-1/3">
-                        <div class="sticky top-[100px] bg-white p-8 border border-slate-200 rounded-[2rem] shadow-2xl shadow-slate-200/50 border-t-4 border-t-indigo-600">
-                            <div class="flex justify-between items-center mb-6">
-                                <h3 class="text-2xl font-extrabold text-slate-900">Apply Now</h3>
-                                <span class="bg-red-100 text-red-700 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest animate-pulse border border-red-200">Admissions Open</span>
-                            </div>
-                            <p class="text-sm font-medium text-slate-500 mb-8 leading-relaxed">Ensure a safe and fraud-free application process. Click below to securely access the official university portal.</p>
-                            
-                            <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="w-full py-4 bg-indigo-600 text-white font-extrabold rounded-xl hover:bg-slate-900 hover:shadow-xl transition-all transform hover:-translate-y-1 text-center flex items-center justify-center gap-3 text-[16px]">
-                                Open Official Website <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </button>
-                            
-                            <div class="mt-8 pt-6 border-t border-slate-100 flex items-start gap-4">
-                                <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-100"><i class="fa-solid fa-shield-check text-xl"></i></div>
-                                <div>
-                                    <p class="text-sm text-slate-800 font-extrabold mb-1">100% Verified Link</p>
-                                    <p class="text-xs text-slate-500 font-medium leading-relaxed">We strictly redirect you to the official university portal to protect against fake agents.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].classList.add("active");  
+            setTimeout(showSlides, 4000); 
         }
 
-        // Lead Generation Submit Logic
-        document.getElementById('lead-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('lead-submit-btn');
-            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Validating & Redirecting...`; 
-            btn.disabled = true;
-            
-            try {
-                // Save lead to Firebase "leads" collection
-                await addDoc(collection(db, 'leads'), {
-                    name: document.getElementById('lead-name').value, 
-                    phone: document.getElementById('lead-phone').value,
-                    universityId: uniId,
-                    universityName: currentUni.name, 
-                    timestamp: new Date().toISOString()
-                });
-                
-                // Open official website in a new tab
-                let webLink = currentUni.website;
-                if (!webLink.startsWith('http')) webLink = 'https://' + webLink;
-                window.open(webLink, '_blank');
-                
-                // Close modal and reset form
-                document.getElementById('lead-modal').classList.add('hidden');
-                document.getElementById('lead-form').reset();
-            } catch(e) {
-                alert("Something went wrong! Please check your connection.");
+        // MEGA MENU LOGIC
+        const specializations = [
+            "Engineering", "Management", "Commerce & Banking", "Medical", "Sciences", 
+            "Hotel Management", "Information Technology", "Arts & Humanities", 
+            "Mass Communication", "Nursing", "Agriculture", "Design", 
+            "Law", "Pharmacy", "Para Medical", "Dental", "Performing Arts"
+        ];
+
+        const megaMenuContent = {
+            "Engineering": {
+                degrees: ["B.Tech colleges in India", "M.Tech colleges in India", "B.Arch colleges in India", "Diploma colleges in India", "View All Degrees"],
+                popular: ["Chandigarh University", "Amity University, Punjab", "Sharda University", "LPU Jalandhar", "Parul University"],
+                top: ["IIT Madras", "IIT Delhi", "IIT Bombay", "BITS Pilani", "VIT Vellore"]
+            },
+            "Management": {
+                degrees: ["MBA colleges in India", "BBA colleges in India", "PGDM colleges in India", "Executive MBA in India", "View All Degrees"],
+                popular: ["Chandigarh University", "Amity University", "Parul University", "CGC Landran", "Shoolini University Solan"],
+                top: ["IIM Ahmedabad", "IIM Bangalore", "IIM Calcutta", "ISB Hyderabad", "XLRI Jamshedpur"]
+            },
+            "Medical": {
+                degrees: ["MBBS colleges in India", "BDS colleges in India", "BAMS colleges in India", "MD colleges in India", "View All Degrees"],
+                popular: ["Sharda University", "NIMS University", "Parul University", "Amity University", "SGT University"],
+                top: ["AIIMS New Delhi", "PGIMER Chandigarh", "CMC Vellore", "NIMHANS Bangalore", "JIPMER Puducherry"]
+            },
+            "Default": {
+                degrees: ["Top UG colleges in India", "Top PG colleges in India", "Diploma courses in India", "Certificate courses", "View All Degrees"],
+                popular: ["Chandigarh University", "Amity University", "Sharda University", "LPU Jalandhar", "Parul University"],
+                top: ["Delhi University", "JNU New Delhi", "BHU Varanasi", "Jamia Millia Islamia", "Jadavpur University"]
             }
+        };
+
+        function generateMegaMenu() {
+            const sidebar = document.getElementById('mega-sidebar-list');
+            sidebar.innerHTML = '';
             
-            btn.innerHTML = `Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>`; 
-            btn.disabled = false;
+            specializations.forEach((category, index) => {
+                const li = document.createElement('li');
+                li.className = `mega-item px-8 py-3 text-[13px] font-semibold text-slate-600 cursor-pointer ${index === 0 ? 'active' : ''}`;
+                li.textContent = category;
+                
+                li.addEventListener('mouseenter', () => updateMegaContent(category, li));
+                li.addEventListener('click', () => {
+                    window.location.href = `edtech-universities.html?stream=${encodeURIComponent(category)}`;
+                });
+
+                sidebar.appendChild(li);
+            });
+
+            updateMegaContent("Engineering", sidebar.firstChild);
+        }
+
+        function updateMegaContent(category, element) {
+            document.querySelectorAll('.mega-item').forEach(el => el.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            const data = megaMenuContent[category] || megaMenuContent["Default"];
+
+            const renderList = (id, items) => {
+                const ul = document.getElementById(id);
+                ul.innerHTML = '';
+                ul.parentElement.parentElement.classList.remove('mega-content-fade');
+                void ul.parentElement.parentElement.offsetWidth; 
+                ul.parentElement.parentElement.classList.add('mega-content-fade');
+
+                items.forEach((item, idx) => {
+                    const li = document.createElement('li');
+                    const isLink = idx === items.length - 1 && item.includes('View All');
+                    
+                    li.innerHTML = `<a href="edtech-universities.html?stream=${encodeURIComponent(category)}&filter=${encodeURIComponent(item)}" class="${isLink ? 'text-indigo-600 font-bold hover:underline underline-offset-4 mt-2 inline-block' : 'text-slate-500 font-medium hover:text-indigo-600 transition flex items-center gap-2'}">${item}</a>`;
+                    ul.appendChild(li);
+                });
+            }
+
+            renderList('mega-degrees', data.degrees);
+            renderList('mega-popular', data.popular);
+            renderList('mega-top', data.top);
+        }
+
+        // DREAM BUILDER LOGIC
+        const dreamData = {
+            startup: {
+                icon: "🚀", title: "Future Startup Founder", sal: "₹15L - Unlimited",
+                desc: "Build the next unicorn. Connect with top investors and learn entrepreneurship from the best business schools.",
+                steps: ["Top Tier MBA / BBA Programs", "Incubation & Mentorship Access", "Fund-raising workshops"],
+                skills: "Leadership, Scaling, Product Market Fit"
+            },
+            tech: {
+                icon: "👨‍💻", title: "FAANG Software Engineer", sal: "₹18L - ₹60 LPA",
+                desc: "Crack Google, Amazon or Meta. Master DSA and high-level system design with world-class tech degrees.",
+                steps: ["Advanced CSE / Data Science Degrees", "Direct Placement Partnerships", "Mock Interview Training"],
+                skills: "Python, Java, DSA, System Design"
+            },
+            abroad: {
+                icon: "🌍", title: "Global Professional", sal: "€45k - €120k",
+                desc: "Settle in Canada, UK, or Germany. Degrees that give you global recognition and work-visa sponsorship.",
+                steps: ["Global Credit Transfer Programs", "IELTS/TOEFL Prep Included", "International Job Assistance"],
+                skills: "Cross-culture adaptibility, Global Tech"
+            },
+            finance: {
+                icon: "💰", title: "Investment Banker", sal: "₹12L - ₹40 LPA",
+                desc: "Manage billions of dollars. Get hired by Wall Street or top Indian finance firms.",
+                steps: ["CFA / MBA Finance Specialization", "Wall Street Trading Labs", "Hedge Fund Internships"],
+                skills: "Valuation, M&A, Portfolio Mgmt"
+            }
+        };
+
+        function updateRoadmap(key, btn) {
+            document.querySelectorAll('.dream-tab').forEach(t => {
+                t.classList.remove('active', 'bg-indigo-50', 'text-indigo-700', 'border-indigo-100');
+                t.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+            });
+            btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+            btn.classList.add('active', 'bg-indigo-50', 'text-indigo-700', 'border-indigo-100');
+
+            const card = document.getElementById('displayCard');
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.98)';
+            
+            setTimeout(() => {
+                const item = dreamData[key];
+                document.getElementById('r-icon').innerText = item.icon;
+                document.getElementById('r-title').innerText = item.title;
+                document.getElementById('r-desc').innerText = item.desc;
+                document.getElementById('r-sal').innerText = item.sal;
+                document.getElementById('r-skills').innerText = item.skills;
+                document.getElementById('s1').innerText = item.steps[0];
+                document.getElementById('s2').innerText = item.steps[1];
+                document.getElementById('s3').innerText = item.steps[2];
+                
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        function triggerLead() {
+            const goal = document.getElementById('r-title').innerText;
+            window.location.href = "edtech-universities.html?goal=" + encodeURIComponent(goal);
+        }
+
+
+        // SCALABLE CAREER EXPLORER LOGIC 
+        const careersDatabase = [
+            {
+                id: "tech",
+                name: "💻 IT & Software",
+                roles: [
+                    { title: "Software Engineer", desc: "Build apps, websites, and high-performance software systems.", salary: "₹6L - ₹40L+", icon: "fa-code", color: "blue" },
+                    { title: "Data Scientist", desc: "Analyze complex data to help companies make smart decisions.", salary: "₹8L - ₹30L+", icon: "fa-chart-pie", color: "indigo" },
+                    { title: "Cyber Security Expert", desc: "Protect systems and networks from digital hacking attacks.", salary: "₹7L - ₹25L+", icon: "fa-shield-halved", color: "emerald" },
+                    { title: "Cloud Architect", desc: "Manage and design cloud computing architectures for tech giants.", salary: "₹12L - ₹45L+", icon: "fa-cloud", color: "blue" }
+                ]
+            },
+            {
+                id: "medical",
+                name: "🩺 Healthcare",
+                roles: [
+                    { title: "Surgeon / Doctor", desc: "Diagnose and treat complex medical conditions in hospitals.", salary: "₹12L - ₹50L+", icon: "fa-user-doctor", color: "rose" },
+                    { title: "Clinical Psychologist", desc: "Help people manage mental health issues and emotional distress.", salary: "₹4L - ₹15L+", icon: "fa-brain", color: "purple" },
+                    { title: "Pharmacist", desc: "Prepare, research and dispense medical prescriptions safely.", salary: "₹3L - ₹10L+", icon: "fa-pills", color: "teal" }
+                ]
+            },
+            {
+                id: "business",
+                name: "📈 Business & Mgt.",
+                roles: [
+                    { title: "Investment Banker", desc: "Manage financial assets, IPOs and corporate mergers globally.", salary: "₹15L - ₹60L+", icon: "fa-sack-dollar", color: "emerald" },
+                    { title: "Marketing Manager", desc: "Promote products, build brand awareness and run campaigns.", salary: "₹7L - ₹25L+", icon: "fa-bullhorn", color: "orange" },
+                    { title: "HR Director", desc: "Manage employee relations, corporate culture and hiring.", salary: "₹8L - ₹30L+", icon: "fa-users", color: "pink" }
+                ]
+            },
+            {
+                id: "design",
+                name: "🎨 Design & Arts",
+                roles: [
+                    { title: "UI/UX Designer", desc: "Design user-friendly digital interfaces for apps and websites.", salary: "₹6L - ₹25L+", icon: "fa-object-group", color: "purple" },
+                    { title: "Fashion Designer", desc: "Create innovative clothing, accessories, and footwear.", salary: "₹4L - ₹20L+", icon: "fa-shirt", color: "rose" },
+                    { title: "Animator", desc: "Create visual effects and animations for games and movies.", salary: "₹5L - ₹18L+", icon: "fa-film", color: "indigo" }
+                ]
+            },
+            {
+                id: "law",
+                name: "⚖️ Legal Studies",
+                roles: [
+                    { title: "Corporate Lawyer", desc: "Advise businesses on legal rights, duties, and corporate issues.", salary: "₹8L - ₹35L+", icon: "fa-scale-balanced", color: "slate" },
+                    { title: "Criminal Defense", desc: "Defend individuals and organizations charged with criminal activity.", salary: "₹5L - ₹25L+", icon: "fa-gavel", color: "amber" }
+                ]
+            }
+        ];
+
+        function renderCareerCategories() {
+            const container = document.getElementById('career-categories');
+            container.innerHTML = '';
+            
+            careersDatabase.forEach((cat, index) => {
+                const btn = document.createElement('button');
+                const activeClasses = 'bg-indigo-50 text-indigo-700 border-2 border-indigo-100 shadow-sm';
+                const inactiveClasses = 'bg-transparent text-slate-500 hover:bg-slate-50 hover:text-slate-800 border-2 border-transparent';
+                
+                btn.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal ${index === 0 ? activeClasses : inactiveClasses}`;
+                btn.innerHTML = cat.name;
+                
+                btn.onclick = () => {
+                    Array.from(container.children).forEach(c => {
+                        c.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal ${inactiveClasses}`;
+                    });
+                    btn.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal ${activeClasses}`;
+                    
+                    renderCareerRoles(cat.id);
+                };
+                container.appendChild(btn);
+            });
+
+            if(careersDatabase.length > 0) {
+                renderCareerRoles(careersDatabase[0].id);
+            }
+        }
+
+        function renderCareerRoles(categoryId) {
+            const container = document.getElementById('career-grid');
+            container.innerHTML = ''; 
+            
+            const category = careersDatabase.find(c => c.id === categoryId);
+            if(!category) return;
+
+            container.classList.remove('mega-content-fade');
+            void container.offsetWidth; 
+            container.classList.add('mega-content-fade');
+
+            category.roles.forEach(role => {
+                const colorMap = {
+                    'blue': { bg: 'bg-blue-50', text: 'text-blue-600', hover: 'hover:border-blue-200', shadow: 'hover:shadow-blue-500/10' },
+                    'indigo': { bg: 'bg-indigo-50', text: 'text-indigo-600', hover: 'hover:border-indigo-200', shadow: 'hover:shadow-indigo-500/10' },
+                    'emerald': { bg: 'bg-emerald-50', text: 'text-emerald-600', hover: 'hover:border-emerald-200', shadow: 'hover:shadow-emerald-500/10' },
+                    'rose': { bg: 'bg-rose-50', text: 'text-rose-600', hover: 'hover:border-rose-200', shadow: 'hover:shadow-rose-500/10' },
+                    'purple': { bg: 'bg-purple-50', text: 'text-purple-600', hover: 'hover:border-purple-200', shadow: 'hover:shadow-purple-500/10' },
+                    'teal': { bg: 'bg-teal-50', text: 'text-teal-600', hover: 'hover:border-teal-200', shadow: 'hover:shadow-teal-500/10' },
+                    'orange': { bg: 'bg-orange-50', text: 'text-orange-600', hover: 'hover:border-orange-200', shadow: 'hover:shadow-orange-500/10' },
+                    'pink': { bg: 'bg-pink-50', text: 'text-pink-600', hover: 'hover:border-pink-200', shadow: 'hover:shadow-pink-500/10' },
+                    'slate': { bg: 'bg-slate-100', text: 'text-slate-700', hover: 'hover:border-slate-300', shadow: 'hover:shadow-slate-500/10' },
+                    'amber': { bg: 'bg-amber-50', text: 'text-amber-600', hover: 'hover:border-amber-200', shadow: 'hover:shadow-amber-500/10' }
+                };
+                
+                const theme = colorMap[role.color] || colorMap['blue'];
+
+                const cardHTML = `
+                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 ${theme.hover} shadow-sm hover:shadow-xl ${theme.shadow} transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 cursor-default">
+                        <div class="w-16 h-16 ${theme.bg} ${theme.text} rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${role.icon}"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 mb-3 tracking-tight">${role.title}</h3>
+                        <p class="text-slate-500 font-medium text-sm mb-6 flex-grow leading-relaxed">${role.desc}</p>
+                        
+                        <div class="border-t border-slate-100 pt-5 mt-auto">
+                            <div class="flex justify-between items-center mb-5">
+                                <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1.5 rounded-lg">Avg. Salary</span>
+                                <span class="font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg">${role.salary}</span>
+                            </div>
+                            <button onclick="window.location.href='edtech-universities.html?career=${encodeURIComponent(role.title)}'" class="w-full py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-indigo-600 transition-colors flex justify-center items-center gap-2 text-[15px]">
+                                Discover Colleges <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateMegaMenu();
+            renderCareerCategories(); 
         });
+
     </script>
 </body>
 </html>
