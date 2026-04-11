@@ -78,13 +78,16 @@
                     <span class="text-2xl font-black tracking-tight text-slate-900">EduMentor</span>
                 </div>
                 
-                <div class="flex items-center gap-6 h-full">
-                    <a href="#updates-hub" class="hidden md:flex text-red-500 font-bold hover:text-red-600 transition items-center h-full gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Live Updates
+                <div class="flex items-center gap-4 lg:gap-6 h-full">
+                    
+                    <!-- Free Counselling Lead Gen Button -->
+                    <a href="#" class="hidden xl:flex text-orange-500 font-bold hover:text-orange-600 transition items-center h-full gap-1.5">
+                        <i class="fa-solid fa-headset"></i> Free Counselling
                     </a>
 
-                    <a href="#career-explorer" class="hidden md:flex text-slate-600 font-bold hover:text-indigo-600 transition items-center h-full">
-                        Career Compass
+                    <!-- Jump to Career Section (Highlighted) -->
+                    <a href="#career-explorer" class="hidden lg:flex bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full font-extrabold hover:bg-indigo-100 transition items-center gap-2 shadow-sm border border-indigo-100">
+                        <i class="fa-solid fa-compass text-indigo-500"></i> Find Career
                     </a>
 
                     <div class="hidden md:flex items-center h-full nav-group">
@@ -122,7 +125,7 @@
         </div>
     </nav>
 
-    <!-- 👇 NAYA: Flash News Ticker 👇 -->
+    <!-- Flash News Ticker -->
     <div class="mt-[80px] bg-gradient-to-r from-slate-900 to-indigo-950 border-b border-indigo-500/30 text-white text-sm font-bold py-2.5 overflow-hidden relative flex items-center z-30 shadow-md">
         <!-- Static Label -->
         <div class="bg-indigo-600 px-4 md:px-6 py-2.5 absolute left-0 z-10 h-full flex items-center shadow-[10px_0_20px_rgba(0,0,0,0.5)]">
@@ -137,33 +140,64 @@
             <span class="mx-6 hover:text-white cursor-pointer transition">🩺 <b class="text-white">NEET UG:</b> Correction Window Opened Today</span>
         </div>
     </div>
-    <!-- 👆 NAYA: Flash News Ticker Ends 👆 -->
 
-    <section class="relative h-[550px] md:h-[650px] w-full overflow-hidden bg-slate-900 flex items-center justify-center">
+    <!-- Collegedunia Inspired Hero Section -->
+    <section class="relative h-[650px] md:h-[750px] w-full overflow-hidden bg-slate-900 flex items-center justify-center">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" class="slide active w-full h-full object-cover opacity-40">
-            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-40">
-            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-40">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" class="slide active w-full h-full object-cover opacity-30">
+            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-30">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-30">
         </div>
 
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-            <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-6 inline-block backdrop-blur-sm">India's #1 AI-Verified Admission Platform</span>
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">Your Future Begins With <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">The Right Choice.</span></h1>
-            <p class="text-lg md:text-xl text-slate-300 font-medium mb-10 max-w-2xl mx-auto">Skip the fake agents. Get direct official university links, AI-verified placements, and 100% genuine reviews.</p>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto w-full">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">Find Over 11000+ Colleges <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">in India & Abroad.</span></h1>
             
-            <form action="edtech-universities.html" method="GET" class="bg-white p-2 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row gap-2 max-w-3xl mx-auto border-4 border-white/20">
-                <div class="flex-1 flex items-center bg-slate-50 rounded-xl md:rounded-full px-6 py-3">
-                    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
-                    <input type="text" placeholder="Search Universities, Courses, or Cities..." class="bg-transparent w-full outline-none font-bold text-slate-800 placeholder:text-slate-400">
+            <!-- Advanced Search Bar with Goal Selection & Counselling Button -->
+            <form action="edtech-universities.html" method="GET" class="bg-white p-2 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row gap-2 max-w-4xl mx-auto border-4 border-white/20 mt-10">
+                
+                <!-- Goal Dropdown -->
+                <div class="md:w-1/3 border-b md:border-b-0 md:border-r border-slate-200">
+                    <select name="goal" class="w-full h-full px-6 py-3 bg-transparent outline-none font-bold text-slate-700 cursor-pointer appearance-none">
+                        <option value="">🎯 Select Goal</option>
+                        <option value="engineering">Engineering</option>
+                        <option value="management">Management</option>
+                        <option value="medical">Medical</option>
+                        <option value="design">Design & Arts</option>
+                    </select>
                 </div>
-                <button type="submit" class="bg-indigo-600 text-white px-8 py-4 rounded-xl md:rounded-full font-black hover:bg-slate-900 transition flex items-center justify-center gap-2">
-                    Search Now <i class="fa-solid fa-arrow-right"></i>
-                </button>
+
+                <!-- Search Input -->
+                <div class="flex-1 flex items-center bg-transparent px-4 py-3">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
+                    <input type="text" placeholder="Search for colleges, exams, courses and more.." class="bg-transparent w-full outline-none font-bold text-slate-800 placeholder:text-slate-400">
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-2">
+                    <button type="submit" class="flex-1 md:flex-none bg-indigo-600 text-white px-8 py-4 rounded-xl md:rounded-full font-black hover:bg-indigo-700 transition">
+                        Search
+                    </button>
+                    <button type="button" class="flex-1 md:flex-none bg-orange-500 text-white px-6 py-4 rounded-xl md:rounded-full font-black hover:bg-orange-600 transition shadow-lg shadow-orange-500/30 whitespace-nowrap">
+                        Need Counselling
+                    </button>
+                </div>
             </form>
+
+            <!-- Quick Course Links (Sub-nav Pill tags) -->
+            <div class="mt-8 flex flex-wrap justify-center gap-3 md:gap-4 max-w-4xl mx-auto">
+                <span class="text-slate-300 text-sm font-bold flex items-center mr-2"><i class="fa-solid fa-fire text-orange-500 mr-1"></i> Trending:</span>
+                <a href="edtech-universities.html?stream=Engineering" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">B.Tech</a>
+                <a href="edtech-universities.html?stream=Management" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">MBA</a>
+                <a href="edtech-universities.html?stream=Medical" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">MBBS</a>
+                <a href="edtech-universities.html?stream=Design" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">B.Design</a>
+                <a href="edtech-universities.html?stream=Law" class="px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-sm font-bold rounded-full transition">BA LLB</a>
+                <a href="edtech-universities.html?stream=Abroad" class="px-4 py-1.5 bg-indigo-500/30 hover:bg-indigo-500/50 backdrop-blur-md border border-indigo-400/30 text-white text-sm font-bold rounded-full transition flex items-center gap-1"><i class="fa-solid fa-plane-departure"></i> Study Abroad</a>
+            </div>
+
         </div>
     </section>
 
-    <!-- 👇 NAYA: Premium Updates Hub (Modern Sarkari Result Style) 👇 -->
+    <!-- Premium Updates Hub -->
     <section id="updates-hub" class="w-full bg-slate-50 py-20 relative z-20 -mt-10 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
         <div class="max-w-[1400px] mx-auto px-6">
             
@@ -180,9 +214,7 @@
                 </a>
             </div>
 
-            <!-- 4 Columns Grid System -->
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                
                 <!-- Column 1: Admissions -->
                 <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300">
                     <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
@@ -190,7 +222,6 @@
                         Admissions
                     </h3>
                     <ul class="space-y-4">
-                        <!-- Add new links by copying this 'li' block -->
                         <li><a href="#" class="group flex items-start gap-3">
                             <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
                             <div>
@@ -330,7 +361,6 @@
             </div>
         </div>
     </section>
-    <!-- 👆 Premium Updates Hub Ends 👆 -->
 
     <!-- DREAM BUILDER APP -->
     <section id="dream-builder-app" class="w-full bg-white py-20 relative z-20">
@@ -386,34 +416,25 @@
 
     <!-- SCALABLE CAREER EXPLORER BY JOB PROFILES -->
     <section class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200" id="career-explorer">
-        <!-- Decorative Background -->
         <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none"></div>
 
         <div class="max-w-[1400px] mx-auto px-6 relative z-10">
-            <!-- Section Header -->
             <div class="text-center mb-16">
                 <span class="text-indigo-600 font-black tracking-widest uppercase text-sm mb-2 block">Career Compass</span>
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900">Explore Careers by <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500">Job Profiles</span></h2>
                 <p class="text-slate-500 font-medium mt-4 max-w-2xl mx-auto">Not sure what to study? Browse through popular job roles, see their salaries, and find the right courses to get you there.</p>
             </div>
 
-            <!-- Explorer Layout -->
             <div class="flex flex-col lg:flex-row gap-10">
-                
-                <!-- Left Sidebar: Career Categories -->
                 <div class="lg:w-1/4 shrink-0">
                     <div class="bg-white rounded-3xl p-3 shadow-xl border border-slate-100 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible no-scrollbar sticky top-28" id="career-categories">
-                        <!-- JS Will Populate Tabs Here Dynamically -->
                     </div>
                 </div>
 
-                <!-- Right Content: Job Profile Cards Grid -->
                 <div class="lg:w-3/4">
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="career-grid">
-                        <!-- JS Will Populate Job Profile Cards Here Dynamically -->
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -447,9 +468,7 @@
     </footer>
 
     <script>
-        // ==========================================
-        // HERO SLIDER LOGIC
-        // ==========================================
+        // Hero Slider Logic
         let slideIndex = 0;
         showSlides();
         function showSlides() {
@@ -463,9 +482,7 @@
             setTimeout(showSlides, 4000); 
         }
 
-        // ==========================================
-        // MEGA MENU LOGIC (Data-Driven Configuration)
-        // ==========================================
+        // MEGA MENU LOGIC
         const specializations = [
             "Engineering", "Management", "Commerce & Banking", "Medical", "Sciences", 
             "Hotel Management", "Information Technology", "Arts & Humanities", 
@@ -543,9 +560,7 @@
             renderList('mega-top', data.top);
         }
 
-        // ==========================================
         // DREAM BUILDER LOGIC
-        // ==========================================
         const dreamData = {
             startup: {
                 icon: "🚀", title: "Future Startup Founder", sal: "₹15L - Unlimited",
@@ -607,9 +622,7 @@
         }
 
 
-        // ==========================================
-        // 🚀 SCALABLE CAREER EXPLORER LOGIC 
-        // ==========================================
+        // SCALABLE CAREER EXPLORER LOGIC 
         const careersDatabase = [
             {
                 id: "tech",
