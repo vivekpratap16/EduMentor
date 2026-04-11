@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Universities | EduMentor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #f1f5f9; }
+        
+        /* Custom Checkbox */
+        .filter-checkbox {
+            appearance: none; width: 1.25rem; height: 1.25rem; border: 2px solid #cbd5e1; border-radius: 0.375rem;
+            outline: none; cursor: pointer; transition: all 0.2s; position: relative; flex-shrink: 0;
+        }
+        .filter-checkbox:checked { background-color: #4f46e5; border-color: #4f46e5; }
+        .filter-checkbox:checked::after {
+            content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            color: white; font-size: 0.7rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+
+        .uni-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
+        .uni-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.1); border-color: #818cf8; }
+        
+        /* Scrollbar hiding for sidebar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-nav">
+        <div class="max-w-[1400px] mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight text-slate-900">EduMentor</span>
+            </div>
+            <div class="hidden md:flex gap-8 font-semibold text-slate-600">
+                <a href="#" class="text-indigo-600 font-bold">Universities</a>
+                <a href="#" class="hover:text-indigo-600 transition">Compare</a>
+                <a href="#" class="hover:text-indigo-600 transition">Courses</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50"><i class="fa-regular fa-bell"></i></button>
+                <div class="w-10 h-10 bg-slate-200 rounded-full border-2 border-white shadow"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Global Search Header -->
+    <div class="bg-slate-900 py-10 px-6 border-b-4 border-indigo-500 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="max-w-[1400px] mx-auto relative z-10 flex flex-col md:flex-row gap-6 items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-extrabold text-white mb-2">Find Your Perfect University</h1>
+                <p class="text-indigo-200 font-medium text-sm">Showing exact matches from our verified database.</p>
+            </div>
+            <div class="w-full md:w-[400px] relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" id="globalSearch" placeholder="Search by name, course, or state..." class="w-full pl-12 pr-4 py-3 rounded-xl outline-none font-bold text-slate-700 shadow-xl border-2 border-transparent focus:border-indigo-400 transition">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- LEFT SIDEBAR: ADVANCED FILTERS -->
+        <aside class="w-full lg:w-1/4 shrink-0">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 sticky top-[100px] max-h-[85vh] overflow-y-auto no-scrollbar">
+                
+                <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                    <h2 class="font-extrabold text-lg flex items-center gap-2"><i class="fa-solid fa-sliders text-indigo-500"></i> Filters</h2>
+                    <button onclick="clearAllFilters()" class="text-xs font-bold text-slate-400 hover:text-red-500 transition">Clear All</button>
+                </div>
+
+                <!-- 1. Study Level Filter (NEW) -->
+                <div class="mb-6 border-b border-slate-100 pb-6">
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wider">Study Level</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="UG" class="filter-checkbox level-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Undergraduate (UG)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="PG" class="filter-checkbox level-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Postgraduate (PG)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Diploma" class="filter-checkbox level-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Diploma</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="PhD" class="filter-checkbox level-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Doctorate (PhD)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Certificate" class="filter-checkbox level-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Certificates</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 2. Streams / Course Filter -->
+                <div class="mb-6 border-b border-slate-100 pb-6">
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wider">Streams & Courses</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Tech" class="filter-checkbox course-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Engineering (B.Tech / M.Tech)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="MBA" class="filter-checkbox course-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Management (BBA / MBA)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="CA" class="filter-checkbox course-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">IT & Software (BCA / MCA)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Medical" class="filter-checkbox course-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Medical (MBBS / BDS / Pharmacy)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Arts" class="filter-checkbox course-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Arts & Humanities (BA / MA)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Commerce" class="filter-checkbox course-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Commerce (B.Com / M.Com)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 3. State Filter -->
+                <div class="mb-6 border-b border-slate-100 pb-6">
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wider">State / Location</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Delhi" class="filter-checkbox state-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Delhi NCR</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Punjab" class="filter-checkbox state-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Punjab</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Maharashtra" class="filter-checkbox state-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Maharashtra</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="Karnataka" class="filter-checkbox state-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">Karnataka (Bangalore)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 4. Approvals Filter -->
+                <div class="mb-6">
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wider">Approvals</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="A++" class="filter-checkbox approval-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">NAAC A++ Rated</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" value="UGC" class="filter-checkbox approval-filter">
+                            <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-600">UGC Approved</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- RIGHT SIDE: UNIVERSITIES GRID -->
+        <main class="w-full lg:w-3/4">
+            
+            <!-- Sorting & Result Info -->
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6 flex flex-wrap justify-between items-center gap-4">
+                <p class="font-bold text-slate-700">Found <span id="resultCount" class="text-indigo-600 font-black">0</span> Exact Matches</p>
+                <div class="flex items-center gap-3">
+                    <span class="text-sm font-bold text-slate-400">Sort by:</span>
+                    <select class="bg-slate-50 border border-slate-200 text-sm font-bold text-slate-700 rounded-lg px-3 py-2 outline-none focus:border-indigo-500 cursor-pointer">
+                        <option>Relevance</option>
+                        <option>Highest Placement</option>
+                        <option>Lowest Fees</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Cards Container -->
+            <div id="uniContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Loader -->
+                <div class="col-span-full text-center py-32 bg-white rounded-3xl border border-slate-200">
+                    <div class="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+                    <p class="text-slate-500 font-bold text-lg">Searching Database...</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Firebase Scripts & SCALABLE Filter Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyxEZ4ukI8WRhV71RyS8JYJcXAICGAbto",
+            authDomain: "edtech-7d520.firebaseapp.com",
+            projectId: "edtech-7d520",
+            storageBucket: "edtech-7d520.firebasestorage.app",
+            messagingSenderId: "78074698553",
+            appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let allUniversities = [];
+
+        // Fetch Data Real-time
+        onSnapshot(collection(db, "universities"), (snapshot) => {
+            allUniversities = [];
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                allUniversities.push({ 
+                    id: doc.id, 
+                    name: data.name || "Unknown University",
+                    state: data.state || data.location || "Location N/A",
+                    courses: data.courses || data.course || "",
+                    fees: data.fees || "Pending",
+                    placement: data.placement || "Pending",
+                    ai_verified: data.ai_verified || false,
+                    website: data.website || "#",
+                    naac: data.naac || "",
+                    approvals: data.approvals || ""
+                });
+            });
+            applyFilters();
+        });
+
+        // ----------------------------------------------------
+        // 🚀 SMART & SCALABLE FILTER ENGINE
+        // (Aage koi naya filter add karna ho, bas HTML mein class add karein aur neeche 1 line add karein)
+        // ----------------------------------------------------
+        function applyFilters() {
+            const globalSearchTerm = document.getElementById('globalSearch').value.toLowerCase();
+            
+            // Helper function to get all checked values of a specific class
+            const getCheckedValues = (selector) => Array.from(document.querySelectorAll(selector + ':checked')).map(cb => cb.value.toLowerCase());
+
+            // 1. Apne saare filters yahan define karein
+            const filters = {
+                levels: getCheckedValues('.level-filter'),
+                courses: getCheckedValues('.course-filter'),
+                states: getCheckedValues('.state-filter'),
+                approvals: getCheckedValues('.approval-filter')
+            };
+
+            // Helper function to check if ANY selected filter matches the database string
+            const isMatch = (selectedFilters, dataString) => {
+                if (selectedFilters.length === 0) return true; // Agar kuch select nahi kiya, sab allow karo
+                if (!dataString) return false;
+                const lowerData = dataString.toLowerCase();
+                // Exact ya partial match server string me check karta hai
+                return selectedFilters.some(filterItem => lowerData.includes(filterItem));
+            };
+
+            const filteredData = allUniversities.filter(uni => {
+                // Global Search Match (Name, Course, State)
+                const uniSearchString = `${uni.name} ${uni.courses} ${uni.state}`.toLowerCase();
+                const matchesSearch = uniSearchString.includes(globalSearchTerm);
+
+                // 2. Apne filters database field ke sath match karein
+                // Agar 'level' field database mein alag se nahi hai, toh hum 'courses' text mein dhundhenge
+                const matchesLevel = isMatch(filters.levels, uni.courses + " " + uni.name);
+                const matchesCourse = isMatch(filters.courses, uni.courses);
+                const matchesState = isMatch(filters.states, uni.state);
+                const matchesApproval = isMatch(filters.approvals, (uni.naac + " " + uni.approvals));
+
+                // 3. Agar SAB match karte hain tabhi Card dikhega (Exact precision)
+                return matchesSearch && matchesLevel && matchesCourse && matchesState && matchesApproval;
+            });
+
+            renderCards(filteredData);
+        }
+
+        // Attach Event Listeners to ALL checkboxes automatically
+        document.getElementById('globalSearch').addEventListener('input', applyFilters);
+        document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', applyFilters);
+        });
+
+        // Clear All Function
+        window.clearAllFilters = function() {
+            document.getElementById('globalSearch').value = "";
+            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+            applyFilters();
+        }
+
+        // ----------------------------------------------------
+        // RENDERING CARDS
+        // ----------------------------------------------------
+        function renderCards(dataArray) {
+            const container = document.getElementById('uniContainer');
+            document.getElementById('resultCount').innerText = dataArray.length;
+            
+            if(dataArray.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-24 bg-white rounded-3xl border border-slate-200 border-dashed">
+                        <div class="text-5xl mb-4">🔍</div>
+                        <h3 class="text-xl font-extrabold text-slate-800 mb-2">No exact matches found</h3>
+                        <p class="text-slate-500 font-medium text-sm">Try tweaking your filters or search term to see more results.</p>
+                        <button onclick="clearAllFilters()" class="mt-6 text-indigo-600 font-bold bg-indigo-50 px-6 py-2 rounded-lg hover:bg-indigo-100 transition">Clear Filters</button>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            
+            dataArray.forEach((uni) => {
+                let badgeHTML = uni.ai_verified 
+                    ? `<span class="bg-emerald-50 text-emerald-600 border border-emerald-200 px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1"><i class="fa-solid fa-shield-check"></i> Verified</span>`
+                    : `<span class="bg-yellow-50 text-yellow-600 border border-yellow-200 px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider shadow-sm"><i class="fa-solid fa-clock"></i> Pending</span>`;
+                
+                let naacBadge = uni.naac ? `<span class="bg-indigo-50 text-indigo-700 px-2 py-1 rounded text-[10px] font-black border border-indigo-100">NAAC ${uni.naac}</span>` : '';
+
+                container.innerHTML += `
+                    <div class="bg-white rounded-[1.5rem] p-5 uni-card relative flex flex-col h-full">
+                        
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[1rem] flex items-center justify-center text-white font-black text-2xl shadow-lg border-2 border-white shrink-0">
+                                ${(uni.name || "U").substring(0,1).toUpperCase()}
+                            </div>
+                            <div class="flex flex-col items-end gap-1">
+                                ${badgeHTML}
+                                ${naacBadge}
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-xl font-extrabold text-slate-900 mb-1 leading-tight line-clamp-2">${uni.name}</h3>
+                        <p class="text-slate-500 font-bold text-xs mb-4 flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${uni.state}</p>
+                        
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-5 flex-grow">
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Top Courses</p>
+                            <p class="font-bold text-indigo-700 text-sm mb-4 line-clamp-1">${uni.courses || 'Multiple Programs'}</p>
+                            
+                            <div class="grid grid-cols-2 gap-3 border-t border-slate-200 pt-3">
+                                <div>
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Avg. Fees</p>
+                                    <p class="font-extrabold text-slate-800 text-sm">${uni.fees}</p>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Highest Package</p>
+                                    <p class="font-extrabold text-emerald-600 text-sm">${uni.placement}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto grid grid-cols-2 gap-3">
+                            <a href="${uni.website}" target="_blank" class="w-full text-center py-2.5 bg-slate-100 text-slate-700 font-extrabold rounded-lg hover:bg-slate-200 transition-all text-xs">
+                                Visit Site
+                            </a>
+                            <button onclick="window.location.href='edtech-info.html?id=${uni.id}'" class="w-full text-center py-2.5 bg-indigo-600 text-white font-extrabold rounded-lg hover:bg-indigo-700 shadow-md transition-all text-xs">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

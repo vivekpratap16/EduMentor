@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Details | EduMentor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #312e81 100%); }
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #f1f5f9; }
+        .spec-badge { background: #f1f5f9; color: #475569; padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #e2e8f0; display: inline-block; margin: 4px 4px 0 0;}
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Top Navigation -->
+    <nav class="fixed w-full z-40 glass-nav top-0 transition-all duration-300">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center h-20 justify-between">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='edtech-universities.html'">
+                    <div class="w-10 h-10 bg-indigo-50 hover:bg-indigo-100 transition rounded-xl flex items-center justify-center text-indigo-600 font-black shadow-inner"><i class="fa-solid fa-arrow-left"></i></div>
+                    <span class="font-extrabold text-xl tracking-tight text-slate-900 hidden sm:block hover:text-indigo-600 transition">Back to Search</span>
+                </div>
+                <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+                    <span class="text-2xl font-extrabold tracking-tight text-slate-900">EduMentor</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div id="content-area" class="pb-20 pt-20">
+        <div class="text-center py-40">
+            <div class="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-slate-500 font-bold text-lg">Fetching Verified Details...</p>
+        </div>
+    </div>
+
+    <!-- Lead Modal - High Conversion Design -->
+    <div id="lead-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-[2rem] p-8 max-w-md w-full relative shadow-2xl border border-white">
+            <button onclick="document.getElementById('lead-modal').classList.add('hidden')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            
+            <div class="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 shadow-inner"><i class="fa-solid fa-lock"></i></div>
+            <h3 class="text-2xl font-extrabold mb-2 text-center text-slate-900">Unlock Official Link 🎓</h3>
+            <p class="text-sm text-center text-slate-500 mb-6 font-medium">To protect you from fake portals, we verify all students before redirecting to the official website.</p>
+            
+            <form id="lead-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Full Name</label>
+                    <input type="text" id="lead-name" required placeholder="e.g. Rahul Sharma" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 focus:bg-white transition font-bold text-sm text-slate-800">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Mobile Number</label>
+                    <input type="tel" id="lead-phone" required placeholder="+91 XXXXX XXXXX" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 focus:bg-white transition font-bold text-sm text-slate-800">
+                </div>
+                
+                <button type="submit" id="lead-submit-btn" class="w-full mt-2 py-4 bg-slate-900 text-white font-extrabold rounded-xl hover:bg-indigo-600 transition-all flex justify-center items-center gap-2 shadow-lg hover:-translate-y-0.5 text-lg">
+                    Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <p class="text-[10px] text-center text-slate-400 font-bold uppercase tracking-wider mt-3"><i class="fa-solid fa-shield-halved text-emerald-500"></i> Your data is 100% Secure & Encrypted</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyxEZ4ukI8WRhV71RyS8JYJcXAICGAbto",
+            authDomain: "edtech-7d520.firebaseapp.com",
+            projectId: "edtech-7d520",
+            storageBucket: "edtech-7d520.firebasestorage.app",
+            messagingSenderId: "78074698553",
+            appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
+        };
+        const app = initializeApp(firebaseConfig); 
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUni = null;
+        // URL se University ID nikalna
+        const urlParams = new URLSearchParams(window.location.search);
+        let uniId = urlParams.get('id');
+
+        // Anonymous login taaki koi bhi user detail dekh sake
+        signInAnonymously(auth).catch(e => console.error("Auth error", e));
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!uniId) {
+                document.getElementById('content-area').innerHTML = `
+                    <div class='text-center py-40'>
+                        <div class='text-6xl mb-4'>⚠️</div>
+                        <h2 class='text-2xl font-extrabold text-slate-800'>Invalid Link</h2>
+                        <p class='text-slate-500 font-medium mt-2'>Please select a university from the search page.</p>
+                        <button onclick="window.location.href='edtech-universities.html'" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold">Go to Search</button>
+                    </div>`;
+                return;
+            }
+            
+            try {
+                // Fetch data from Firebase
+                const docSnap = await getDoc(doc(db, 'universities', uniId));
+                if (docSnap.exists()) {
+                    currentUni = docSnap.data();
+                    renderPage(currentUni);
+                } else {
+                    document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-red-500'>University Not Found!</h2></div>";
+                }
+            } catch(e) {
+                console.error("Fetch Error:", e);
+                document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-red-500'>Error loading data.</h2></div>";
+            }
+        });
+
+        function renderPage(uni) {
+            let nirfHtml = uni.nirf && uni.nirf !== "N/A" ? `<span class="bg-yellow-400 text-yellow-900 px-3 py-1.5 rounded-lg font-extrabold text-sm shadow-sm border border-yellow-500"><i class="fa-solid fa-trophy mr-1"></i> NIRF Rank: ${uni.nirf}</span>` : '';
+            let naacHtml = uni.naac && uni.naac !== "N/A" ? `<span class="bg-white/20 px-3 py-1.5 rounded-lg font-bold text-sm backdrop-blur-md border border-white/30 text-white">NAAC ${uni.naac}</span>` : '';
+            
+            // Render Courses based on the new admin panel data structure
+            let programsHtml = "";
+            if(uni.coursesList && uni.coursesList.length > 0) {
+                uni.coursesList.forEach(course => {
+                    programsHtml += `
+                        <div class="border border-slate-200 rounded-2xl p-5 bg-white hover:border-indigo-400 hover:shadow-lg transition-all mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <h4 class="font-extrabold text-slate-900 text-lg flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> ${course.name}</h4>
+                            </div>
+                            <div class="bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 text-center sm:text-right">
+                                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-0.5">Estimated Fees</span> 
+                                <span class="font-extrabold text-indigo-700">${course.fees || 'Check Website'}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                programsHtml = `
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-white">
+                        <h4 class="font-extrabold text-slate-900 text-lg mb-2"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-2"></i> ${uni.courses || 'Various Programs'}</h4>
+                        <p class="text-sm text-slate-500 font-medium">Detailed fee structure is available on the official website.</p>
+                    </div>`;
+            }
+
+            let feesDisplay = uni.fees && uni.fees !== "Pending" ? uni.fees : "<span class='text-sm text-orange-500 font-bold'>Update pending</span>";
+            let placementDisplay = uni.highest_placement && uni.highest_placement !== "Pending" ? uni.highest_placement : (uni.placement !== "Pending" ? uni.placement : "<span class='text-sm text-orange-500 font-bold'>Update pending</span>");
+
+            document.getElementById('content-area').innerHTML = `
+                <!-- Dynamic Hero Section -->
+                <div class="hero-gradient text-white pt-12 pb-20 px-6 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    
+                    <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start md:items-center relative z-10">
+                        <div class="w-32 h-32 md:w-40 md:h-40 bg-white rounded-3xl flex items-center justify-center text-5xl md:text-7xl font-black text-indigo-600 shadow-2xl shrink-0 border-4 border-white/20">
+                            ${(uni.name || "U").substring(0,2).toUpperCase()}
+                        </div>
+                        <div>
+                            <div class="flex flex-wrap gap-3 mb-4">
+                                ${nirfHtml} 
+                                ${naacHtml}
+                                ${uni.ai_verified ? '<span class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg font-bold text-sm shadow border border-emerald-600 flex items-center gap-1"><i class="fa-solid fa-shield-check"></i> AI Verified</span>' : ''}
+                            </div>
+                            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-3 leading-tight tracking-tight text-white">${uni.name}</h1>
+                            <p class="text-indigo-200 font-bold text-lg md:text-xl flex items-center gap-2"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${uni.state || 'Location not specified'}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Grid -->
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col lg:flex-row gap-8 relative z-20 -mt-10">
+                    
+                    <!-- Left Content -->
+                    <div class="lg:w-2/3 space-y-8">
+                        
+                        <!-- High Level Stats -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="bg-white p-8 rounded-[2rem] border border-emerald-100 text-center shadow-xl shadow-emerald-100/40 relative overflow-hidden group hover:-translate-y-1 transition">
+                                <div class="absolute -right-4 -bottom-4 text-emerald-50 opacity-50 text-8xl transition group-hover:scale-110"><i class="fa-solid fa-chart-line"></i></div>
+                                <div class="relative z-10">
+                                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"><i class="fa-solid fa-briefcase"></i></div>
+                                    <p class="text-xs text-emerald-600 uppercase font-black tracking-widest mb-1">Highest Package</p>
+                                    <p class="text-3xl font-extrabold text-slate-900">${placementDisplay}</p>
+                                </div>
+                            </div>
+                            <div class="bg-white p-8 rounded-[2rem] border border-indigo-100 text-center shadow-xl shadow-indigo-100/40 relative overflow-hidden group hover:-translate-y-1 transition">
+                                <div class="absolute -left-4 -bottom-4 text-indigo-50 opacity-50 text-8xl transition group-hover:scale-110"><i class="fa-solid fa-money-check-dollar"></i></div>
+                                <div class="relative z-10">
+                                    <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"><i class="fa-solid fa-wallet"></i></div>
+                                    <p class="text-xs text-indigo-600 uppercase font-black tracking-widest mb-1">Starting Fees From</p>
+                                    <p class="text-3xl font-extrabold text-slate-900">${feesDisplay}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Programs Listing -->
+                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-200 shadow-inner">
+                            <h2 class="text-2xl font-extrabold mb-6 text-slate-900 border-b border-slate-200 pb-4 flex items-center gap-3"><i class="fa-solid fa-book-open text-indigo-500"></i> Top Courses & Fees</h2>
+                            <div>${programsHtml}</div>
+                        </div>
+
+                        <!-- Approvals section -->
+                        <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
+                            <h2 class="text-2xl font-extrabold mb-4 text-slate-900 flex items-center gap-3"><i class="fa-solid fa-award text-indigo-500"></i> Accreditations & Approvals</h2>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                ${uni.approvals ? uni.approvals.split(',').map(app => `<span class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl font-bold border border-indigo-100">${app.trim()}</span>`).join('') : '<span class="text-slate-500 font-medium">Standard University Approvals</span>'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sticky Action Bar -->
+                    <div class="lg:w-1/3">
+                        <div class="sticky top-[100px] bg-white p-8 border border-slate-200 rounded-[2rem] shadow-2xl shadow-slate-200/50 border-t-4 border-t-indigo-600">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-extrabold text-slate-900">Apply Now</h3>
+                                <span class="bg-red-100 text-red-700 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest animate-pulse border border-red-200">Admissions Open</span>
+                            </div>
+                            <p class="text-sm font-medium text-slate-500 mb-8 leading-relaxed">Ensure a safe and fraud-free application process. Click below to securely access the official university portal.</p>
+                            
+                            <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="w-full py-4 bg-indigo-600 text-white font-extrabold rounded-xl hover:bg-slate-900 hover:shadow-xl transition-all transform hover:-translate-y-1 text-center flex items-center justify-center gap-3 text-[16px]">
+                                Open Official Website <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </button>
+                            
+                            <div class="mt-8 pt-6 border-t border-slate-100 flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-100"><i class="fa-solid fa-shield-check text-xl"></i></div>
+                                <div>
+                                    <p class="text-sm text-slate-800 font-extrabold mb-1">100% Verified Link</p>
+                                    <p class="text-xs text-slate-500 font-medium leading-relaxed">We strictly redirect you to the official university portal to protect against fake agents.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Lead Generation Submit Logic
+        document.getElementById('lead-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('lead-submit-btn');
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Validating & Redirecting...`; 
+            btn.disabled = true;
+            
+            try {
+                // Save lead to Firebase "leads" collection
+                await addDoc(collection(db, 'leads'), {
+                    name: document.getElementById('lead-name').value, 
+                    phone: document.getElementById('lead-phone').value,
+                    universityId: uniId,
+                    universityName: currentUni.name, 
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Open official website in a new tab
+                let webLink = currentUni.website;
+                if (!webLink.startsWith('http')) webLink = 'https://' + webLink;
+                window.open(webLink, '_blank');
+                
+                // Close modal and reset form
+                document.getElementById('lead-modal').classList.add('hidden');
+                document.getElementById('lead-form').reset();
+            } catch(e) {
+                alert("Something went wrong! Please check your connection.");
+            }
+            
+            btn.innerHTML = `Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>`; 
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>

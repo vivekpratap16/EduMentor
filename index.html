@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMentor | Find Your Dream College</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; scroll-behavior: smooth; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9; }
+        
+        /* Dream Tab Styles */
+        .dream-tab { transition: all 0.3s ease; }
+        .dream-tab.active {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Slider Animation */
+        @keyframes fade {
+            from {opacity: 0.4} 
+            to {opacity: 1}
+        }
+        .slide { display: none; animation: fade 1.5s; }
+        .slide.active { display: block; }
+
+        /* Premium Mega Menu Styles */
+        .mega-menu {
+            opacity: 0; visibility: hidden; transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Keep menu open when hovering the group (the nav item) */
+        .nav-group:hover .mega-menu {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        
+        .mega-sidebar::-webkit-scrollbar { width: 4px; }
+        .mega-sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        
+        .mega-item { border-left: 3px solid transparent; transition: all 0.2s; }
+        .mega-item.active { background-color: #f8fafc; color: #4f46e5; border-left-color: #4f46e5; font-weight: 800; }
+        .mega-item:hover:not(.active) { background-color: #f1f5f9; color: #4f46e5; }
+        
+        /* Fade in right content */
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(-5px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .mega-content-fade { animation: fadeInRight 0.3s ease forwards; }
+
+        /* Hide scrollbar for career categories */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <nav class="fixed w-full z-50 glass-nav top-0 transition-all duration-300">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative h-20">
+            <div class="flex items-center h-full justify-between">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-200">E</div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">EduMentor</span>
+                </div>
+                
+                <div class="flex items-center gap-6 h-full">
+                    
+                    <!-- Jump to Career Section -->
+                    <a href="#career-explorer" class="hidden md:flex text-slate-600 font-bold hover:text-indigo-600 transition items-center h-full">
+                        Career Compass
+                    </a>
+
+                    <!-- MEGA MENU TRIGGER -->
+                    <div class="hidden md:flex items-center h-full nav-group">
+                        <a href="edtech-universities.html" class="text-slate-600 font-bold hover:text-indigo-600 transition flex items-center gap-1.5 h-full">
+                            Explore Colleges <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300 nav-group-hover:rotate-180"></i>
+                        </a>
+
+                        <!-- MEGA MENU DROPDOWN PANEL -->
+                        <div class="mega-menu absolute top-20 left-0 w-full bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] border border-slate-100 cursor-default flex h-[500px] rounded-b-2xl overflow-hidden">
+                            
+                            <!-- Left Sidebar (17 Specializations) -->
+                            <div class="w-1/4 bg-slate-50 border-r border-slate-200 overflow-y-auto mega-sidebar py-4">
+                                <ul id="mega-sidebar-list" class="flex flex-col">
+                                    <!-- List populated by JavaScript below -->
+                                </ul>
+                            </div>
+                            
+                            <!-- Right Content Area -->
+                            <div class="w-3/4 p-8 bg-white overflow-y-auto mega-sidebar" id="mega-content-area">
+                                <div class="grid grid-cols-3 gap-10 mega-content-fade">
+                                    
+                                    <!-- Colleges By Degrees -->
+                                    <div>
+                                        <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> Colleges By Degrees</h4>
+                                        <ul class="space-y-4" id="mega-degrees">
+                                            <!-- Dynamic Data -->
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Popular Colleges -->
+                                    <div>
+                                        <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-fire text-orange-500"></i> Popular Colleges</h4>
+                                        <ul class="space-y-4" id="mega-popular">
+                                            <!-- Dynamic Data -->
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Top Colleges -->
+                                    <div>
+                                        <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-award text-amber-500"></i> Top Colleges</h4>
+                                        <ul class="space-y-4" id="mega-top">
+                                            <!-- Dynamic Data -->
+                                        </ul>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MEGA MENU END -->
+
+                    <a href="edtech-auth.html" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-indigo-600 transition shadow-lg hover:-translate-y-0.5">Student Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative h-[600px] md:h-[700px] w-full mt-[80px] overflow-hidden bg-slate-900 flex items-center justify-center">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" class="slide active w-full h-full object-cover opacity-40">
+            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-40">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-40">
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-6 inline-block backdrop-blur-sm">India's #1 AI-Verified Admission Platform</span>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">Your Future Begins With <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">The Right Choice.</span></h1>
+            <p class="text-lg md:text-xl text-slate-300 font-medium mb-10 max-w-2xl mx-auto">Skip the fake agents. Get direct official university links, AI-verified placements, and 100% genuine reviews.</p>
+            
+            <form action="edtech-universities.html" method="GET" class="bg-white p-2 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row gap-2 max-w-3xl mx-auto border-4 border-white/20">
+                <div class="flex-1 flex items-center bg-slate-50 rounded-xl md:rounded-full px-6 py-3">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
+                    <input type="text" placeholder="Search Universities, Courses, or Cities..." class="bg-transparent w-full outline-none font-bold text-slate-800 placeholder:text-slate-400">
+                </div>
+                <button type="submit" class="bg-indigo-600 text-white px-8 py-4 rounded-xl md:rounded-full font-black hover:bg-slate-900 transition flex items-center justify-center gap-2">
+                    Search Now <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- DREAM BUILDER APP -->
+    <section id="dream-builder-app" class="w-full bg-white py-20 relative z-20 -mt-6 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
+        <div class="max-w-6xl mx-auto px-6">
+            
+            <div class="text-center mb-12">
+                <span class="text-indigo-600 font-black tracking-widest uppercase text-sm mb-2 block">Confused about courses?</span>
+                <h3 class="text-3xl md:text-5xl font-black text-slate-900">What is your <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Ultimate Goal?</span></h3>
+                <p class="text-slate-500 font-medium mt-4">Select what you want to BECOME, and we'll show you the exact roadmap to get there.</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-12" id="dreamTabs">
+                <button onclick="updateRoadmap('startup', this)" class="dream-tab active px-6 py-3.5 rounded-2xl border-2 border-indigo-100 bg-indigo-50 text-indigo-700 font-extrabold hover:bg-indigo-100 transition shadow-sm text-sm md:text-base">🚀 Build a Startup</button>
+                <button onclick="updateRoadmap('tech', this)" class="dream-tab px-6 py-3.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-extrabold hover:border-indigo-200 transition shadow-sm text-sm md:text-base">👨‍💻 Work in FAANG</button>
+                <button onclick="updateRoadmap('abroad', this)" class="dream-tab px-6 py-3.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-extrabold hover:border-indigo-200 transition shadow-sm text-sm md:text-base">🌍 Settle Abroad</button>
+                <button onclick="updateRoadmap('finance', this)" class="dream-tab px-6 py-3.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-extrabold hover:border-indigo-200 transition shadow-sm text-sm md:text-base">💰 Finance Guru</button>
+            </div>
+
+            <div id="displayCard" class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl flex flex-col md:flex-row gap-10 items-center transition-all duration-500 relative overflow-hidden">
+                <div class="absolute -top-20 -right-20 w-96 h-96 bg-indigo-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+
+                <div class="md:w-3/5 relative z-10">
+                    <div id="r-icon" class="text-6xl mb-4 bg-white/10 w-20 h-20 flex items-center justify-center rounded-2xl border border-white/20 shadow-inner">🚀</div>
+                    <h2 id="r-title" class="text-3xl md:text-4xl font-black mb-4 tracking-tight">Future Startup Founder</h2>
+                    <p id="r-desc" class="text-indigo-200 text-lg mb-8 font-medium leading-relaxed">Build the next unicorn. Connect with top investors and learn entrepreneurship from the best business schools.</p>
+                    
+                    <div class="space-y-4 mb-10">
+                        <div class="flex items-center gap-4 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50"><div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-check"></i></div> <span id="s1" class="font-bold text-slate-200">Top Tier MBA / BBA Programs</span></div>
+                        <div class="flex items-center gap-4 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50"><div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-check"></i></div> <span id="s2" class="font-bold text-slate-200">Incubation & Mentorship Access</span></div>
+                        <div class="flex items-center gap-4 bg-slate-800/50 p-3 rounded-xl border border-slate-700/50"><div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-check"></i></div> <span id="s3" class="font-bold text-slate-200">Fund-raising workshops</span></div>
+                    </div>
+
+                    <button onclick="triggerLead()" class="bg-indigo-600 hover:bg-white hover:text-indigo-600 text-white w-full md:w-auto px-10 py-4 rounded-xl font-black text-lg shadow-lg hover:shadow-indigo-500/30 transition-all flex items-center justify-center gap-3">
+                        Get Free Guidance <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="md:w-2/5 w-full space-y-4 relative z-10">
+                    <div class="bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition cursor-default">
+                        <div class="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <p class="text-xs text-slate-400 uppercase font-black tracking-widest mb-1">Potential Earnings</p>
+                        <p id="r-sal" class="text-2xl font-black text-white">₹15L - Unlimited</p>
+                    </div>
+                    <div class="bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10 hover:bg-white/10 transition cursor-default">
+                        <div class="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-3"><i class="fa-solid fa-brain"></i></div>
+                        <p class="text-xs text-slate-400 uppercase font-black tracking-widest mb-1">Required Core Skills</p>
+                        <p id="r-skills" class="text-base mt-1 font-bold text-slate-200 leading-snug">Leadership, Scaling, Product Market Fit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 👇 NEW: SCALABLE CAREER EXPLORER BY JOB PROFILES 👇 -->
+    <section class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200" id="career-explorer">
+        <!-- Decorative Background -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none"></div>
+
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="text-indigo-600 font-black tracking-widest uppercase text-sm mb-2 block">Career Compass</span>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900">Explore Careers by <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500">Job Profiles</span></h2>
+                <p class="text-slate-500 font-medium mt-4 max-w-2xl mx-auto">Not sure what to study? Browse through popular job roles, see their salaries, and find the right courses to get you there.</p>
+            </div>
+
+            <!-- Explorer Layout -->
+            <div class="flex flex-col lg:flex-row gap-10">
+                
+                <!-- Left Sidebar: Career Categories -->
+                <div class="lg:w-1/4 shrink-0">
+                    <div class="bg-white rounded-3xl p-3 shadow-xl border border-slate-100 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible no-scrollbar sticky top-28" id="career-categories">
+                        <!-- JS Will Populate Tabs Here Dynamically -->
+                    </div>
+                </div>
+
+                <!-- Right Content: Job Profile Cards Grid -->
+                <div class="lg:w-3/4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="career-grid">
+                        <!-- JS Will Populate Job Profile Cards Here Dynamically -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- 👆 NEW FEATURE ENDS 👆 -->
+    
+    <section class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition">
+                <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-shield-halved"></i></div>
+                <h4 class="text-xl font-extrabold text-slate-900 mb-2">100% Verified Links</h4>
+                <p class="text-slate-500 font-medium text-sm">We redirect you only to official university portals. No fake agents.</p>
+            </div>
+            <div class="text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h4 class="text-xl font-extrabold text-slate-900 mb-2">Zero Hidden Fees</h4>
+                <p class="text-slate-500 font-medium text-sm">Our counseling and platform is completely free for students.</p>
+            </div>
+            <div class="text-center p-6 bg-slate-50 rounded-3xl border border-slate-100 shadow-sm hover:-translate-y-1 transition">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"><i class="fa-solid fa-user-graduate"></i></div>
+                <h4 class="text-xl font-extrabold text-slate-900 mb-2">Expert Counseling</h4>
+                <p class="text-slate-500 font-medium text-sm">Get personalized roadmap according to your career goals.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-white py-12 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-black mb-4">EduMentor</h2>
+            <p class="text-slate-400 font-medium mb-6">Guiding students to the right path, avoiding fake promises.</p>
+            <p class="text-slate-600 text-sm font-bold">&copy; 2026 EduMentor. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // HERO SLIDER LOGIC
+        // ==========================================
+        let slideIndex = 0;
+        showSlides();
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].classList.add("active");  
+            setTimeout(showSlides, 4000); 
+        }
+
+        // ==========================================
+        // MEGA MENU LOGIC (Data-Driven Configuration)
+        // ==========================================
+        const specializations = [
+            "Engineering", "Management", "Commerce & Banking", "Medical", "Sciences", 
+            "Hotel Management", "Information Technology", "Arts & Humanities", 
+            "Mass Communication", "Nursing", "Agriculture", "Design", 
+            "Law", "Pharmacy", "Para Medical", "Dental", "Performing Arts"
+        ];
+
+        const megaMenuContent = {
+            "Engineering": {
+                degrees: ["B.Tech colleges in India", "M.Tech colleges in India", "B.Arch colleges in India", "Diploma colleges in India", "View All Degrees"],
+                popular: ["Chandigarh University", "Amity University, Punjab", "Sharda University", "LPU Jalandhar", "Parul University"],
+                top: ["IIT Madras", "IIT Delhi", "IIT Bombay", "BITS Pilani", "VIT Vellore"]
+            },
+            "Management": {
+                degrees: ["MBA colleges in India", "BBA colleges in India", "PGDM colleges in India", "Executive MBA in India", "View All Degrees"],
+                popular: ["Chandigarh University", "Amity University", "Parul University", "CGC Landran", "Shoolini University Solan"],
+                top: ["IIM Ahmedabad", "IIM Bangalore", "IIM Calcutta", "ISB Hyderabad", "XLRI Jamshedpur"]
+            },
+            "Medical": {
+                degrees: ["MBBS colleges in India", "BDS colleges in India", "BAMS colleges in India", "MD colleges in India", "View All Degrees"],
+                popular: ["Sharda University", "NIMS University", "Parul University", "Amity University", "SGT University"],
+                top: ["AIIMS New Delhi", "PGIMER Chandigarh", "CMC Vellore", "NIMHANS Bangalore", "JIPMER Puducherry"]
+            },
+            "Default": {
+                degrees: ["Top UG colleges in India", "Top PG colleges in India", "Diploma courses in India", "Certificate courses", "View All Degrees"],
+                popular: ["Chandigarh University", "Amity University", "Sharda University", "LPU Jalandhar", "Parul University"],
+                top: ["Delhi University", "JNU New Delhi", "BHU Varanasi", "Jamia Millia Islamia", "Jadavpur University"]
+            }
+        };
+
+        function generateMegaMenu() {
+            const sidebar = document.getElementById('mega-sidebar-list');
+            sidebar.innerHTML = '';
+            
+            specializations.forEach((category, index) => {
+                const li = document.createElement('li');
+                li.className = `mega-item px-8 py-3 text-[13px] font-semibold text-slate-600 cursor-pointer ${index === 0 ? 'active' : ''}`;
+                li.textContent = category;
+                
+                li.addEventListener('mouseenter', () => updateMegaContent(category, li));
+                li.addEventListener('click', () => {
+                    window.location.href = `edtech-universities.html?stream=${encodeURIComponent(category)}`;
+                });
+
+                sidebar.appendChild(li);
+            });
+
+            updateMegaContent("Engineering", sidebar.firstChild);
+        }
+
+        function updateMegaContent(category, element) {
+            document.querySelectorAll('.mega-item').forEach(el => el.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            const data = megaMenuContent[category] || megaMenuContent["Default"];
+
+            const renderList = (id, items) => {
+                const ul = document.getElementById(id);
+                ul.innerHTML = '';
+                ul.parentElement.parentElement.classList.remove('mega-content-fade');
+                void ul.parentElement.parentElement.offsetWidth; 
+                ul.parentElement.parentElement.classList.add('mega-content-fade');
+
+                items.forEach((item, idx) => {
+                    const li = document.createElement('li');
+                    const isLink = idx === items.length - 1 && item.includes('View All');
+                    
+                    li.innerHTML = `<a href="edtech-universities.html?stream=${encodeURIComponent(category)}&filter=${encodeURIComponent(item)}" class="${isLink ? 'text-indigo-600 font-bold hover:underline underline-offset-4 mt-2 inline-block' : 'text-slate-500 font-medium hover:text-indigo-600 transition flex items-center gap-2'}">${item}</a>`;
+                    ul.appendChild(li);
+                });
+            }
+
+            renderList('mega-degrees', data.degrees);
+            renderList('mega-popular', data.popular);
+            renderList('mega-top', data.top);
+        }
+
+        // ==========================================
+        // DREAM BUILDER LOGIC
+        // ==========================================
+        const dreamData = {
+            startup: {
+                icon: "🚀", title: "Future Startup Founder", sal: "₹15L - Unlimited",
+                desc: "Build the next unicorn. Connect with top investors and learn entrepreneurship from the best business schools.",
+                steps: ["Top Tier MBA / BBA Programs", "Incubation & Mentorship Access", "Fund-raising workshops"],
+                skills: "Leadership, Scaling, Product Market Fit"
+            },
+            tech: {
+                icon: "👨‍💻", title: "FAANG Software Engineer", sal: "₹18L - ₹60 LPA",
+                desc: "Crack Google, Amazon or Meta. Master DSA and high-level system design with world-class tech degrees.",
+                steps: ["Advanced CSE / Data Science Degrees", "Direct Placement Partnerships", "Mock Interview Training"],
+                skills: "Python, Java, DSA, System Design"
+            },
+            abroad: {
+                icon: "🌍", title: "Global Professional", sal: "€45k - €120k",
+                desc: "Settle in Canada, UK, or Germany. Degrees that give you global recognition and work-visa sponsorship.",
+                steps: ["Global Credit Transfer Programs", "IELTS/TOEFL Prep Included", "International Job Assistance"],
+                skills: "Cross-culture adaptibility, Global Tech"
+            },
+            finance: {
+                icon: "💰", title: "Investment Banker", sal: "₹12L - ₹40 LPA",
+                desc: "Manage billions of dollars. Get hired by Wall Street or top Indian finance firms.",
+                steps: ["CFA / MBA Finance Specialization", "Wall Street Trading Labs", "Hedge Fund Internships"],
+                skills: "Valuation, M&A, Portfolio Mgmt"
+            }
+        };
+
+        function updateRoadmap(key, btn) {
+            document.querySelectorAll('.dream-tab').forEach(t => {
+                t.classList.remove('active', 'bg-indigo-50', 'text-indigo-700', 'border-indigo-100');
+                t.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+            });
+            btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+            btn.classList.add('active', 'bg-indigo-50', 'text-indigo-700', 'border-indigo-100');
+
+            const card = document.getElementById('displayCard');
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.98)';
+            
+            setTimeout(() => {
+                const item = dreamData[key];
+                document.getElementById('r-icon').innerText = item.icon;
+                document.getElementById('r-title').innerText = item.title;
+                document.getElementById('r-desc').innerText = item.desc;
+                document.getElementById('r-sal').innerText = item.sal;
+                document.getElementById('r-skills').innerText = item.skills;
+                document.getElementById('s1').innerText = item.steps[0];
+                document.getElementById('s2').innerText = item.steps[1];
+                document.getElementById('s3').innerText = item.steps[2];
+                
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        function triggerLead() {
+            const goal = document.getElementById('r-title').innerText;
+            window.location.href = "edtech-universities.html?goal=" + encodeURIComponent(goal);
+        }
+
+
+        // ==========================================
+        // 🚀 SCALABLE CAREER EXPLORER LOGIC 
+        // ==========================================
+        // Yahan aap asani se naye careers aur streams add kar sakte hain
+        const careersDatabase = [
+            {
+                id: "tech",
+                name: "💻 IT & Software",
+                roles: [
+                    { title: "Software Engineer", desc: "Build apps, websites, and high-performance software systems.", salary: "₹6L - ₹40L+", icon: "fa-code", color: "blue" },
+                    { title: "Data Scientist", desc: "Analyze complex data to help companies make smart decisions.", salary: "₹8L - ₹30L+", icon: "fa-chart-pie", color: "indigo" },
+                    { title: "Cyber Security Expert", desc: "Protect systems and networks from digital hacking attacks.", salary: "₹7L - ₹25L+", icon: "fa-shield-halved", color: "emerald" },
+                    { title: "Cloud Architect", desc: "Manage and design cloud computing architectures for tech giants.", salary: "₹12L - ₹45L+", icon: "fa-cloud", color: "blue" }
+                ]
+            },
+            {
+                id: "medical",
+                name: "🩺 Healthcare",
+                roles: [
+                    { title: "Surgeon / Doctor", desc: "Diagnose and treat complex medical conditions in hospitals.", salary: "₹12L - ₹50L+", icon: "fa-user-doctor", color: "rose" },
+                    { title: "Clinical Psychologist", desc: "Help people manage mental health issues and emotional distress.", salary: "₹4L - ₹15L+", icon: "fa-brain", color: "purple" },
+                    { title: "Pharmacist", desc: "Prepare, research and dispense medical prescriptions safely.", salary: "₹3L - ₹10L+", icon: "fa-pills", color: "teal" }
+                ]
+            },
+            {
+                id: "business",
+                name: "📈 Business & Mgt.",
+                roles: [
+                    { title: "Investment Banker", desc: "Manage financial assets, IPOs and corporate mergers globally.", salary: "₹15L - ₹60L+", icon: "fa-sack-dollar", color: "emerald" },
+                    { title: "Marketing Manager", desc: "Promote products, build brand awareness and run campaigns.", salary: "₹7L - ₹25L+", icon: "fa-bullhorn", color: "orange" },
+                    { title: "HR Director", desc: "Manage employee relations, corporate culture and hiring.", salary: "₹8L - ₹30L+", icon: "fa-users", color: "pink" }
+                ]
+            },
+            {
+                id: "design",
+                name: "🎨 Design & Arts",
+                roles: [
+                    { title: "UI/UX Designer", desc: "Design user-friendly digital interfaces for apps and websites.", salary: "₹6L - ₹25L+", icon: "fa-object-group", color: "purple" },
+                    { title: "Fashion Designer", desc: "Create innovative clothing, accessories, and footwear.", salary: "₹4L - ₹20L+", icon: "fa-shirt", color: "rose" },
+                    { title: "Animator", desc: "Create visual effects and animations for games and movies.", salary: "₹5L - ₹18L+", icon: "fa-film", color: "indigo" }
+                ]
+            },
+            {
+                id: "law",
+                name: "⚖️ Legal Studies",
+                roles: [
+                    { title: "Corporate Lawyer", desc: "Advise businesses on legal rights, duties, and corporate issues.", salary: "₹8L - ₹35L+", icon: "fa-scale-balanced", color: "slate" },
+                    { title: "Criminal Defense", desc: "Defend individuals and organizations charged with criminal activity.", salary: "₹5L - ₹25L+", icon: "fa-gavel", color: "amber" }
+                ]
+            }
+        ];
+
+        function renderCareerCategories() {
+            const container = document.getElementById('career-categories');
+            container.innerHTML = '';
+            
+            careersDatabase.forEach((cat, index) => {
+                const btn = document.createElement('button');
+                const activeClasses = 'bg-indigo-50 text-indigo-700 border-2 border-indigo-100 shadow-sm';
+                const inactiveClasses = 'bg-transparent text-slate-500 hover:bg-slate-50 hover:text-slate-800 border-2 border-transparent';
+                
+                btn.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal ${index === 0 ? activeClasses : inactiveClasses}`;
+                btn.innerHTML = cat.name;
+                
+                btn.onclick = () => {
+                    // Update active state tab
+                    Array.from(container.children).forEach(c => {
+                        c.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal ${inactiveClasses}`;
+                    });
+                    btn.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal ${activeClasses}`;
+                    
+                    renderCareerRoles(cat.id);
+                };
+                container.appendChild(btn);
+            });
+
+            // Initialize first category
+            if(careersDatabase.length > 0) {
+                renderCareerRoles(careersDatabase[0].id);
+            }
+        }
+
+        function renderCareerRoles(categoryId) {
+            const container = document.getElementById('career-grid');
+            container.innerHTML = ''; 
+            
+            const category = careersDatabase.find(c => c.id === categoryId);
+            if(!category) return;
+
+            // Trigger fade animation
+            container.classList.remove('mega-content-fade');
+            void container.offsetWidth; 
+            container.classList.add('mega-content-fade');
+
+            category.roles.forEach(role => {
+                // Tailwind color themes mapping for cards
+                const colorMap = {
+                    'blue': { bg: 'bg-blue-50', text: 'text-blue-600', hover: 'hover:border-blue-200', shadow: 'hover:shadow-blue-500/10' },
+                    'indigo': { bg: 'bg-indigo-50', text: 'text-indigo-600', hover: 'hover:border-indigo-200', shadow: 'hover:shadow-indigo-500/10' },
+                    'emerald': { bg: 'bg-emerald-50', text: 'text-emerald-600', hover: 'hover:border-emerald-200', shadow: 'hover:shadow-emerald-500/10' },
+                    'rose': { bg: 'bg-rose-50', text: 'text-rose-600', hover: 'hover:border-rose-200', shadow: 'hover:shadow-rose-500/10' },
+                    'purple': { bg: 'bg-purple-50', text: 'text-purple-600', hover: 'hover:border-purple-200', shadow: 'hover:shadow-purple-500/10' },
+                    'teal': { bg: 'bg-teal-50', text: 'text-teal-600', hover: 'hover:border-teal-200', shadow: 'hover:shadow-teal-500/10' },
+                    'orange': { bg: 'bg-orange-50', text: 'text-orange-600', hover: 'hover:border-orange-200', shadow: 'hover:shadow-orange-500/10' },
+                    'pink': { bg: 'bg-pink-50', text: 'text-pink-600', hover: 'hover:border-pink-200', shadow: 'hover:shadow-pink-500/10' },
+                    'slate': { bg: 'bg-slate-100', text: 'text-slate-700', hover: 'hover:border-slate-300', shadow: 'hover:shadow-slate-500/10' },
+                    'amber': { bg: 'bg-amber-50', text: 'text-amber-600', hover: 'hover:border-amber-200', shadow: 'hover:shadow-amber-500/10' }
+                };
+                
+                const theme = colorMap[role.color] || colorMap['blue'];
+
+                const cardHTML = `
+                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 ${theme.hover} shadow-sm hover:shadow-xl ${theme.shadow} transition-all duration-300 group flex flex-col h-full hover:-translate-y-1 cursor-default">
+                        <div class="w-16 h-16 ${theme.bg} ${theme.text} rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid ${role.icon}"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 mb-3 tracking-tight">${role.title}</h3>
+                        <p class="text-slate-500 font-medium text-sm mb-6 flex-grow leading-relaxed">${role.desc}</p>
+                        
+                        <div class="border-t border-slate-100 pt-5 mt-auto">
+                            <div class="flex justify-between items-center mb-5">
+                                <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1.5 rounded-lg">Avg. Salary</span>
+                                <span class="font-black text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg">${role.salary}</span>
+                            </div>
+                            <button onclick="window.location.href='edtech-universities.html?career=${encodeURIComponent(role.title)}'" class="w-full py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-indigo-600 transition-colors flex justify-center items-center gap-2 text-[15px]">
+                                Discover Colleges <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Initialize All Features when Page Loads
+        document.addEventListener('DOMContentLoaded', () => {
+            generateMegaMenu();
+            renderCareerCategories(); // Initialize new feature
+        });
+
+    </script>
+</body>
+</html>

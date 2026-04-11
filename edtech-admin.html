@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | EduMentor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; background-color: #f1f5f9; }
+        .glass-card { background: white; border-radius: 1.5rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0; }
+        .input-field { width: 100%; padding: 0.75rem 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.75rem; outline: none; font-weight: 500; transition: all 0.3s; }
+        .input-field:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); background: white; }
+    </style>
+</head>
+<body class="text-slate-800 p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-extrabold text-slate-900">Admin Dashboard</h1>
+                <p class="text-slate-500 font-medium">Nayi University Add Karein aur Real-time Data Manage Karein.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Side: Form -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="glass-card p-8">
+                    <h2 class="text-xl font-bold mb-6 text-indigo-900 border-b pb-3"><i class="fa-solid fa-building-columns mr-2"></i> Basic Details</h2>
+                    
+                    <div class="space-y-5">
+                        <!-- Name -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">University Ka Naam *</label>
+                            <input type="text" id="uniName" class="input-field" placeholder="e.g. Amity University">
+                        </div>
+
+                        <!-- Link & AI Fetch -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Official Website Link *</label>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="url" id="uniLink" class="input-field flex-1" placeholder="https://www.amity.edu">
+                                <button type="button" id="aiFetchBtn" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-6 py-3 rounded-xl font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all whitespace-nowrap">
+                                    <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> AI Se Data Fetch Karein
+                                </button>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-2 font-medium" id="aiStatusText">Link daal kar button dabayein. Bot automatic baaki details bhar dega!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8">
+                    <h2 class="text-xl font-bold mb-6 text-indigo-900 border-b pb-3"><i class="fa-solid fa-award mr-2"></i> Approvals aur Rankings</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">NAAC Grade</label>
+                            <input type="text" id="naacGrade" class="input-field" placeholder="e.g. A++">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">NIRF Rank</label>
+                            <input type="text" id="nirfRank" class="input-field" placeholder="e.g. 15">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Approvals</label>
+                            <input type="text" id="approvals" class="input-field" placeholder="e.g. UGC, AICTE">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8">
+                    <h2 class="text-xl font-bold mb-6 text-indigo-900 border-b pb-3"><i class="fa-solid fa-briefcase mr-2"></i> Placement Details</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Average Package</label>
+                            <input type="text" id="avgPlacement" class="input-field" placeholder="e.g. 8.5 LPA">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Highest Package</label>
+                            <input type="text" id="highPlacement" class="input-field" placeholder="e.g. 50 LPA">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8">
+                    <div class="flex justify-between items-center mb-6 border-b pb-3">
+                        <h2 class="text-xl font-bold text-indigo-900"><i class="fa-solid fa-book-open mr-2"></i> Courses aur Fees</h2>
+                        <button type="button" onclick="addCourseRow()" class="text-indigo-600 text-sm font-bold bg-indigo-50 px-3 py-1.5 rounded-lg hover:bg-indigo-100 transition"><i class="fa-solid fa-plus"></i> Naya Course Jodein</button>
+                    </div>
+                    
+                    <div id="coursesContainer" class="space-y-3">
+                        <!-- Dynamic Course Rows Yahan Aayenge -->
+                        <div class="flex gap-3 course-row">
+                            <input type="text" placeholder="Course Name (e.g. B.Tech CS)" class="input-field flex-1 course-name">
+                            <input type="text" placeholder="Fees (e.g. 2 Lakh/Yr)" class="input-field flex-1 course-fees">
+                            <button type="button" onclick="this.parentElement.remove()" class="bg-red-50 text-red-500 px-4 rounded-xl hover:bg-red-100 transition"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <button type="button" id="saveDbBtn" class="w-full py-4 bg-slate-900 text-white text-lg font-extrabold rounded-xl hover:bg-indigo-600 shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Database Mein Save Karein
+                </button>
+            </div>
+
+            <!-- Right Side: Real-time Live Preview -->
+            <div class="lg:col-span-1">
+                <div class="glass-card p-6 sticky top-8">
+                    <h2 class="text-lg font-bold mb-4 text-slate-800 flex items-center justify-between">
+                        <span><i class="fa-solid fa-tower-broadcast text-emerald-500 mr-2 animate-pulse"></i> Live Database</span>
+                        <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full uppercase tracking-wider">Real-time</span>
+                    </h2>
+                    
+                    <div id="liveTable" class="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+                        <!-- Real-time data from Firebase will load here -->
+                        <div class="text-center py-10 text-slate-400">
+                            <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+                            <p class="text-sm font-medium">Data load ho raha hai...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts (Firebase + Gemini Logic) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // 1. Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyxEZ4ukI8WRhV71RyS8JYJcXAICGAbto",
+            authDomain: "edtech-7d520.firebaseapp.com",
+            projectId: "edtech-7d520",
+            storageBucket: "edtech-7d520.firebasestorage.app",
+            messagingSenderId: "78074698553",
+            appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 2. Add New Course Row Function
+        window.addCourseRow = function(name = "", fees = "") {
+            const container = document.getElementById("coursesContainer");
+            const div = document.createElement("div");
+            div.className = "flex gap-3 course-row animate-[fadeIn_0.3s_ease-out]";
+            div.innerHTML = `
+                <input type="text" value="${name}" placeholder="Course Name (e.g. B.Tech CS)" class="input-field flex-1 course-name">
+                <input type="text" value="${fees}" placeholder="Fees (e.g. 2 Lakh/Yr)" class="input-field flex-1 course-fees">
+                <button type="button" onclick="this.parentElement.remove()" class="bg-red-50 text-red-500 px-4 rounded-xl hover:bg-red-100 transition"><i class="fa-solid fa-trash"></i></button>
+            `;
+            container.appendChild(div);
+        };
+
+        // 3. Gemini AI Fetch Logic
+        const GEMINI_API_KEY = "AIzaSyDhi-HTxYHJ9wJu4nWhlIhpsVsOht4nQGc"; // User's Gemini Key
+
+        document.getElementById("aiFetchBtn").addEventListener("click", async () => {
+            const link = document.getElementById("uniLink").value;
+            const statusText = document.getElementById("aiStatusText");
+            const btn = document.getElementById("aiFetchBtn");
+
+            if(!link) {
+                alert("Kripya pehle website link dalein!");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Data Dhoondh Raha Hai...';
+            statusText.innerHTML = "<span class='text-indigo-500 font-bold'>AI is analyzing the website and finding details... (is mein 5-10 seconds lag sakte hain)</span>";
+
+            try {
+                const prompt = `Research the university at this URL: ${link}. Return strictly ONLY a JSON object containing these keys with estimated or real data. Do not use markdown formatting.
+                {
+                    "name": "Full University Name",
+                    "naac": "NAAC Grade (e.g. A++) or N/A",
+                    "nirf": "NIRF Rank number or N/A",
+                    "approvals": "Comma separated (e.g. UGC, AICTE)",
+                    "avg_placement": "Average package in LPA",
+                    "highest_placement": "Highest package in LPA",
+                    "courses": [
+                        {"name": "Top Course 1 Name", "fees": "Approx Fees/Year"},
+                        {"name": "Top Course 2 Name", "fees": "Approx Fees/Year"}
+                    ]
+                }`;
+
+                // Pehle latest flash model try karein
+                let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+
+                // Agar 404 error aaye, toh automatically 'gemini-pro' model par fallback karein
+                if (response.status === 404) {
+                    console.log("⚠️ 1.5-flash not found, falling back to gemini-pro...");
+                    response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+                }
+
+                const result = await response.json();
+                
+                // --- 🚨 NAYA ERROR HANDLING 🚨 ---
+                if (!response.ok) {
+                    throw new Error(`Google API Error (${response.status}): ${result.error?.message || 'Model not found or Invalid API Key'}`);
+                }
+                
+                if (!result.candidates || result.candidates.length === 0) {
+                    throw new Error("AI ne koi data return nahi kiya. Ho sakta hai safety filters ne is request ko block kar diya ho.");
+                }
+                // -----------------------------------
+
+                let textResult = result.candidates[0].content.parts[0].text;
+                
+                console.log("🤖 Raw AI Response:", textResult); // Background mein check karne ke liye
+                
+                // Smart JSON Extractor (Sirf { } ke andar ka data nikalega)
+                const jsonMatch = textResult.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    textResult = jsonMatch[0];
+                } else {
+                    textResult = textResult.replace(/```json/g, "").replace(/```/g, "").trim();
+                }
+                
+                const aiData = JSON.parse(textResult);
+
+                // Form Fields Auto-Fill
+                document.getElementById("uniName").value = aiData.name || "";
+                document.getElementById("naacGrade").value = aiData.naac || "";
+                document.getElementById("nirfRank").value = aiData.nirf || "";
+                document.getElementById("approvals").value = aiData.approvals || "";
+                document.getElementById("avgPlacement").value = aiData.avg_placement || "";
+                document.getElementById("highPlacement").value = aiData.highest_placement || "";
+
+                // Courses Auto-Fill
+                const coursesContainer = document.getElementById("coursesContainer");
+                coursesContainer.innerHTML = ""; // Purane hatao
+                if(aiData.courses && aiData.courses.length > 0) {
+                    aiData.courses.forEach(c => addCourseRow(c.name, c.fees));
+                } else {
+                    addCourseRow();
+                }
+
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Data Fetch Complete!';
+                btn.classList.replace("from-purple-600", "from-emerald-500");
+                btn.classList.replace("to-indigo-600", "to-emerald-600");
+                statusText.innerHTML = "<span class='text-emerald-500 font-bold'>Data successfully bhara gaya. Aap inko verify/edit kar sakte hain.</span>";
+
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles mr-2"></i> AI Se Data Fetch Karein';
+                    btn.classList.replace("from-emerald-500", "from-purple-600");
+                    btn.classList.replace("to-emerald-600", "to-indigo-600");
+                }, 3000);
+
+            } catch (error) {
+                console.error("Fetch Error:", error);
+                btn.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Fetch Failed';
+                statusText.innerHTML = `<span class='text-red-500 font-bold'>Error aaya: ${error.message}. Kripya details manually bharein ya API key check karein.</span>`;
+            }
+        });
+
+        // 4. Save to Database Logic
+        document.getElementById("saveDbBtn").addEventListener("click", async () => {
+            const btn = document.getElementById("saveDbBtn");
+            const name = document.getElementById("uniName").value;
+            const website = document.getElementById("uniLink").value;
+
+            if(!name || !website) {
+                alert("University Ka Naam aur Link zaroori hai!");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Save ho raha hai...';
+            btn.disabled = true;
+
+            // Courses collect karein
+            let coursesList = [];
+            let courseSummary = [];
+            let lowestFee = "Pending";
+            
+            document.querySelectorAll(".course-row").forEach(row => {
+                const cName = row.querySelector(".course-name").value;
+                const cFees = row.querySelector(".course-fees").value;
+                if(cName) {
+                    coursesList.push({ name: cName, fees: cFees });
+                    courseSummary.push(cName);
+                    if(lowestFee === "Pending" && cFees) lowestFee = cFees; // Just taking first fee as avg/lowest for main card display
+                }
+            });
+
+            const dataToSave = {
+                name: name,
+                website: website,
+                naac: document.getElementById("naacGrade").value,
+                nirf: document.getElementById("nirfRank").value,
+                approvals: document.getElementById("approvals").value,
+                placement: document.getElementById("avgPlacement").value || "Pending",
+                highest_placement: document.getElementById("highPlacement").value,
+                coursesList: coursesList,
+                courses: courseSummary.join(", ") || "Various Courses",
+                fees: lowestFee, // Saved for search page preview
+                state: "India (All)", // Default fallback
+                ai_verified: true, // Marked true kyunki admin ne check karke save kiya hai
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                await addDoc(collection(db, "universities"), dataToSave);
+                alert("✅ University Database mein successfully add ho gayi!");
+                
+                // Form clear
+                document.querySelectorAll("input").forEach(i => i.value = "");
+                document.getElementById("coursesContainer").innerHTML = "";
+                addCourseRow();
+                document.getElementById("aiStatusText").innerText = "Link daal kar button dabayein. Bot automatic baaki details bhar dega!";
+
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+            
+            btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-2"></i> Database Mein Save Karein';
+            btn.disabled = false;
+        });
+
+        // 5. Real-time Live Database Viewer
+        onSnapshot(collection(db, "universities"), (snapshot) => {
+            const table = document.getElementById("liveTable");
+            table.innerHTML = ""; // Clear loader
+
+            if (snapshot.empty) {
+                table.innerHTML = "<p class='text-sm text-slate-500'>Abhi tak koi data add nahi kiya gaya hai.</p>";
+                return;
+            }
+
+            // Get all docs and sort manually by timestamp (newest first)
+            let unis = [];
+            snapshot.forEach(doc => unis.push({ id: doc.id, ...doc.data() }));
+            unis.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+
+            unis.forEach(uni => {
+                table.innerHTML += `
+                    <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl flex justify-between items-center hover:shadow-md transition">
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm mb-1">${uni.name}</h3>
+                            <div class="flex gap-2 text-[10px] font-extrabold text-slate-500 uppercase">
+                                <span class="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded border border-indigo-200">NAAC: ${uni.naac || '-'}</span>
+                                <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200">₹ ${uni.placement || '-'}</span>
+                            </div>
+                        </div>
+                        <div class="text-emerald-500 text-lg">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+    </script>
+</body>
+</html>
