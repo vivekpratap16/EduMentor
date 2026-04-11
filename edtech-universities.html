@@ -12,7 +12,6 @@
         
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9; }
         
-        /* Custom Checkbox */
         .filter-checkbox {
             appearance: none; width: 1.25rem; height: 1.25rem; border: 2px solid #cbd5e1; border-radius: 0.375rem;
             outline: none; cursor: pointer; transition: all 0.2s; position: relative; flex-shrink: 0;
@@ -23,15 +22,30 @@
             color: white; font-size: 0.7rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
         }
 
-        /* Custom Scrollbar for Sidebar */
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: #f8fafc; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-        /* Card/Row Hover Effects */
-        .college-row { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; }
-        .college-row:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.1); border-color: #c7d2fe; z-index: 10; position: relative; }
+        /* Smooth Row Hover & Click */
+        .college-row { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #e2e8f0; cursor: pointer; }
+        .college-row:hover { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.1); border-color: #c7d2fe; z-index: 10; position: relative; }
         
+        /* Expandable Quick View Panel */
+        .quick-view-panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease-in-out;
+            opacity: 0;
+        }
+        .quick-view-panel.open {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            margin-top: 1rem;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 1rem;
+        }
+        .quick-view-content { overflow: hidden; }
+
         .view-btn.active { background-color: #4f46e5; color: white; border-color: #4f46e5; }
     </style>
 </head>
@@ -45,10 +59,9 @@
                 <span class="text-2xl font-black tracking-tight text-slate-900 hidden sm:block">EduMentor</span>
             </div>
             
-            <!-- Global Search in Nav -->
             <div class="flex-1 max-w-2xl mx-4 sm:mx-8 hidden md:block relative">
                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-3 text-slate-400"></i>
-                <input type="text" id="global-search" placeholder="Search for colleges, exams, courses and more..." class="w-full pl-11 pr-4 py-2.5 bg-slate-100 border border-transparent focus:bg-white focus:border-indigo-300 rounded-full outline-none font-bold text-slate-700 text-sm transition-all shadow-inner">
+                <input type="text" id="global-search" placeholder="Search 2600+ colleges, exams, courses..." class="w-full pl-11 pr-4 py-2.5 bg-slate-100 border border-transparent focus:bg-white focus:border-indigo-300 rounded-full outline-none font-bold text-slate-700 text-sm transition-all shadow-inner">
             </div>
 
             <div class="flex items-center gap-4">
@@ -60,14 +73,14 @@
         </div>
     </nav>
 
-    <!-- Page Header (Breadcrumb & Title) -->
+    <!-- Page Header -->
     <div class="bg-white border-b border-slate-200 py-6">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6">
             <div class="text-xs font-bold text-slate-400 mb-2 flex items-center gap-2">
                 <a href="index.html" class="hover:text-indigo-600">Home</a> <i class="fa-solid fa-angle-right text-[10px]"></i> <span class="text-indigo-600">Colleges in India</span>
             </div>
             <h1 class="text-2xl md:text-3xl font-black text-slate-900">List of Top Ranked Colleges In India</h1>
-            <p class="text-sm font-medium text-slate-500 mt-1">Explore fees, placements, reviews, and admissions for <span id="total-count-header" class="text-indigo-600 font-bold">0</span> colleges.</p>
+            <p class="text-sm font-medium text-slate-500 mt-1">Explore fees, placements, reviews, and admissions for <span id="total-count-header" class="text-indigo-600 font-bold">...</span> colleges.</p>
         </div>
     </div>
 
@@ -84,46 +97,26 @@
 
                 <!-- Streams Filter -->
                 <div class="mb-6">
-                    <h3 class="font-bold text-slate-800 mb-3 text-sm flex justify-between items-center cursor-pointer">Stream <i class="fa-solid fa-angle-down text-slate-400"></i></h3>
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm flex justify-between items-center">Stream</h3>
                     <div class="space-y-3 max-h-48 overflow-y-auto custom-scroll pr-2">
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Engineering" class="filter-checkbox stream-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Engineering</span></label>
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Management" class="filter-checkbox stream-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Management</span></label>
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Medical" class="filter-checkbox stream-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Medical</span></label>
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Law" class="filter-checkbox stream-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Law</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Design" class="filter-checkbox stream-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Design & Arts</span></label>
                     </div>
                 </div>
 
                 <!-- State / City Filter -->
                 <div class="mb-6 border-t border-slate-100 pt-5">
-                    <h3 class="font-bold text-slate-800 mb-3 text-sm flex justify-between items-center cursor-pointer">State / City <i class="fa-solid fa-angle-down text-slate-400"></i></h3>
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm flex justify-between items-center">State / City</h3>
                     <div class="space-y-3 max-h-48 overflow-y-auto custom-scroll pr-2">
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Delhi NCR" class="filter-checkbox state-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Delhi NCR</span></label>
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Maharashtra" class="filter-checkbox state-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Maharashtra</span></label>
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Karnataka" class="filter-checkbox state-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Karnataka</span></label>
                         <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Tamil Nadu" class="filter-checkbox state-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Tamil Nadu</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Punjab" class="filter-checkbox state-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Punjab</span></label>
                     </div>
                 </div>
 
-                <!-- Course Level Filter -->
-                <div class="mb-6 border-t border-slate-100 pt-5">
-                    <h3 class="font-bold text-slate-800 mb-3 text-sm flex justify-between items-center cursor-pointer">Course Level <i class="fa-solid fa-angle-down text-slate-400"></i></h3>
-                    <div class="space-y-3">
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="UG" class="filter-checkbox level-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Under Graduate (UG)</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="PG" class="filter-checkbox level-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Post Graduate (PG)</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="Diploma" class="filter-checkbox level-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Diploma</span></label>
-                    </div>
-                </div>
-
-                <!-- Approvals Filter -->
-                <div class="mb-2 border-t border-slate-100 pt-5">
-                    <h3 class="font-bold text-slate-800 mb-3 text-sm flex justify-between items-center cursor-pointer">Approvals <i class="fa-solid fa-angle-down text-slate-400"></i></h3>
-                    <div class="space-y-3">
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="UGC" class="filter-checkbox approval-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">UGC Approved</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="AICTE" class="filter-checkbox approval-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">AICTE Approved</span></label>
-                    </div>
-                </div>
             </div>
         </aside>
 
@@ -132,10 +125,9 @@
             
             <!-- Sort & View Toggles -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <p class="font-bold text-slate-700 text-sm">Found <span id="resultCount" class="text-indigo-600 font-black text-lg">0</span> Colleges</p>
+                <p class="font-bold text-slate-700 text-sm">Showing <span id="resultCount" class="text-indigo-600 font-black text-lg">0</span> matches</p>
                 
                 <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <!-- Sort Dropdown -->
                     <div class="flex items-center gap-2 flex-1 sm:flex-none">
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Sort By:</span>
                         <select id="sort-dropdown" class="bg-slate-50 border border-slate-200 text-sm font-bold text-slate-800 rounded-lg px-3 py-2.5 outline-none focus:border-indigo-500 cursor-pointer w-full sm:w-auto transition-colors hover:bg-slate-100">
@@ -147,7 +139,6 @@
                         </select>
                     </div>
 
-                    <!-- View Toggles (List/Grid) -->
                     <div class="hidden sm:flex bg-slate-100 p-1 rounded-lg border border-slate-200">
                         <button onclick="setViewMode('list')" id="view-list" class="view-btn active w-8 h-8 flex items-center justify-center rounded-md text-slate-500 hover:text-indigo-600 transition"><i class="fa-solid fa-list"></i></button>
                         <button onclick="setViewMode('grid')" id="view-grid" class="view-btn w-8 h-8 flex items-center justify-center rounded-md text-slate-500 hover:text-indigo-600 transition"><i class="fa-solid fa-border-all"></i></button>
@@ -155,10 +146,10 @@
                 </div>
             </div>
 
-            <!-- Table Header (Only visible in List View on Desktop) -->
+            <!-- Table Header (List View Only) -->
             <div id="table-header" class="hidden lg:grid grid-cols-12 gap-4 px-6 py-3 bg-indigo-50/50 border border-indigo-100 rounded-t-2xl font-black text-indigo-900 text-[11px] uppercase tracking-widest shadow-sm">
                 <div class="col-span-4 pl-2">College Details</div>
-                <div class="col-span-3">Course & Fees</div>
+                <div class="col-span-3">Top Course & Fees</div>
                 <div class="col-span-2">Placements</div>
                 <div class="col-span-3 text-right pr-2">Reviews & Actions</div>
             </div>
@@ -166,12 +157,23 @@
             <!-- Colleges Container -->
             <div id="colleges-container" class="flex flex-col gap-4">
                 <!-- Data will be injected here by JS -->
+                <div class="text-center py-20 bg-white rounded-3xl border border-slate-200" id="loading-spinner">
+                    <div class="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-3"></div>
+                    <p class="font-bold text-slate-500">Connecting to Database...</p>
+                </div>
+            </div>
+            
+            <!-- Pagination / Load More -->
+            <div class="mt-8 text-center" id="load-more-container">
+                <button id="load-more-btn" onclick="loadMoreColleges()" class="bg-white border-2 border-indigo-100 text-indigo-600 font-extrabold px-10 py-3.5 rounded-xl hover:bg-indigo-50 hover:border-indigo-300 transition-all shadow-sm">
+                    Load More Colleges <i class="fa-solid fa-angle-down ml-1"></i>
+                </button>
             </div>
 
         </main>
     </div>
 
-    <!-- Lead Generation / Brochure Modal -->
+    <!-- Lead Generation Modal -->
     <div id="lead-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl p-8 max-w-md w-full relative shadow-2xl">
             <button onclick="document.getElementById('lead-modal').classList.add('hidden')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
@@ -181,7 +183,6 @@
             <form class="space-y-4" onsubmit="event.preventDefault(); alert('Brochure Sent to Email/WhatsApp!'); document.getElementById('lead-modal').classList.add('hidden');">
                 <input type="text" required placeholder="Full Name" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 font-bold text-sm">
                 <input type="tel" required placeholder="Mobile Number (WhatsApp)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 font-bold text-sm">
-                <input type="email" required placeholder="Email Address" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 font-bold text-sm">
                 <button type="submit" class="w-full py-4 bg-indigo-600 text-white font-black rounded-xl hover:bg-slate-900 transition mt-2">Get Brochure Now</button>
             </form>
         </div>
@@ -189,97 +190,277 @@
 
 
     <!-- ========================================== -->
-    <!-- 🚀 LOCAL DATABASE & SEARCH LOGIC -->
+    <!-- 🚀 SUPER SMOOTH DATABASE & RENDER LOGIC -->
     <!-- ========================================== -->
     <script>
-        // 1. Database (HTML file ke andar) - Aap isme aasaani se naye colleges add kar sakte hain
-        const localCollegesDB = [
-            {
-                id: "c1", rank: 1, name: "IIT Madras - Indian Institute of Technology",
-                location: "Chennai", state: "Tamil Nadu", stream: "Engineering", level: "UG",
-                approvals: "AICTE, UGC", logo: "IIT", logoColor: "from-blue-600 to-blue-800",
-                courseName: "B.Tech Computer Science",
-                fees: "₹2.14 Lakhs", feesNum: 214500, feesDesc: "1st Year Fees",
-                placementHigh: "₹1.98 CPA", placementAvg: "₹21.48 LPA", placementNum: 2148000,
-                rating: 8.9, reviewsCount: 452, ratingBadge: "Excellent"
-            },
-            {
-                id: "c2", rank: 2, name: "IIM Ahmedabad - Indian Institute of Management",
-                location: "Ahmedabad", state: "Gujarat", stream: "Management", level: "PG",
-                approvals: "UGC", logo: "IIM", logoColor: "from-amber-500 to-amber-700",
-                courseName: "MBA / PGPM",
-                fees: "₹25.0 Lakhs", feesNum: 2500000, feesDesc: "Total Fees",
-                placementHigh: "₹1.15 CPA", placementAvg: "₹32.79 LPA", placementNum: 3279000,
-                rating: 9.1, reviewsCount: 310, ratingBadge: "Outstanding"
-            },
-            {
-                id: "c3", rank: 3, name: "Chandigarh University (CU)",
-                location: "Chandigarh", state: "Punjab", stream: "Engineering", level: "UG",
-                approvals: "NAAC A+, UGC", logo: "CU", logoColor: "from-red-500 to-red-700",
-                courseName: "B.Tech Computer Science",
-                fees: "₹1.60 Lakhs", feesNum: 160000, feesDesc: "1st Year Fees",
-                placementHigh: "₹54.75 LPA", placementAvg: "₹9.54 LPA", placementNum: 954000,
-                rating: 8.2, reviewsCount: 1245, ratingBadge: "Very Good"
-            },
-            {
-                id: "c4", rank: 4, name: "VIT Vellore",
-                location: "Vellore", state: "Tamil Nadu", stream: "Engineering", level: "UG",
-                approvals: "AICTE, UGC", logo: "VIT", logoColor: "from-emerald-500 to-emerald-700",
-                courseName: "B.Tech Electronics",
-                fees: "₹1.98 Lakhs", feesNum: 198000, feesDesc: "1st Year Fees",
-                placementHigh: "₹1.02 CPA", placementAvg: "₹9.23 LPA", placementNum: 923000,
-                rating: 8.5, reviewsCount: 892, ratingBadge: "Excellent"
-            },
-            {
-                id: "c5", rank: 5, name: "Amity University",
-                location: "Noida", state: "Delhi NCR", stream: "Management", level: "UG",
-                approvals: "NAAC A+, UGC", logo: "AU", logoColor: "from-yellow-400 to-yellow-600",
-                courseName: "BBA",
-                fees: "₹3.15 Lakhs", feesNum: 315000, feesDesc: "1st Year Fees",
-                placementHigh: "₹61.75 LPA", placementAvg: "₹7.50 LPA", placementNum: 750000,
-                rating: 7.8, reviewsCount: 956, ratingBadge: "Good"
-            },
-            {
-                id: "c6", rank: 6, name: "AIIMS New Delhi",
-                location: "New Delhi", state: "Delhi NCR", stream: "Medical", level: "UG",
-                approvals: "MCI, UGC", logo: "A", logoColor: "from-rose-500 to-rose-700",
-                courseName: "MBBS",
-                fees: "₹1,628", feesNum: 1628, feesDesc: "1st Year Fees",
-                placementHigh: "₹40.0 LPA", placementAvg: "₹12.0 LPA", placementNum: 1200000,
-                rating: 9.5, reviewsCount: 620, ratingBadge: "Exceptional"
-            },
-            {
-                id: "c7", rank: 7, name: "National Law School (NLSIU)",
-                location: "Bangalore", state: "Karnataka", stream: "Law", level: "UG",
-                approvals: "BCI, UGC", logo: "NLS", logoColor: "from-slate-700 to-slate-900",
-                courseName: "BA LLB (Hons)",
-                fees: "₹3.27 Lakhs", feesNum: 327000, feesDesc: "1st Year Fees",
-                placementHigh: "₹25.0 LPA", placementAvg: "₹16.0 LPA", placementNum: 1600000,
-                rating: 8.8, reviewsCount: 150, ratingBadge: "Excellent"
-            },
-            {
-                id: "c8", rank: 8, name: "NIFT Delhi",
-                location: "New Delhi", state: "Delhi NCR", stream: "Design", level: "UG",
-                approvals: "Ministry of Textiles", logo: "N", logoColor: "from-purple-500 to-purple-700",
-                courseName: "B.Des Fashion Design",
-                fees: "₹2.83 Lakhs", feesNum: 283000, feesDesc: "1st Year Fees",
-                placementHigh: "₹18.0 LPA", placementAvg: "₹6.5 LPA", placementNum: 650000,
-                rating: 8.4, reviewsCount: 210, ratingBadge: "Very Good"
-            },
-            {
-                id: "c9", rank: 9, name: "SPJIMR Mumbai",
-                location: "Mumbai", state: "Maharashtra", stream: "Management", level: "PG",
-                approvals: "AICTE", logo: "SP", logoColor: "from-indigo-600 to-blue-800",
-                courseName: "PGDM",
-                fees: "₹20.4 Lakhs", feesNum: 2040000, feesDesc: "Total Fees",
-                placementHigh: "₹81.0 LPA", placementAvg: "₹33.0 LPA", placementNum: 3300000,
-                rating: 9.0, reviewsCount: 180, ratingBadge: "Outstanding"
-            }
-        ];
-
-        let currentViewMode = 'list'; // Default view
+        // 1. MOCK DATABASE FETCHER
+        // Real-world mein yeh fetch('colleges.json') hoga. Demo ke liye hum dummy data generate kar rahe hain (2600 items tak)
+        let masterDatabase = [];
+        let filteredData = [];
         
-        // 2. View Toggle Function
+        // Pagination vars
+        let currentPage = 1;
+        const itemsPerPage = 8;
+        let currentViewMode = 'list';
+
+        // Simulated Async Database Load
+        async function fetchCollegesDatabase() {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const sampleBase = [
+                        { id: "c1", rank: 1, name: "IIT Madras - Indian Institute of Technology", location: "Chennai", state: "Tamil Nadu", stream: "Engineering", approvals: "AICTE, UGC", logo: "IIT", logoColor: "from-blue-600 to-blue-800", courseName: "B.Tech Computer Science", fees: "₹2.14 Lakhs", feesNum: 214500, feesDesc: "1st Year Fees", placementHigh: "₹1.98 CPA", placementAvg: "₹21.48 LPA", placementNum: 2148000, rating: 8.9, reviewsCount: 452, ratingBadge: "Excellent" },
+                        { id: "c2", rank: 2, name: "IIM Ahmedabad - Indian Institute of Management", location: "Ahmedabad", state: "Gujarat", stream: "Management", approvals: "UGC", logo: "IIM", logoColor: "from-amber-500 to-amber-700", courseName: "MBA / PGPM", fees: "₹25.0 Lakhs", feesNum: 2500000, feesDesc: "Total Fees", placementHigh: "₹1.15 CPA", placementAvg: "₹32.79 LPA", placementNum: 3279000, rating: 9.1, reviewsCount: 310, ratingBadge: "Outstanding" },
+                        { id: "c3", rank: 3, name: "Chandigarh University (CU)", location: "Chandigarh", state: "Punjab", stream: "Engineering", approvals: "NAAC A+, UGC", logo: "CU", logoColor: "from-red-500 to-red-700", courseName: "B.Tech Computer Science", fees: "₹1.60 Lakhs", feesNum: 160000, feesDesc: "1st Year Fees", placementHigh: "₹54.75 LPA", placementAvg: "₹9.54 LPA", placementNum: 954000, rating: 8.2, reviewsCount: 1245, ratingBadge: "Very Good" },
+                        { id: "c4", rank: 4, name: "VIT Vellore", location: "Vellore", state: "Tamil Nadu", stream: "Engineering", approvals: "AICTE, UGC", logo: "VIT", logoColor: "from-emerald-500 to-emerald-700", courseName: "B.Tech Electronics", fees: "₹1.98 Lakhs", feesNum: 198000, feesDesc: "1st Year Fees", placementHigh: "₹1.02 CPA", placementAvg: "₹9.23 LPA", placementNum: 923000, rating: 8.5, reviewsCount: 892, ratingBadge: "Excellent" },
+                        { id: "c5", rank: 5, name: "Amity University", location: "Noida", state: "Delhi NCR", stream: "Management", approvals: "NAAC A+, UGC", logo: "AU", logoColor: "from-yellow-400 to-yellow-600", courseName: "BBA", fees: "₹3.15 Lakhs", feesNum: 315000, feesDesc: "1st Year Fees", placementHigh: "₹61.75 LPA", placementAvg: "₹7.50 LPA", placementNum: 750000, rating: 7.8, reviewsCount: 956, ratingBadge: "Good" }
+                    ];
+                    
+                    // Hum base array ko multiply kar rahe hain 2600 data points dikhane ke liye (For testing smoothness)
+                    let massiveDB = [...sampleBase];
+                    for(let i=6; i<=2647; i++) {
+                        let randBase = sampleBase[Math.floor(Math.random() * sampleBase.length)];
+                        massiveDB.push({ ...randBase, id: `c${i}`, rank: i, reviewsCount: Math.floor(Math.random()*1000) });
+                    }
+                    resolve(massiveDB);
+                }, 800); // Simulate network delay
+            });
+        }
+
+        // Initialize App
+        async function initializeApp() {
+            document.getElementById('loading-spinner').classList.remove('hidden');
+            masterDatabase = await fetchCollegesDatabase();
+            
+            document.getElementById('loading-spinner').classList.add('hidden');
+            document.getElementById('total-count-header').innerText = masterDatabase.length.toLocaleString();
+            
+            applyFilters(); // Start filtering & rendering
+        }
+
+        // 2. Expandable Quick View Toggle
+        window.toggleQuickView = function(event, id) {
+            // Prevent buttons inside from triggering this
+            if(event.target.tagName.toLowerCase() === 'button' || event.target.closest('button')) return;
+            
+            const panel = document.getElementById(`quickview-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                if(icon) icon.style.transform = 'rotate(0deg)';
+            } else {
+                // Close others
+                document.querySelectorAll('.quick-view-panel.open').forEach(p => {
+                    p.classList.remove('open');
+                    const otherIconId = p.id.replace('quickview-', 'icon-');
+                    const otherIcon = document.getElementById(otherIconId);
+                    if(otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                });
+                // Open this
+                panel.classList.add('open');
+                if(icon) icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // 3. HTML Generators with Premium Quick View
+        function generateListHTML(college) {
+            return `
+                <div onclick="toggleQuickView(event, '${college.id}')" class="bg-white rounded-2xl p-4 border border-slate-200 college-row overflow-hidden group">
+                    <div class="flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:items-center">
+                        
+                        <!-- Mobile Rank -->
+                        <div class="lg:hidden flex justify-between items-center border-b border-slate-100 pb-2">
+                            <span class="bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-md">Rank #${college.rank}</span>
+                            <span class="bg-orange-50 text-orange-600 font-black text-xs px-2 py-1 rounded border border-orange-100">⭐ ${college.rating}</span>
+                        </div>
+
+                        <!-- College Details -->
+                        <div class="lg:col-span-4 flex items-start lg:items-center gap-4 relative">
+                            <div class="hidden lg:flex absolute -left-4 -top-4 w-8 h-8 bg-slate-900 text-white rounded-br-xl rounded-tl-2xl items-center justify-center font-black text-xs shadow-md">#${college.rank}</div>
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br ${college.logoColor} text-white flex items-center justify-center font-black text-xl shadow-md shrink-0 border-[3px] border-white ring-1 ring-slate-100 lg:ml-6">${college.logo}</div>
+                            <div>
+                                <h3 class="font-extrabold text-slate-900 text-base leading-tight group-hover:text-indigo-600 transition mb-1">${college.name}</h3>
+                                <p class="text-xs font-bold text-slate-500 flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${college.location}, ${college.state}</p>
+                            </div>
+                        </div>
+
+                        <!-- Course & Fees -->
+                        <div class="lg:col-span-3 flex justify-between lg:justify-start lg:flex-col lg:pl-4 lg:border-l border-slate-100 h-full">
+                            <div class="text-left">
+                                <p class="font-black text-indigo-600 text-lg tracking-tight">${college.fees}</p>
+                                <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1">${college.feesDesc}</p>
+                            </div>
+                            <p class="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 px-2 py-1 rounded truncate max-w-[180px]">${college.courseName}</p>
+                        </div>
+
+                        <!-- Placements -->
+                        <div class="lg:col-span-2 flex justify-between lg:justify-start lg:flex-col lg:pl-4 lg:border-l border-slate-100 h-full">
+                            <div>
+                                <p class="font-black text-slate-800 text-lg flex items-center gap-1.5"><i class="fa-solid fa-arrow-trend-up text-emerald-500"></i> ${college.placementHigh}</p>
+                                <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Highest Salary</p>
+                            </div>
+                            <p class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded inline-block mt-1">Avg: ${college.placementAvg}</p>
+                        </div>
+
+                        <!-- Actions & Dropdown Icon -->
+                        <div class="lg:col-span-3 flex gap-3 lg:pl-4 lg:border-l border-slate-100 items-center justify-end">
+                            <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="hidden xl:flex bg-white border-2 border-indigo-100 text-indigo-600 font-extrabold text-xs py-2 px-4 rounded-xl hover:bg-indigo-50 transition-all items-center gap-1">
+                                Brochure
+                            </button>
+                            <button class="bg-slate-900 text-white font-extrabold text-xs py-2.5 px-5 rounded-xl hover:bg-indigo-600 transition-all shadow-md">Apply Now</button>
+                            
+                            <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 transition-transform duration-300 ml-2" id="icon-${college.id}">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Premium Expandable Quick View -->
+                    <div id="quickview-${college.id}" class="quick-view-panel text-sm text-slate-600">
+                        <div class="quick-view-content flex flex-col md:flex-row gap-6">
+                            
+                            <div class="md:w-1/3 bg-slate-50 rounded-xl p-4 border border-slate-100">
+                                <h4 class="font-black text-slate-900 mb-3 border-b border-slate-200 pb-2"><i class="fa-solid fa-book-open text-indigo-500 mr-2"></i> Alternative Courses</h4>
+                                <ul class="space-y-2 text-xs font-bold">
+                                    <li class="flex justify-between"><span>MBA Finance</span> <span class="text-indigo-600">₹8.5 Lakhs</span></li>
+                                    <li class="flex justify-between"><span>BBA Analytics</span> <span class="text-indigo-600">₹4.2 Lakhs</span></li>
+                                    <li class="flex justify-between"><span>B.Tech AI & ML</span> <span class="text-indigo-600">₹10 Lakhs</span></li>
+                                </ul>
+                            </div>
+
+                            <div class="md:w-1/3 bg-slate-50 rounded-xl p-4 border border-slate-100">
+                                <h4 class="font-black text-slate-900 mb-3 border-b border-slate-200 pb-2"><i class="fa-solid fa-star text-orange-500 mr-2"></i> User Rating Breakdown</h4>
+                                <div class="space-y-2 text-xs font-bold">
+                                    <div class="flex justify-between items-center"><span>Placements</span> <div class="w-24 h-1.5 bg-slate-200 rounded"><div class="h-full bg-emerald-500 rounded" style="width: 85%"></div></div></div>
+                                    <div class="flex justify-between items-center"><span>Faculty</span> <div class="w-24 h-1.5 bg-slate-200 rounded"><div class="h-full bg-emerald-500 rounded" style="width: 90%"></div></div></div>
+                                    <div class="flex justify-between items-center"><span>Infrastructure</span> <div class="w-24 h-1.5 bg-slate-200 rounded"><div class="h-full bg-emerald-500 rounded" style="width: 95%"></div></div></div>
+                                </div>
+                            </div>
+
+                            <div class="md:w-1/3 flex flex-col justify-center gap-3">
+                                <p class="text-xs font-medium text-slate-500 text-center mb-2">Want detailed placement reports & cutoff marks?</p>
+                                <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="w-full bg-indigo-50 border border-indigo-200 text-indigo-700 font-extrabold py-3 rounded-xl hover:bg-indigo-100 transition shadow-sm">
+                                    Download Complete Brochure PDF
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateGridHTML(college) {
+            // Reusing the grid layout but making it clickable
+            return `
+                <div onclick="window.location.href='#'" class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 relative overflow-hidden group hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                    <div class="absolute top-0 right-0 bg-slate-900 text-white font-black text-xs px-4 py-1.5 rounded-bl-2xl border-b border-l border-slate-700 z-10">Rank #${college.rank}</div>
+                    
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br ${college.logoColor} text-white flex items-center justify-center font-black text-xl shadow-md border-2 border-white ring-1 ring-slate-100 shrink-0">${college.logo}</div>
+                        <div class="pr-10">
+                            <h3 class="font-extrabold text-slate-900 text-base leading-tight group-hover:text-indigo-600 transition line-clamp-2">${college.name}</h3>
+                            <p class="text-xs font-bold text-slate-500 mt-1 flex items-center gap-1"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${college.location}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-5">
+                        <div><p class="text-[10px] font-extrabold uppercase text-slate-400">Fees</p><p class="font-black text-indigo-600">${college.fees}</p></div>
+                        <div class="border-l border-slate-200 pl-3"><p class="text-[10px] font-extrabold uppercase text-slate-400">High Pkg</p><p class="font-black text-emerald-600">${college.placementHigh}</p></div>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-5">
+                        <p class="text-[11px] font-bold text-slate-700 bg-slate-100 px-2 py-1 rounded truncate max-w-[60%]">${college.courseName}</p>
+                        <span class="text-xs font-black text-orange-600">⭐ ${college.rating}</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="event.stopPropagation(); document.getElementById('lead-modal').classList.remove('hidden')" class="bg-white border-2 border-slate-200 text-slate-600 font-extrabold text-xs py-3 rounded-xl hover:border-indigo-500 hover:text-indigo-600">Brochure</button>
+                        <button onclick="event.stopPropagation();" class="bg-slate-900 text-white font-extrabold text-xs py-3 rounded-xl hover:bg-indigo-600 shadow-md">Apply Now</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 4. Sorting, Filtering & Pagination Logic
+        function applyFilters(resetPage = true) {
+            if(resetPage) currentPage = 1;
+
+            const searchTerm = document.getElementById('global-search').value.toLowerCase();
+            const sortBy = document.getElementById('sort-dropdown').value;
+            const getChecked = (selector) => Array.from(document.querySelectorAll(selector + ':checked')).map(cb => cb.value.toLowerCase());
+            
+            const streams = getChecked('.stream-filter');
+            const states = getChecked('.state-filter');
+
+            // Fast Array Filter
+            filteredData = masterDatabase.filter(college => {
+                const searchStr = `${college.name} ${college.location} ${college.state} ${college.courseName}`.toLowerCase();
+                const matchesSearch = searchStr.includes(searchTerm);
+                const matchesStream = streams.length === 0 || streams.includes(college.stream.toLowerCase());
+                const matchesState = states.length === 0 || states.some(s => college.state.toLowerCase().includes(s));
+                return matchesSearch && matchesStream && matchesState;
+            });
+
+            // Fast Array Sort
+            filteredData.sort((a, b) => {
+                if(sortBy === 'popularity') return a.rank - b.rank;
+                if(sortBy === 'rating') return b.rating - a.rating;
+                if(sortBy === 'fees-low') return a.feesNum - b.feesNum;
+                if(sortBy === 'fees-high') return b.feesNum - a.feesNum;
+                if(sortBy === 'placement') return b.placementNum - a.placementNum;
+                return 0;
+            });
+
+            document.getElementById('resultCount').innerText = filteredData.length.toLocaleString();
+            renderVisibleColleges(resetPage);
+        }
+
+        function renderVisibleColleges(clearContainer = false) {
+            const container = document.getElementById('colleges-container');
+            const loadMoreBtn = document.getElementById('load-more-container');
+            
+            if(clearContainer) container.innerHTML = '';
+            
+            if(filteredData.length === 0) {
+                container.innerHTML = `<div class="text-center py-20 bg-white rounded-3xl border border-slate-200 border-dashed mt-4"><div class="text-5xl mb-4 opacity-50">🔍</div><h3 class="text-xl font-extrabold text-slate-800 mb-2">No colleges found</h3></div>`;
+                loadMoreBtn.classList.add('hidden');
+                return;
+            }
+
+            // PAGINATION LOGIC: Sirf 8-10 cards ek bar mein load honge
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentSlice = filteredData.slice(startIndex, endIndex);
+
+            const html = currentSlice.map(c => currentViewMode === 'grid' ? generateGridHTML(c) : generateListHTML(c)).join('');
+            
+            if(clearContainer) {
+                container.innerHTML = html;
+            } else {
+                container.insertAdjacentHTML('beforeend', html);
+            }
+
+            // Hide "Load More" if all data is shown
+            if(endIndex >= filteredData.length) {
+                loadMoreBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.remove('hidden');
+            }
+        }
+
+        window.loadMoreColleges = function() {
+            currentPage++;
+            const btn = document.getElementById('load-more-btn');
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Loading...`;
+            
+            setTimeout(() => {
+                renderVisibleColleges(false);
+                btn.innerHTML = `Load More Colleges <i class="fa-solid fa-angle-down ml-1"></i>`;
+            }, 300); // UI feel delay
+        }
+
+        // View Toggle Function
         window.setViewMode = function(mode) {
             currentViewMode = mode;
             document.getElementById('view-list').classList.toggle('active', mode === 'list');
@@ -292,247 +473,20 @@
                 container.className = "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6";
                 header.classList.add('hidden');
             } else {
-                container.className = "flex flex-col gap-4"; // Ensure gap is applied to rows
-                // Only show table header on large screens when in list mode
+                container.className = "flex flex-col gap-4"; 
                 if (window.innerWidth >= 1024) header.classList.remove('hidden');
             }
             
-            applyFilters(); // Re-render data
-        }
-
-        // Handling window resize for table header
-        window.addEventListener('resize', () => {
-            const header = document.getElementById('table-header');
-            if (currentViewMode === 'list' && window.innerWidth >= 1024) {
-                header.classList.remove('hidden');
-            } else {
-                header.classList.add('hidden');
-            }
-        });
-
-        // 3. HTML Generators for List and Grid Views
-        function generateListHTML(college) {
-            return `
-                <div class="bg-white rounded-2xl p-5 lg:p-0 lg:rounded-none lg:bg-transparent lg:border-none border border-slate-200 shadow-sm lg:shadow-none college-row bg-white lg:border lg:border-slate-200 lg:rounded-2xl overflow-hidden group">
-                    <div class="flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:items-center p-0 lg:p-4">
-                        
-                        <!-- Top Mobile Banner (Rank) -->
-                        <div class="lg:hidden flex justify-between items-center mb-2 border-b border-slate-100 pb-3">
-                            <span class="bg-slate-900 text-white text-[10px] font-black px-3 py-1 rounded-md">Rank #${college.rank}</span>
-                            <div class="flex items-center gap-1 bg-orange-50 px-2 py-1 rounded text-orange-600 font-black text-xs border border-orange-100">
-                                <span>⭐ ${college.rating}</span>
-                            </div>
-                        </div>
-
-                        <!-- College Info (Col 4) -->
-                        <div class="lg:col-span-4 flex items-start lg:items-center gap-4 relative">
-                            <!-- Rank Badge (Desktop only) -->
-                            <div class="hidden lg:flex absolute -left-4 -top-4 w-8 h-8 bg-slate-900 text-white rounded-br-xl rounded-tl-2xl items-center justify-center font-black text-xs shadow-md">#${college.rank}</div>
-                            
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${college.logoColor} text-white flex items-center justify-center font-black text-xl shadow-md shrink-0 border-[3px] border-white ring-1 ring-slate-100 lg:ml-6">
-                                ${college.logo}
-                            </div>
-                            <div>
-                                <h3 class="font-extrabold text-slate-900 text-lg leading-tight group-hover:text-indigo-600 transition cursor-pointer mb-1">${college.name}</h3>
-                                <p class="text-xs font-bold text-slate-500 mb-2 flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${college.location}, ${college.state}</p>
-                                <div class="flex gap-2 flex-wrap">
-                                    <span class="text-[9px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">${college.approvals}</span>
-                                    <span class="text-[9px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${college.stream}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Divider for mobile -->
-                        <div class="lg:hidden h-px w-full bg-slate-100 my-2"></div>
-
-                        <!-- Course & Fees (Col 3) -->
-                        <div class="lg:col-span-3 flex lg:flex-col justify-between lg:justify-center items-center lg:items-start lg:pl-4 lg:border-l border-slate-100 h-full">
-                            <div class="text-left">
-                                <p class="font-black text-indigo-600 text-xl tracking-tight">${college.fees}</p>
-                                <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-2">${college.feesDesc}</p>
-                            </div>
-                            <p class="text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg truncate max-w-[200px]" title="${college.courseName}">
-                                ${college.courseName}
-                            </p>
-                        </div>
-
-                        <!-- Placements (Col 2) -->
-                        <div class="lg:col-span-2 flex lg:flex-col justify-between lg:justify-center items-center lg:items-start lg:pl-4 lg:border-l border-slate-100 h-full">
-                            <div class="text-right lg:text-left">
-                                <p class="font-black text-slate-800 text-lg flex items-center gap-1.5 justify-end lg:justify-start"><i class="fa-solid fa-arrow-trend-up text-emerald-500"></i> ${college.placementHigh}</p>
-                                <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Highest Salary</p>
-                            </div>
-                            <p class="text-xs font-bold text-slate-600 mt-2 bg-emerald-50 text-emerald-700 px-2 py-1 rounded hidden lg:inline-block">Avg: ${college.placementAvg}</p>
-                        </div>
-
-                        <!-- Reviews & Actions (Col 3) -->
-                        <div class="lg:col-span-3 flex flex-col gap-3 lg:pl-4 lg:border-l border-slate-100 h-full justify-center">
-                            <!-- Desktop Reviews -->
-                            <div class="hidden lg:flex justify-between items-center bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                <div class="flex items-center gap-2">
-                                    <span class="bg-orange-100 text-orange-600 font-black px-2 py-0.5 rounded text-sm border border-orange-200">⭐ ${college.rating}</span>
-                                    <span class="text-[10px] font-bold text-slate-500">/ 10</span>
-                                </div>
-                                <span class="text-[10px] font-bold text-indigo-600 hover:underline cursor-pointer">${college.reviewsCount} Reviews</span>
-                            </div>
-                            
-                            <!-- Action Buttons -->
-                            <div class="grid grid-cols-2 gap-2 mt-2 lg:mt-0">
-                                <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="bg-white border-2 border-indigo-100 text-indigo-600 font-extrabold text-xs py-3 rounded-xl hover:border-indigo-600 hover:bg-indigo-50 transition-all flex items-center justify-center gap-1">
-                                    <i class="fa-solid fa-download"></i> Brochure
-                                </button>
-                                <button class="bg-slate-900 text-white font-extrabold text-xs py-3 rounded-xl hover:bg-indigo-600 transition-all shadow-md flex items-center justify-center gap-1 hover:-translate-y-0.5">
-                                    Apply <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function generateGridHTML(college) {
-            return `
-                <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 relative overflow-hidden group hover:shadow-xl hover:border-indigo-200 transition-all duration-300 hover:-translate-y-1">
-                    <!-- Top Ribbon -->
-                    <div class="absolute top-0 right-0 bg-slate-900 text-white font-black text-xs px-4 py-1.5 rounded-bl-2xl border-b border-l border-slate-700 shadow-sm z-10">
-                        Rank #${college.rank}
-                    </div>
-                    
-                    <!-- Header -->
-                    <div class="flex items-start gap-4 mb-6 relative z-0">
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br ${college.logoColor} text-white flex items-center justify-center font-black text-xl shadow-lg shrink-0 border-2 border-white ring-1 ring-slate-100">
-                            ${college.logo}
-                        </div>
-                        <div class="pr-16">
-                            <h3 class="font-extrabold text-slate-900 text-lg leading-tight group-hover:text-indigo-600 transition line-clamp-2 cursor-pointer">${college.name}</h3>
-                            <p class="text-xs font-bold text-slate-500 mt-1.5 flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${college.location}, ${college.state}</p>
-                        </div>
-                    </div>
-
-                    <!-- Tags -->
-                    <div class="flex gap-2 mb-5 flex-wrap">
-                        <span class="text-[9px] font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-1 rounded border border-indigo-100">${college.stream}</span>
-                        <span class="text-[9px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded border border-emerald-100">${college.approvals}</span>
-                    </div>
-
-                    <!-- Stats Grid -->
-                    <div class="grid grid-cols-2 gap-3 bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-6">
-                        <div>
-                            <p class="text-[10px] font-extrabold uppercase text-slate-400 tracking-widest mb-1">First Year Fees</p>
-                            <p class="font-black text-indigo-600 text-lg">${college.fees}</p>
-                        </div>
-                        <div class="border-l border-slate-200 pl-3">
-                            <p class="text-[10px] font-extrabold uppercase text-slate-400 tracking-widest mb-1">Highest Salary</p>
-                            <p class="font-black text-emerald-600 text-lg">${college.placementHigh}</p>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Bar -->
-                    <div class="flex justify-between items-center mb-6">
-                        <p class="text-xs font-bold text-slate-700 truncate max-w-[50%] border-b border-slate-300 border-dashed pb-0.5">${college.courseName}</p>
-                        <div class="flex items-center gap-1.5">
-                            <span class="bg-orange-100 text-orange-600 font-black px-2 py-1 rounded text-xs border border-orange-200">⭐ ${college.rating}</span>
-                            <span class="text-[10px] font-bold text-slate-400">(${college.reviewsCount})</span>
-                        </div>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="bg-white border-2 border-slate-200 text-slate-600 font-extrabold text-sm py-3.5 rounded-xl hover:border-indigo-500 hover:text-indigo-600 transition-colors">Brochure</button>
-                        <button class="bg-slate-900 text-white font-extrabold text-sm py-3.5 rounded-xl hover:bg-indigo-600 transition-all shadow-md hover:shadow-indigo-500/30">Apply Now</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // 4. Sorting & Filtering Engine
-        function applyFilters() {
-            const searchTerm = document.getElementById('global-search').value.toLowerCase();
-            const sortBy = document.getElementById('sort-dropdown').value;
-            
-            const getChecked = (selector) => Array.from(document.querySelectorAll(selector + ':checked')).map(cb => cb.value.toLowerCase());
-            
-            const streams = getChecked('.stream-filter');
-            const states = getChecked('.state-filter');
-            const levels = getChecked('.level-filter');
-            const approvals = getChecked('.approval-filter');
-
-            // Filter logic
-            let filteredData = localCollegesDB.filter(college => {
-                const searchStr = `${college.name} ${college.location} ${college.state} ${college.courseName}`.toLowerCase();
-                const matchesSearch = searchStr.includes(searchTerm);
-                
-                const matchesStream = streams.length === 0 || streams.includes(college.stream.toLowerCase());
-                const matchesState = states.length === 0 || states.some(s => college.state.toLowerCase().includes(s));
-                const matchesLevel = levels.length === 0 || levels.includes(college.level.toLowerCase());
-                const matchesApproval = approvals.length === 0 || approvals.some(a => college.approvals.toLowerCase().includes(a));
-
-                return matchesSearch && matchesStream && matchesState && matchesLevel && matchesApproval;
-            });
-
-            // Sort logic
-            filteredData.sort((a, b) => {
-                if(sortBy === 'popularity') return a.rank - b.rank; // Rank 1 is best
-                if(sortBy === 'rating') return b.rating - a.rating; // Highest rating first
-                if(sortBy === 'fees-low') return a.feesNum - b.feesNum;
-                if(sortBy === 'fees-high') return b.feesNum - a.feesNum;
-                if(sortBy === 'placement') return b.placementNum - a.placementNum;
-                return 0;
-            });
-
-            // Render
-            const container = document.getElementById('colleges-container');
-            document.getElementById('resultCount').innerText = filteredData.length;
-            document.getElementById('total-count-header').innerText = filteredData.length;
-            
-            if(filteredData.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-full text-center py-20 bg-white rounded-3xl border border-slate-200 border-dashed mt-4">
-                        <div class="text-5xl mb-4 opacity-50">🔍</div>
-                        <h3 class="text-xl font-extrabold text-slate-800 mb-2">No colleges found</h3>
-                        <p class="text-slate-500 font-medium text-sm">Try tweaking your filters or search term to see more results.</p>
-                        <button onclick="clearAllFilters()" class="mt-6 text-indigo-600 font-bold bg-indigo-50 px-6 py-2.5 rounded-xl hover:bg-indigo-100 transition border border-indigo-100">Clear All Filters</button>
-                    </div>`;
-                return;
-            }
-
-            container.innerHTML = filteredData.map(c => currentViewMode === 'grid' ? generateGridHTML(c) : generateListHTML(c)).join('');
+            applyFilters(true); // Re-render from page 1
         }
 
         // Attach Listeners
-        document.getElementById('global-search').addEventListener('input', applyFilters);
-        document.getElementById('sort-dropdown').addEventListener('change', applyFilters);
-        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.addEventListener('change', applyFilters));
+        document.getElementById('global-search').addEventListener('input', () => applyFilters(true));
+        document.getElementById('sort-dropdown').addEventListener('change', () => applyFilters(true));
+        document.querySelectorAll('.filter-checkbox').forEach(cb => cb.addEventListener('change', () => applyFilters(true)));
 
-        // Clear All Function
-        window.clearAllFilters = function() {
-            document.getElementById('global-search').value = "";
-            document.getElementById('sort-dropdown').value = "popularity";
-            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-            applyFilters();
-        }
-
-        // URL Parameter handling (If user clicks from Home Page)
-        function checkURLParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const stream = urlParams.get('stream');
-            const career = urlParams.get('career');
-            
-            if(stream) {
-                const checkboxes = document.querySelectorAll('.stream-filter');
-                checkboxes.forEach(cb => {
-                    if(cb.value.toLowerCase() === stream.toLowerCase()) cb.checked = true;
-                });
-            }
-            if(career) {
-                document.getElementById('global-search').value = career;
-            }
-            applyFilters(); // Initial render
-        }
-
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', checkURLParams);
+        // Run on Load
+        document.addEventListener('DOMContentLoaded', initializeApp);
 
     </script>
 </body>
