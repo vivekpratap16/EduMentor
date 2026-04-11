@@ -34,7 +34,6 @@
             opacity: 0; visibility: hidden; transform: translateY(10px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Keep menu open when hovering the group (the nav item) */
         .nav-group:hover .mega-menu {
             opacity: 1; visibility: visible; transform: translateY(0);
         }
@@ -46,16 +45,27 @@
         .mega-item.active { background-color: #f8fafc; color: #4f46e5; border-left-color: #4f46e5; font-weight: 800; }
         .mega-item:hover:not(.active) { background-color: #f1f5f9; color: #4f46e5; }
         
-        /* Fade in right content */
         @keyframes fadeInRight {
             from { opacity: 0; transform: translateX(-5px); }
             to { opacity: 1; transform: translateX(0); }
         }
         .mega-content-fade { animation: fadeInRight 0.3s ease forwards; }
-
-        /* Hide scrollbar for career categories */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* NAYA: Live News Ticker Animation */
+        @keyframes scrollTicker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollTicker 30s linear infinite;
+        }
+        .ticker-content:hover {
+            animation-play-state: paused;
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -69,61 +79,42 @@
                 </div>
                 
                 <div class="flex items-center gap-6 h-full">
-                    
-                    <!-- Jump to Career Section -->
+                    <a href="#updates-hub" class="hidden md:flex text-red-500 font-bold hover:text-red-600 transition items-center h-full gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Live Updates
+                    </a>
+
                     <a href="#career-explorer" class="hidden md:flex text-slate-600 font-bold hover:text-indigo-600 transition items-center h-full">
                         Career Compass
                     </a>
 
-                    <!-- MEGA MENU TRIGGER -->
                     <div class="hidden md:flex items-center h-full nav-group">
                         <a href="edtech-universities.html" class="text-slate-600 font-bold hover:text-indigo-600 transition flex items-center gap-1.5 h-full">
                             Explore Colleges <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300 nav-group-hover:rotate-180"></i>
                         </a>
 
-                        <!-- MEGA MENU DROPDOWN PANEL -->
+                        <!-- MEGA MENU DROPDOWN -->
                         <div class="mega-menu absolute top-20 left-0 w-full bg-white shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] border border-slate-100 cursor-default flex h-[500px] rounded-b-2xl overflow-hidden">
-                            
-                            <!-- Left Sidebar (17 Specializations) -->
                             <div class="w-1/4 bg-slate-50 border-r border-slate-200 overflow-y-auto mega-sidebar py-4">
-                                <ul id="mega-sidebar-list" class="flex flex-col">
-                                    <!-- List populated by JavaScript below -->
-                                </ul>
+                                <ul id="mega-sidebar-list" class="flex flex-col"></ul>
                             </div>
-                            
-                            <!-- Right Content Area -->
                             <div class="w-3/4 p-8 bg-white overflow-y-auto mega-sidebar" id="mega-content-area">
                                 <div class="grid grid-cols-3 gap-10 mega-content-fade">
-                                    
-                                    <!-- Colleges By Degrees -->
                                     <div>
                                         <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> Colleges By Degrees</h4>
-                                        <ul class="space-y-4" id="mega-degrees">
-                                            <!-- Dynamic Data -->
-                                        </ul>
+                                        <ul class="space-y-4" id="mega-degrees"></ul>
                                     </div>
-                                    
-                                    <!-- Popular Colleges -->
                                     <div>
                                         <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-fire text-orange-500"></i> Popular Colleges</h4>
-                                        <ul class="space-y-4" id="mega-popular">
-                                            <!-- Dynamic Data -->
-                                        </ul>
+                                        <ul class="space-y-4" id="mega-popular"></ul>
                                     </div>
-                                    
-                                    <!-- Top Colleges -->
                                     <div>
                                         <h4 class="text-slate-900 font-black mb-5 text-sm flex items-center gap-2 border-b border-slate-100 pb-2"><i class="fa-solid fa-award text-amber-500"></i> Top Colleges</h4>
-                                        <ul class="space-y-4" id="mega-top">
-                                            <!-- Dynamic Data -->
-                                        </ul>
+                                        <ul class="space-y-4" id="mega-top"></ul>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- MEGA MENU END -->
 
                     <a href="edtech-auth.html" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-indigo-600 transition shadow-lg hover:-translate-y-0.5">Student Login</a>
                 </div>
@@ -131,7 +122,24 @@
         </div>
     </nav>
 
-    <section class="relative h-[600px] md:h-[700px] w-full mt-[80px] overflow-hidden bg-slate-900 flex items-center justify-center">
+    <!-- 👇 NAYA: Flash News Ticker 👇 -->
+    <div class="mt-[80px] bg-gradient-to-r from-slate-900 to-indigo-950 border-b border-indigo-500/30 text-white text-sm font-bold py-2.5 overflow-hidden relative flex items-center z-30 shadow-md">
+        <!-- Static Label -->
+        <div class="bg-indigo-600 px-4 md:px-6 py-2.5 absolute left-0 z-10 h-full flex items-center shadow-[10px_0_20px_rgba(0,0,0,0.5)]">
+            <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse mr-2"></span> <span class="hidden md:inline uppercase tracking-widest text-xs">Breaking</span>
+        </div>
+        <!-- Scrolling Content -->
+        <div class="ticker-content pl-[120px] md:pl-[180px] text-indigo-100 flex items-center w-full">
+            <span class="mx-6 hover:text-white cursor-pointer transition">🚀 <b class="text-white">CUET UG 2026:</b> Registration Forms Out Now! Last Date: 30th April</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">🏆 <b class="text-white">JEE Main:</b> Session 1 Results Declared. Check Your Percentile!</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">💼 <b class="text-white">TCS Ninja:</b> Mass Off-Campus Hiring for 2025/2026 Batch</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">🏛️ <b class="text-white">UPSC CSE:</b> Official Notification Released for 1056 Posts</span> •
+            <span class="mx-6 hover:text-white cursor-pointer transition">🩺 <b class="text-white">NEET UG:</b> Correction Window Opened Today</span>
+        </div>
+    </div>
+    <!-- 👆 NAYA: Flash News Ticker Ends 👆 -->
+
+    <section class="relative h-[550px] md:h-[650px] w-full overflow-hidden bg-slate-900 flex items-center justify-center">
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070&auto=format&fit=crop" class="slide active w-full h-full object-cover opacity-40">
             <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" class="slide w-full h-full object-cover opacity-40">
@@ -155,8 +163,177 @@
         </div>
     </section>
 
+    <!-- 👇 NAYA: Premium Updates Hub (Modern Sarkari Result Style) 👇 -->
+    <section id="updates-hub" class="w-full bg-slate-50 py-20 relative z-20 -mt-10 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
+        <div class="max-w-[1400px] mx-auto px-6">
+            
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+                <div>
+                    <span class="text-red-500 font-black tracking-widest uppercase text-sm mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Trending Board
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900">Live <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Updates & Forms</span></h2>
+                    <p class="text-slate-500 font-medium mt-2">All major university admissions, exam results, and job notifications in one place.</p>
+                </div>
+                <a href="#" class="bg-white border border-slate-200 text-slate-700 font-bold px-6 py-3 rounded-xl hover:border-indigo-500 hover:text-indigo-600 transition-all mt-6 md:mt-0 flex items-center gap-2 shadow-sm">
+                    View All Updates <i class="fa-solid fa-arrow-right text-sm"></i>
+                </a>
+            </div>
+
+            <!-- 4 Columns Grid System -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                
+                <!-- Column 1: Admissions -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg"><i class="fa-solid fa-graduation-cap"></i></div>
+                        Admissions
+                    </h3>
+                    <ul class="space-y-4">
+                        <!-- Add new links by copying this 'li' block -->
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug mb-1">CUET UG 2026 Online Form</span>
+                                <span class="text-[10px] font-black text-white bg-red-500 px-2 py-0.5 rounded shadow-sm">Last Date: 30 Apr</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug mb-1">NEET UG 2026 Registration</span>
+                                <span class="text-[10px] font-black text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">Ends Soon</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug">Delhi University PG Admission Form</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-indigo-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition block leading-snug mb-1">Chandigarh University Phase 2</span>
+                                <span class="text-[10px] font-black text-emerald-700 bg-emerald-100 border border-emerald-200 px-2 py-0.5 rounded">CUCET Open</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Exam Results -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-emerald-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg"><i class="fa-solid fa-trophy"></i></div>
+                        Exam Results
+                    </h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug mb-1">JEE Main 2026 Session 1 Result</span>
+                                <span class="text-[10px] font-black text-white bg-emerald-500 px-2 py-0.5 rounded shadow-sm animate-pulse">Declared</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug">CBSE Class 12th Board Result 2026</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug">GATE 2026 Scorecard Released</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-emerald-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-emerald-600 transition block leading-snug mb-1">CAT 2025 Final Cutoffs</span>
+                                <span class="text-[10px] font-black text-blue-700 bg-blue-100 border border-blue-200 px-2 py-0.5 rounded">Check Score</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Govt Jobs -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-orange-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-lg"><i class="fa-solid fa-building-columns"></i></div>
+                        Govt Jobs
+                    </h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug mb-1">SSC CGL 2026 Notification</span>
+                                <span class="text-[10px] font-black text-white bg-orange-500 px-2 py-0.5 rounded shadow-sm">15,000+ Posts</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug">UPSC NDA / NA Apply Online</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug">IBPS PO Prelims Admit Card</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-orange-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-orange-600 transition block leading-snug">RRB NTPC Final Status</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Private & IT Jobs -->
+                <div class="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-4 border-b border-slate-100 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-lg"><i class="fa-solid fa-briefcase"></i></div>
+                        Top Private Jobs
+                    </h3>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug mb-1">TCS Ninja Off-Campus Drive</span>
+                                <span class="text-[10px] font-black text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">Batch: 2025/26</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug mb-1">Infosys System Engineer Hiring</span>
+                                <span class="text-[10px] font-black text-purple-700 bg-purple-100 border border-purple-200 px-2 py-0.5 rounded">Mass Hiring</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug">Wipro WILP Registration Open</span>
+                            </div>
+                        </a></li>
+                        <li><a href="#" class="group flex items-start gap-3">
+                            <i class="fa-solid fa-caret-right text-purple-300 mt-1 transition-transform group-hover:translate-x-1"></i>
+                            <div>
+                                <span class="text-sm font-bold text-slate-700 group-hover:text-purple-600 transition block leading-snug">Google Summer Internship 2026</span>
+                            </div>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 👆 Premium Updates Hub Ends 👆 -->
+
     <!-- DREAM BUILDER APP -->
-    <section id="dream-builder-app" class="w-full bg-white py-20 relative z-20 -mt-6 rounded-t-[3rem] shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
+    <section id="dream-builder-app" class="w-full bg-white py-20 relative z-20">
         <div class="max-w-6xl mx-auto px-6">
             
             <div class="text-center mb-12">
@@ -207,7 +384,7 @@
         </div>
     </section>
 
-    <!-- 👇 NEW: SCALABLE CAREER EXPLORER BY JOB PROFILES 👇 -->
+    <!-- SCALABLE CAREER EXPLORER BY JOB PROFILES -->
     <section class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200" id="career-explorer">
         <!-- Decorative Background -->
         <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none"></div>
@@ -240,7 +417,6 @@
             </div>
         </div>
     </section>
-    <!-- 👆 NEW FEATURE ENDS 👆 -->
     
     <section class="py-16 bg-white border-t border-slate-200">
         <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -434,7 +610,6 @@
         // ==========================================
         // 🚀 SCALABLE CAREER EXPLORER LOGIC 
         // ==========================================
-        // Yahan aap asani se naye careers aur streams add kar sakte hain
         const careersDatabase = [
             {
                 id: "tech",
@@ -496,7 +671,6 @@
                 btn.innerHTML = cat.name;
                 
                 btn.onclick = () => {
-                    // Update active state tab
                     Array.from(container.children).forEach(c => {
                         c.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal ${inactiveClasses}`;
                     });
@@ -507,7 +681,6 @@
                 container.appendChild(btn);
             });
 
-            // Initialize first category
             if(careersDatabase.length > 0) {
                 renderCareerRoles(careersDatabase[0].id);
             }
@@ -520,13 +693,11 @@
             const category = careersDatabase.find(c => c.id === categoryId);
             if(!category) return;
 
-            // Trigger fade animation
             container.classList.remove('mega-content-fade');
             void container.offsetWidth; 
             container.classList.add('mega-content-fade');
 
             category.roles.forEach(role => {
-                // Tailwind color themes mapping for cards
                 const colorMap = {
                     'blue': { bg: 'bg-blue-50', text: 'text-blue-600', hover: 'hover:border-blue-200', shadow: 'hover:shadow-blue-500/10' },
                     'indigo': { bg: 'bg-indigo-50', text: 'text-indigo-600', hover: 'hover:border-indigo-200', shadow: 'hover:shadow-indigo-500/10' },
@@ -565,10 +736,9 @@
             });
         }
 
-        // Initialize All Features when Page Loads
         document.addEventListener('DOMContentLoaded', () => {
             generateMegaMenu();
-            renderCareerCategories(); // Initialize new feature
+            renderCareerCategories(); 
         });
 
     </script>
