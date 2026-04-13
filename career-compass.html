@@ -617,17 +617,41 @@
         // 🚀 CRITICAL FIX: Robust Programmatic Navigation for Canvas Iframe 🚀
         function goToColleges() {
             let targetUrl = 'edtech-universities.html';
-            
-            if (currentSelectedTitle) {
-                targetUrl += `?career=${encodeURIComponent(currentSelectedTitle)}`;
-            }
-            
-            // Generate a hidden anchor tag to safely navigate within the sandbox
-            const redirectLink = document.createElement('a');
-            redirectLink.href = targetUrl;
-            document.body.appendChild(redirectLink);
-            redirectLink.click();
-            document.body.removeChild(redirectLink);
+    
+    if (currentSelectedTitle) {
+        // Career ka data nikalo
+        const data = careersDB.find(c => c.title === currentSelectedTitle);
+        
+        // Career Sector ko University Stream se map karo
+        const streamMap = {
+            'tech': 'Engineering',
+            'medical': 'Medical',
+            'business': 'Management',
+            'creative': 'Design',
+            'law': 'Law'
+        };
+        let mappedStream = streamMap[data.sector] || '';
+
+        // Career Education ko University Level se map karo
+        const levelMap = {
+            'degree': 'UG',
+            'advanced': 'PG',
+            'diploma': 'Diploma'
+        };
+        let mappedLevel = levelMap[data.edu] || '';
+
+        // URL mein parameters add karo
+        targetUrl += `?career=${encodeURIComponent(currentSelectedTitle)}`;
+        if(mappedStream) targetUrl += `&stream=${encodeURIComponent(mappedStream)}`;
+        if(mappedLevel) targetUrl += `&level=${encodeURIComponent(mappedLevel)}`;
+    }
+    
+    // Generate a hidden anchor tag to safely navigate
+    const redirectLink = document.createElement('a');
+    redirectLink.href = targetUrl;
+    document.body.appendChild(redirectLink);
+    redirectLink.click();
+    document.body.removeChild(redirectLink);
         }
 
         document.getElementById('career-modal').addEventListener('click', function(e) {
