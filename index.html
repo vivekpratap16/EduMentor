@@ -44,14 +44,15 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Dream Tab Styles */
-        .dream-tab { transition: all 0.3s ease; }
-        .dream-tab.active { background: #4f46e5; color: white; border-color: #4f46e5; box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.3); transform: translateY(-2px); }
+        /* Floating Feature Cards Animation */
+        .float-card-1 { animation: float-slow 6s infinite ease-in-out alternate; }
+        .float-card-2 { animation: float-slow 8s infinite ease-in-out alternate-reverse; }
+        @keyframes float-slow { 0% { transform: translateY(0px) rotate(-2deg); } 100% { transform: translateY(-15px) rotate(2deg); } }
     </style>
 </head>
 <body class="relative">
 
-    <!-- NAVIGATION (Full Feature Rich + Clean) -->
+    <!-- NAVIGATION -->
     <nav class="fixed w-full z-50 glass-nav top-0 transition-all duration-300 shadow-sm">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative h-20">
             <div class="flex items-center h-full justify-between">
@@ -64,7 +65,7 @@
                 <div class="flex items-center gap-4 lg:gap-7 h-full">
                     
                     <!-- Highlighted Tools -->
-                    <a href="#how-it-works" class="hidden xl:flex text-emerald-600 font-extrabold hover:text-emerald-700 transition items-center h-full gap-1.5 text-sm bg-emerald-50 px-3 py-1.5 rounded-full my-auto h-fit border border-emerald-100">
+                    <a href="career-compass.html" class="hidden xl:flex text-emerald-600 font-extrabold hover:text-emerald-700 transition items-center h-full gap-1.5 text-sm bg-emerald-50 px-3 py-1.5 rounded-full my-auto h-fit border border-emerald-100">
                         <i class="fa-solid fa-wand-magic-sparkles text-emerald-500"></i> AI Match
                     </a>
 
@@ -98,7 +99,7 @@
                         </div>
                     </div>
 
-                    <a href="#career-explorer" class="hidden lg:block text-slate-700 font-bold hover:text-indigo-600 transition">Careers</a>
+                    <a href="career-compass.html" class="hidden lg:block text-slate-700 font-bold hover:text-indigo-600 transition">Careers</a>
                     <a href="edtech-universities.html" class="hidden xl:block text-slate-700 font-bold hover:text-indigo-600 transition">Compare</a>
 
                     <!-- Free Counselling -->
@@ -116,7 +117,7 @@
         </div>
     </nav>
 
-    <!-- LIVE NEWS TICKER (Informative) -->
+    <!-- LIVE NEWS TICKER -->
     <div class="mt-[80px] bg-gradient-to-r from-slate-900 to-indigo-950 border-b border-indigo-500/30 text-white text-sm font-bold py-2.5 overflow-hidden relative flex items-center z-40 shadow-md">
         <div class="bg-indigo-600 px-4 md:px-6 py-2.5 absolute left-0 z-10 h-full flex items-center shadow-[10px_0_20px_rgba(0,0,0,0.5)]">
             <span class="w-2 h-2 rounded-full bg-red-400 animate-pulse mr-2"></span> <span class="hidden md:inline uppercase tracking-widest text-xs">Live Updates</span>
@@ -130,7 +131,7 @@
     </div>
 
     <!-- CONVERSATIONAL + INFORMATIVE HERO SECTION -->
-    <section class="relative pt-16 pb-20 w-full overflow-hidden flex flex-col items-center justify-center min-h-[60vh] bg-white">
+    <section class="relative pt-16 pb-24 w-full overflow-hidden flex flex-col items-center justify-center min-h-[65vh] bg-white">
         <!-- Friendly Background Blobs -->
         <div class="blob bg-blue-100 w-[500px] h-[500px] rounded-full top-0 left-[-10%] mix-blend-multiply"></div>
         <div class="blob bg-purple-100 w-[400px] h-[400px] rounded-full bottom-[10%] right-[-5%] mix-blend-multiply" style="animation-delay: 2s;"></div>
@@ -138,7 +139,7 @@
         <!-- Subtle Grid Pattern -->
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] z-0"></div>
 
-        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto w-full mt-4">
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto w-full mt-4">
             
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-sm font-extrabold mb-6 shadow-sm text-emerald-700">
                 👋 Hello! Let's build your future together.
@@ -149,8 +150,12 @@
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">looking for today?</span>
             </h1>
             
+            <p class="text-lg text-slate-500 font-medium max-w-2xl mx-auto mb-8">
+                Explore thousands of verified colleges, check real placements, or let our AI guide your career.
+            </p>
+
             <!-- Mad Libs Search (The "Living" aspect) -->
-            <div class="bg-white/80 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-100 max-w-4xl mx-auto mt-8 relative z-20">
+            <div class="bg-white/80 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-100 max-w-4xl mx-auto relative z-20">
                 <div class="text-lg md:text-2xl font-bold text-slate-700 leading-loose text-center md:text-left flex flex-wrap items-center justify-center md:justify-start gap-2">
                     <span>"I want to study</span>
                     <select class="mad-libs-select bg-transparent text-center" id="search-course">
@@ -185,20 +190,26 @@
                 </div>
             </div>
 
-            <!-- Quick Info Tags (Solves the "what can I get here" problem) -->
-            <div class="mt-8 flex flex-wrap justify-center gap-3 text-sm">
-                <span class="text-slate-500 font-bold flex items-center mr-2"><i class="fa-solid fa-fire text-orange-500 mr-1"></i> Quick Links:</span>
-                <a href="edtech-universities.html?stream=Engineering" class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-full hover:border-indigo-500 hover:text-indigo-600 transition shadow-sm">B.Tech Colleges</a>
-                <a href="edtech-universities.html?stream=Management" class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-full hover:border-indigo-500 hover:text-indigo-600 transition shadow-sm">Top MBA</a>
-                <a href="edtech-universities.html?stream=Medical" class="px-4 py-1.5 bg-white border border-slate-200 text-slate-600 font-bold rounded-full hover:border-indigo-500 hover:text-indigo-600 transition shadow-sm">MBBS Admissions</a>
-                <a href="edtech-universities.html?stream=Abroad" class="px-4 py-1.5 bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold rounded-full hover:bg-indigo-100 transition shadow-sm flex items-center gap-1"><i class="fa-solid fa-plane-departure"></i> Study Abroad</a>
+            <!-- THE HIGHLIGHTS BAR (Shows exactly what the site offers instantly) -->
+            <div class="mt-10 flex flex-wrap justify-center gap-4 text-sm max-w-5xl mx-auto">
+                <div class="bg-white border border-slate-200 px-4 py-2 rounded-xl flex items-center gap-2 font-bold text-slate-700 shadow-sm">
+                    <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fa-solid fa-building-columns text-[10px]"></i></div> 11,000+ Colleges
+                </div>
+                <div class="bg-white border border-slate-200 px-4 py-2 rounded-xl flex items-center gap-2 font-bold text-slate-700 shadow-sm">
+                    <div class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center"><i class="fa-solid fa-briefcase text-[10px]"></i></div> Real Placements
+                </div>
+                <div class="bg-white border border-slate-200 px-4 py-2 rounded-xl flex items-center gap-2 font-bold text-slate-700 shadow-sm cursor-pointer hover:border-purple-300 transition" onclick="window.location.href='career-compass.html'">
+                    <div class="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center"><i class="fa-solid fa-compass text-[10px]"></i></div> AI Career Match
+                </div>
+                <div class="bg-white border border-slate-200 px-4 py-2 rounded-xl flex items-center gap-2 font-bold text-slate-700 shadow-sm">
+                    <div class="w-6 h-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center"><i class="fa-solid fa-headset text-[10px]"></i></div> Free Counselling
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- MASSIVE STATS BANNER (Builds Instant Trust) -->
+    <!-- MASSIVE STATS BANNER -->
     <section class="bg-indigo-600 text-white relative z-20 border-y border-indigo-700 overflow-hidden">
-        <!-- Abstract Background Lines -->
         <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
         
         <div class="max-w-[1400px] mx-auto px-6 py-10 relative z-10">
@@ -223,7 +234,7 @@
         </div>
     </section>
 
-    <!-- WHAT'S ON YOUR MIND? (The Ultimate Toolkit Grid) -->
+    <!-- YOUR TOOLKIT GRID (What student can do here) -->
     <section class="py-24 bg-slate-50 relative z-20">
         <div class="max-w-[1400px] mx-auto px-6">
             <div class="text-center mb-16">
@@ -237,15 +248,15 @@
                     <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition shadow-inner"><i class="fa-solid fa-building-columns"></i></div>
                     <span class="font-extrabold text-slate-800 text-sm">Find Colleges</span>
                 </a>
-                <a href="#how-it-works" class="friendly-card p-6 text-center flex flex-col items-center gap-4 group">
+                <a href="career-compass.html" class="friendly-card p-6 text-center flex flex-col items-center gap-4 group">
                     <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition shadow-inner"><i class="fa-solid fa-robot"></i></div>
                     <span class="font-extrabold text-slate-800 text-sm">AI Matchmaker</span>
                 </a>
-                <a href="#career-explorer" class="friendly-card p-6 text-center flex flex-col items-center gap-4 group">
+                <a href="career-compass.html" class="friendly-card p-6 text-center flex flex-col items-center gap-4 group border-indigo-100 bg-indigo-50/30">
                     <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition shadow-inner"><i class="fa-solid fa-compass"></i></div>
                     <span class="font-extrabold text-slate-800 text-sm">Career Compass</span>
                 </a>
-                <a href="edtech-universities.html" class="friendly-card p-6 text-center flex flex-col items-center gap-4 group border-indigo-100 bg-indigo-50/30">
+                <a href="edtech-universities.html" class="friendly-card p-6 text-center flex flex-col items-center gap-4 group">
                     <div class="w-16 h-16 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition shadow-inner"><i class="fa-solid fa-not-equal"></i></div>
                     <span class="font-extrabold text-slate-800 text-sm">Compare Tool</span>
                 </a>
@@ -261,8 +272,58 @@
         </div>
     </section>
 
-    <!-- TRENDING COLLEGES (Clean Cards) -->
-    <section class="py-24 bg-white border-t border-slate-100">
+    <!-- NEW: CAREER COMPASS TEASER (Replaces the full bulky feature) -->
+    <section class="py-24 bg-slate-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div class="absolute -right-40 top-0 w-96 h-96 bg-purple-600/30 blur-[120px] rounded-full"></div>
+        <div class="absolute -left-40 bottom-0 w-96 h-96 bg-emerald-600/20 blur-[120px] rounded-full"></div>
+
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Text Area -->
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-xs font-black uppercase tracking-widest mb-6 text-indigo-300">
+                        <i class="fa-solid fa-compass"></i> New Feature
+                    </div>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+                        Not sure what to study? <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Discover your Vibe.</span>
+                    </h2>
+                    <p class="text-slate-400 text-lg font-medium mb-10 max-w-xl mx-auto lg:mx-0">
+                        Forget boring degree names. Tell our AI what you actually enjoy doing—coding, talking to people, or creating art—and get a personalized career roadmap with salary insights.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="career-compass.html" class="bg-indigo-600 text-white px-8 py-4 rounded-xl font-extrabold hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/30 flex items-center justify-center gap-2 text-lg">
+                            Launch Career Compass <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Premium Floating Graphic -->
+                <div class="lg:w-1/2 relative h-[400px] w-full hidden sm:block">
+                    <!-- Floating Card 1 -->
+                    <div class="absolute top-10 right-10 bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl shadow-2xl w-64 float-card-1 z-20">
+                        <div class="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center text-white text-xl mb-4 shadow-inner"><i class="fa-solid fa-code"></i></div>
+                        <h3 class="text-white font-extrabold text-lg mb-1">Software Engineer</h3>
+                        <p class="text-emerald-400 font-black text-sm">₹6L - ₹40L+ Salary</p>
+                    </div>
+                    <!-- Floating Card 2 -->
+                    <div class="absolute bottom-10 left-10 bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl shadow-2xl w-64 float-card-2 z-10">
+                        <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-white text-xl mb-4 shadow-inner"><i class="fa-solid fa-sack-dollar"></i></div>
+                        <h3 class="text-white font-extrabold text-lg mb-1">Investment Banker</h3>
+                        <p class="text-orange-400 font-black text-sm">₹12L - ₹1Cr+ Salary</p>
+                    </div>
+                    <!-- Center connecting element -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white/20 text-6xl">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRENDING COLLEGES -->
+    <section class="py-24 bg-slate-50 border-t border-slate-100">
         <div class="max-w-[1400px] mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12">
                 <div>
@@ -276,104 +337,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" id="trending-colleges-grid">
                 <!-- JS will inject clean cards here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- DREAM BUILDER APP (Conversational Goal Setting) -->
-    <section id="dream-builder-app" class="w-full bg-slate-900 py-24 relative z-20 overflow-hidden">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        <div class="max-w-6xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-12">
-                <h3 class="text-3xl md:text-5xl font-extrabold text-white">Let's talk about your <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Dreams</span></h3>
-                <p class="text-slate-400 font-medium mt-4 text-lg">Forget degrees for a minute. What do you actually want to become?</p>
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-3 mb-12" id="dreamTabs">
-                <button onclick="updateRoadmap('startup', this)" class="dream-tab active px-6 py-3.5 rounded-full border-2 border-transparent bg-white/10 text-white font-extrabold hover:bg-white/20 transition backdrop-blur-md">🚀 Start a Company</button>
-                <button onclick="updateRoadmap('tech', this)" class="dream-tab px-6 py-3.5 rounded-full border-2 border-transparent bg-white/5 text-slate-300 font-extrabold hover:bg-white/20 hover:text-white transition backdrop-blur-md">👨‍💻 Code for FAANG</button>
-                <button onclick="updateRoadmap('abroad', this)" class="dream-tab px-6 py-3.5 rounded-full border-2 border-transparent bg-white/5 text-slate-300 font-extrabold hover:bg-white/20 hover:text-white transition backdrop-blur-md">🌍 Settle Abroad</button>
-                <button onclick="updateRoadmap('finance', this)" class="dream-tab px-6 py-3.5 rounded-full border-2 border-transparent bg-white/5 text-slate-300 font-extrabold hover:bg-white/20 hover:text-white transition backdrop-blur-md">💰 Make Big Money</button>
-            </div>
-
-            <div id="displayCard" class="bg-white/10 backdrop-blur-2xl rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl flex flex-col md:flex-row gap-10 items-center transition-all duration-500 border border-white/10">
-                <div class="md:w-3/5">
-                    <div id="r-icon" class="text-6xl mb-4 bg-white/10 w-20 h-20 flex items-center justify-center rounded-3xl shadow-inner">🚀</div>
-                    <h2 id="r-title" class="text-3xl md:text-4xl font-extrabold mb-4 tracking-tight">Future Startup Founder</h2>
-                    <p id="r-desc" class="text-indigo-200 text-lg mb-8 font-medium leading-relaxed">Awesome! To build the next unicorn, you'll need the right network and business skills. Here is how we can get you there.</p>
-                    
-                    <div class="space-y-4 mb-10">
-                        <div class="flex items-center gap-4"><div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs"><i class="fa-solid fa-check"></i></div> <span id="s1" class="font-bold text-slate-200">BBA/MBA with Incubation Support</span></div>
-                        <div class="flex items-center gap-4"><div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs"><i class="fa-solid fa-check"></i></div> <span id="s2" class="font-bold text-slate-200">Colleges with active Angel Investor networks</span></div>
-                        <div class="flex items-center gap-4"><div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs"><i class="fa-solid fa-check"></i></div> <span id="s3" class="font-bold text-slate-200">Practical leadership workshops</span></div>
-                    </div>
-
-                    <button onclick="window.location.href='edtech-universities.html'" class="bg-white text-slate-900 px-8 py-4 rounded-2xl font-extrabold hover:bg-indigo-600 hover:text-white transition-all flex items-center justify-center gap-3">
-                        Show me matching colleges <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <div class="md:w-2/5 w-full space-y-4">
-                    <div class="bg-black/20 p-6 rounded-3xl border border-white/5">
-                        <p class="text-xs text-slate-400 uppercase font-black tracking-widest mb-1">Future Potential</p>
-                        <p id="r-sal" class="text-2xl font-black text-white">Unlimited</p>
-                    </div>
-                    <div class="bg-black/20 p-6 rounded-3xl border border-white/5">
-                        <p class="text-xs text-slate-400 uppercase font-black tracking-widest mb-1">Focus Skills</p>
-                        <p id="r-skills" class="text-base mt-1 font-bold text-slate-200 leading-snug">Leadership, Scaling, Sales</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SCALABLE CAREER EXPLORER BY JOB PROFILES -->
-    <section class="py-24 bg-slate-50 relative overflow-hidden" id="career-explorer">
-        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <span class="text-indigo-600 font-black tracking-widest uppercase text-sm mb-2 block">Career Compass</span>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Browse by Job Profiles</h2>
-                <p class="text-slate-500 font-medium mt-4 max-w-2xl mx-auto">Not sure about degrees? See what people actually do at their jobs and pick what sounds fun to you.</p>
-            </div>
-
-            <div class="flex flex-col lg:flex-row gap-10">
-                <div class="lg:w-1/4 shrink-0">
-                    <div class="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible no-scrollbar sticky top-28 bg-white p-3 rounded-3xl border border-slate-100 shadow-sm" id="career-categories">
-                    </div>
-                </div>
-                <div class="lg:w-3/4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="career-grid">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HOW IT WORKS (Friendly Explanation) -->
-    <section id="how-it-works" class="py-24 bg-white border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">How we help you decide</h2>
-            <p class="text-slate-500 font-medium mb-16 max-w-2xl mx-auto text-lg">No stress. Just a simple, transparent process to get you into the right college.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-                <!-- Connecting Line -->
-                <div class="hidden md:block absolute top-12 left-1/6 right-1/6 h-1 border-t-2 border-dashed border-slate-200 -z-10"></div>
-                
-                <div class="relative group">
-                    <div class="w-24 h-24 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 border-4 border-white shadow-lg group-hover:scale-110 transition duration-300"><i class="fa-solid fa-comments"></i></div>
-                    <h3 class="text-xl font-extrabold text-slate-900 mb-2">1. Let's Chat</h3>
-                    <p class="text-slate-500 font-medium text-sm">Tell our AI or human mentors about your marks, budget, and dreams.</p>
-                </div>
-                <div class="relative group">
-                    <div class="w-24 h-24 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 border-4 border-white shadow-lg group-hover:scale-110 transition duration-300"><i class="fa-solid fa-list-check"></i></div>
-                    <h3 class="text-xl font-extrabold text-slate-900 mb-2">2. Get Shortlisted</h3>
-                    <p class="text-slate-500 font-medium text-sm">We give you a personalized list of 5 perfect colleges. No clutter.</p>
-                </div>
-                <div class="relative group">
-                    <div class="w-24 h-24 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-6 border-4 border-white shadow-lg group-hover:scale-110 transition duration-300"><i class="fa-solid fa-file-signature"></i></div>
-                    <h3 class="text-xl font-extrabold text-slate-900 mb-2">3. Apply Securely</h3>
-                    <p class="text-slate-500 font-medium text-sm">Apply directly through our portal with 100% genuine university links.</p>
-                </div>
             </div>
         </div>
     </section>
@@ -395,8 +358,7 @@
                     <ul class="space-y-3 font-medium text-slate-400">
                         <li><a href="edtech-universities.html" class="hover:text-indigo-400 transition">Find Colleges</a></li>
                         <li><a href="edtech-universities.html" class="hover:text-indigo-400 transition">Compare Tool</a></li>
-                        <li><a href="#how-it-works" class="hover:text-indigo-400 transition">How it Works</a></li>
-                        <li><a href="#career-explorer" class="hover:text-indigo-400 transition">Career Compass</a></li>
+                        <li><a href="career-compass.html" class="hover:text-indigo-400 transition">Career Compass</a></li>
                     </ul>
                 </div>
                 <div>
@@ -414,20 +376,16 @@
     </footer>
 
     <script>
-        // MEGA MENU LOGIC (Full 17 Specializations + Content)
+        // MEGA MENU LOGIC
         const specializations = [
             "Engineering", "Management", "Commerce & Banking", "Medical", "Sciences", 
-            "Hotel Management", "Information Technology", "Arts & Humanities", 
-            "Mass Communication", "Nursing", "Agriculture", "Design", 
-            "Law", "Pharmacy", "Para Medical", "Dental", "Performing Arts"
+            "Design", "Law", "Pharmacy"
         ];
 
         const megaMenuContent = {
-            "Engineering": { degrees: ["B.Tech colleges in India", "M.Tech colleges in India", "B.Arch colleges in India", "Diploma colleges in India", "View All Degrees"], popular: ["Chandigarh University", "Amity University, Punjab", "Sharda University", "LPU Jalandhar"], top: ["IIT Madras", "IIT Delhi", "IIT Bombay", "VIT Vellore"] },
-            "Management": { degrees: ["MBA colleges in India", "BBA colleges in India", "PGDM colleges in India", "Executive MBA", "View All Degrees"], popular: ["Chandigarh University", "Amity University", "Parul University", "CGC Landran"], top: ["IIM Ahmedabad", "IIM Bangalore", "IIM Calcutta", "XLRI"] },
-            "Medical": { degrees: ["MBBS colleges in India", "BDS colleges in India", "BAMS colleges in India", "MD colleges in India", "View All Degrees"], popular: ["Sharda University", "NIMS University", "Parul University", "Amity University"], top: ["AIIMS New Delhi", "PGIMER Chandigarh", "CMC Vellore", "JIPMER"] },
-            "Law": { degrees: ["BA LLB", "BBA LLB", "LLM", "Diploma in Law", "View All Degrees"], popular: ["Chandigarh University", "UPES Dehradun", "Amity University"], top: ["NLSIU Bangalore", "NLU Delhi", "NALSAR Hyderabad"] },
-            "Default": { degrees: ["Top UG colleges", "Top PG colleges", "Diploma courses", "View All Degrees"], popular: ["Chandigarh University", "Amity University", "Sharda University"], top: ["Delhi University", "JNU", "BHU"] }
+            "Engineering": { degrees: ["B.Tech colleges in India", "M.Tech colleges in India", "Diploma colleges in India", "View All Degrees"], popular: ["Chandigarh University", "IIT Madras", "VIT Vellore", "BITS Pilani"], top: ["IIT Delhi", "IIT Bombay", "NIT Trichy"] },
+            "Management": { degrees: ["MBA colleges in India", "BBA colleges in India", "PGDM colleges in India", "View All Degrees"], popular: ["Chandigarh University", "Amity University", "Parul University"], top: ["IIM Ahmedabad", "IIM Bangalore", "XLRI"] },
+            "Default": { degrees: ["Top UG colleges", "Top PG colleges", "Diploma courses", "View All Degrees"], popular: ["Chandigarh University", "Amity University"], top: ["Delhi University", "JNU", "BHU"] }
         };
 
         function generateMegaMenu() {
@@ -467,7 +425,7 @@
             renderList('mega-top', data.top);
         }
 
-        // TRENDING COLLEGES (Clean Cards with more data)
+        // TRENDING COLLEGES
         const trendingColleges = [
             { name: "IIT Madras", location: "Chennai, TN", logo: "IIT", color: "from-blue-600 to-blue-800", tag: "Engineering", fees: "₹2.14 L/Yr", package: "₹1.98 CPA", rating: "8.9" },
             { name: "IIM Ahmedabad", location: "Ahmedabad, GJ", logo: "IIM", color: "from-amber-500 to-amber-700", tag: "Management", fees: "₹25.0 L", package: "₹1.15 CPA", rating: "9.1" },
@@ -500,78 +458,11 @@
             `).join('');
         }
 
-        // DREAM BUILDER LOGIC
-        const dreamData = {
-            startup: { icon: "🚀", title: "Start a Company", sal: "Unlimited", desc: "Awesome! To build the next unicorn, you'll need the right network and business skills. Here is how we can get you there.", steps: ["BBA/MBA with Incubation Support", "Colleges with active Angel Investor networks", "Practical leadership workshops"], skills: "Leadership, Scaling, Sales" },
-            tech: { icon: "👨‍💻", title: "Code for FAANG", sal: "₹20L - ₹60L", desc: "Tech giants want problem solvers. Let's find colleges that focus on hardcore coding and placements.", steps: ["B.Tech CS or Data Science", "Colleges with direct Google/Amazon tie-ups", "Focus on DSA and Projects"], skills: "Logic, Coding, System Design" },
-            abroad: { icon: "🌍", title: "Settle Abroad", sal: "High Standard", desc: "Ready to fly? We'll find degrees that are internationally recognized and offer easy visa transitions.", steps: ["Global Credit Transfer Programs", "IELTS/TOEFL assistance on campus", "Colleges with strong international alumni"], skills: "Adaptability, Global Communication" },
-            finance: { icon: "💰", title: "Make Big Money", sal: "₹15L+", desc: "Finance, Investment Banking, or Consulting. Let's get you into the colleges where the big firms hire.", steps: ["MBA in Finance / CFA", "Trading Labs on Campus", "Alumni in top consulting firms"], skills: "Numbers, Analytics, Networking" }
-        };
-
-        function updateRoadmap(key, btn) {
-            document.querySelectorAll('.dream-tab').forEach(t => { t.classList.remove('active', 'bg-white/10', 'text-white'); t.classList.add('bg-white/5', 'text-slate-300'); });
-            btn.classList.remove('bg-white/5', 'text-slate-300'); btn.classList.add('active', 'bg-white/10', 'text-white');
-            const card = document.getElementById('displayCard'); card.style.opacity = '0'; card.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                const item = dreamData[key];
-                document.getElementById('r-icon').innerText = item.icon; document.getElementById('r-title').innerText = item.title; document.getElementById('r-desc').innerText = item.desc; document.getElementById('r-sal').innerText = item.sal; document.getElementById('r-skills').innerText = item.skills;
-                document.getElementById('s1').innerText = item.steps[0]; document.getElementById('s2').innerText = item.steps[1]; document.getElementById('s3').innerText = item.steps[2];
-                card.style.opacity = '1'; card.style.transform = 'scale(1)';
-            }, 300);
-        }
-
-        // CAREER EXPLORER LOGIC (Clean Design)
-        const careersDatabase = [
-            { id: "tech", name: "💻 IT & Tech", roles: [{ title: "Software Engineer", desc: "Build apps, websites, and high-performance software systems.", salary: "₹6L - ₹40L+", icon: "fa-code", color: "blue" }, { title: "Data Scientist", desc: "Analyze complex data to help companies make smart decisions.", salary: "₹8L - ₹30L+", icon: "fa-chart-pie", color: "indigo" }, { title: "Cyber Security", desc: "Protect systems and networks from digital hacking attacks.", salary: "₹7L - ₹25L+", icon: "fa-shield-halved", color: "emerald" }] },
-            { id: "medical", name: "🩺 Healthcare", roles: [{ title: "Surgeon / Doctor", desc: "Diagnose and treat complex medical conditions in hospitals.", salary: "₹12L - ₹50L+", icon: "fa-user-doctor", color: "rose" }, { title: "Psychologist", desc: "Help people manage mental health issues and emotional distress.", salary: "₹4L - ₹15L+", icon: "fa-brain", color: "purple" }] },
-            { id: "business", name: "📈 Business", roles: [{ title: "Investment Banker", desc: "Manage financial assets, IPOs and corporate mergers globally.", salary: "₹15L - ₹60L+", icon: "fa-sack-dollar", color: "emerald" }, { title: "Marketing Manager", desc: "Promote products, build brand awareness and run campaigns.", salary: "₹7L - ₹25L+", icon: "fa-bullhorn", color: "orange" }] }
-        ];
-
-        function renderCareerCategories() {
-            const container = document.getElementById('career-categories'); container.innerHTML = '';
-            careersDatabase.forEach((cat, index) => {
-                const btn = document.createElement('button');
-                const activeClasses = 'bg-slate-900 text-white shadow-md border-slate-900';
-                const inactiveClasses = 'bg-slate-50 text-slate-600 hover:bg-white border-transparent';
-                btn.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal border-2 ${index === 0 ? activeClasses : inactiveClasses}`;
-                btn.innerHTML = cat.name;
-                btn.onclick = () => {
-                    Array.from(container.children).forEach(c => { c.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal border-2 ${inactiveClasses}`; });
-                    btn.className = `text-left px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap lg:whitespace-normal border-2 ${activeClasses}`;
-                    renderCareerRoles(cat.id);
-                };
-                container.appendChild(btn);
-            });
-            if(careersDatabase.length > 0) renderCareerRoles(careersDatabase[0].id);
-        }
-
-        function renderCareerRoles(categoryId) {
-            const container = document.getElementById('career-grid'); container.innerHTML = ''; 
-            const category = careersDatabase.find(c => c.id === categoryId); if(!category) return;
-            container.classList.remove('mega-content-fade'); void container.offsetWidth; container.classList.add('mega-content-fade');
-            category.roles.forEach(role => {
-                const colorMap = { 'blue': 'bg-blue-50 text-blue-600', 'indigo': 'bg-indigo-50 text-indigo-600', 'rose': 'bg-rose-50 text-rose-600', 'purple': 'bg-purple-50 text-purple-600', 'orange': 'bg-orange-50 text-orange-600', 'emerald': 'bg-emerald-50 text-emerald-600' };
-                const theme = colorMap[role.color] || colorMap['blue'];
-                container.innerHTML += `
-                    <div class="friendly-card p-8 group cursor-pointer bg-white" onclick="window.location.href='edtech-universities.html'">
-                        <div class="w-14 h-14 ${theme} rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition shadow-inner"><i class="fa-solid ${role.icon}"></i></div>
-                        <h3 class="text-xl font-extrabold text-slate-900 mb-2">${role.title}</h3>
-                        <p class="text-slate-500 font-medium text-sm mb-6">${role.desc}</p>
-                        <div class="pt-4 border-t border-slate-100 flex justify-between items-center">
-                            <span class="text-[11px] font-black uppercase tracking-widest text-slate-400">Avg. Salary</span>
-                            <span class="font-extrabold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg">${role.salary}</span>
-                        </div>
-                    </div>`;
-            });
-        }
-
         // Initialize All
         document.addEventListener('DOMContentLoaded', () => {
             generateMegaMenu();
             renderTrendingColleges();
-            renderCareerCategories(); 
         });
-
     </script>
 </body>
 </html>
