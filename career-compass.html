@@ -3,126 +3,597 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Compass</title>
+    <title>Career Compass | AI Career Finder - EduMentor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        .career-list {
-            list-style: none;
-            padding: 0;
-        }
-        .career-item {
-            background: #e9e9e9;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .career-item:hover {
-            background: #d9d9d9;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f4f7f9; color: #334155; overflow-x: hidden; }
+        
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9; }
+        
+        /* Floating Background */
+        .blob { position: absolute; filter: blur(80px); z-index: 0; opacity: 0.5; animation: float 10s infinite ease-in-out alternate; }
+        @keyframes float { 0% { transform: translate(0px, 0px) scale(1); } 100% { transform: translate(30px, -50px) scale(1.1); } }
+        
+        /* Clean Cards */
+        .career-card { background: white; border-radius: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; display: flex; flex-direction: column;}
+        .career-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15); border-color: #c7d2fe; z-index: 10; }
+
+        /* Custom Checkbox */
+        .filter-checkbox { appearance: none; width: 1.15rem; height: 1.15rem; border: 2px solid #cbd5e1; border-radius: 0.375rem; outline: none; cursor: pointer; transition: all 0.2s; position: relative; flex-shrink: 0; }
+        .filter-checkbox:checked { background-color: #4f46e5; border-color: #4f46e5; }
+        .filter-checkbox:checked::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; font-size: 0.6rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+        /* Modal Overlay & Animation */
+        .modal-overlay { opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(8px); }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { transform: translateY(50px) scale(0.95); opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); opacity: 1; }
+
+        .timeline-line { position: absolute; left: 23px; top: 40px; bottom: 40px; width: 2px; background: #e2e8f0; z-index: 0; }
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Career Compass</h1>
-        <p>Select a career to explore universities:</p>
-        <ul class="career-list" id="careerList">
-            <!-- Careers will be populated here -->
-        </ul>
+<body class="relative">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-40 glass-nav top-0 shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="safeNavigate('index.html')">
+                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg">E</div>
+                <span class="text-2xl font-black tracking-tight text-slate-900">Edu<span class="text-indigo-600">Mentor</span></span>
+            </div>
+            <div class="flex items-center gap-6">
+                <button onclick="safeNavigate('edtech-universities.html')" class="hidden md:block text-slate-600 font-bold hover:text-indigo-600 transition bg-transparent">Explore Colleges</button>
+                <button onclick="safeNavigate('index.html')" class="text-slate-500 font-extrabold hover:text-indigo-600 transition flex items-center gap-2 bg-slate-50 px-4 py-2 rounded-full border border-slate-200 shadow-sm">
+                    <i class="fa-solid fa-house"></i> Home
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION: AI Matchmaker Wizard -->
+    <section class="pt-32 pb-20 relative overflow-hidden bg-slate-900 border-b-4 border-indigo-500 min-h-[60vh] flex flex-col justify-center">
+        <!-- Abstract Background -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 z-0"></div>
+        <div class="blob bg-indigo-500/30 w-[500px] h-[500px] rounded-full top-[-20%] left-[-10%]"></div>
+        <div class="blob bg-emerald-500/20 w-[400px] h-[400px] rounded-full bottom-[-10%] right-[-5%]" style="animation-delay: 2s;"></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10 w-full">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-black uppercase tracking-widest mb-6 shadow-sm text-emerald-400">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Confused about your career?
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight text-white leading-tight">
+                    Find a career that fits <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Your Rules & Ambitions.</span>
+                </h1>
+                <p class="text-slate-400 font-medium text-lg max-w-2xl mx-auto">
+                    Answer 3 simple questions below. Our AI will analyze 60+ industries and instantly recommend the best paths for you.
+                </p>
+            </div>
+
+            <!-- The Smart Matcher Tool -->
+            <div class="bg-white/10 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-white/20 shadow-2xl max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Q1 -->
+                    <div>
+                        <label class="block text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2">1. My main interest is...</label>
+                        <select id="wiz-interest" class="w-full bg-white/5 border border-white/20 text-white font-bold rounded-xl px-4 py-3.5 outline-none focus:border-emerald-400 [&>option]:text-slate-800">
+                            <option value="all">Anything / Not Sure</option>
+                            <option value="tech">Computers & Technology</option>
+                            <option value="medical">Healthcare & Saving Lives</option>
+                            <option value="business">Business & Finance</option>
+                            <option value="creative">Art, Design & Media</option>
+                            <option value="trades">Hands-on Technical Work</option>
+                            <option value="science">Research & Science</option>
+                        </select>
+                    </div>
+                    <!-- Q2 -->
+                    <div>
+                        <label class="block text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2">2. I want to study for...</label>
+                        <select id="wiz-edu" class="w-full bg-white/5 border border-white/20 text-white font-bold rounded-xl px-4 py-3.5 outline-none focus:border-emerald-400 [&>option]:text-slate-800">
+                            <option value="all">Doesn't Matter</option>
+                            <option value="degree">3-4 Years (Bachelors Degree)</option>
+                            <option value="diploma">1-2 Years (Diploma / Cert)</option>
+                            <option value="advanced">5+ Years (Masters/Doctorate)</option>
+                            <option value="apprentice">Earn while learning (Apprentice)</option>
+                        </select>
+                    </div>
+                    <!-- Q3 -->
+                    <div>
+                        <label class="block text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2">3. My salary goal is...</label>
+                        <select id="wiz-salary" class="w-full bg-white/5 border border-white/20 text-white font-bold rounded-xl px-4 py-3.5 outline-none focus:border-emerald-400 [&>option]:text-slate-800">
+                            <option value="all">I just want a good job</option>
+                            <option value="high">High Paying (₹15L+ / yr)</option>
+                            <option value="medium">Stable (₹6L - ₹15L / yr)</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="runSmartMatch()" class="w-full py-4 bg-emerald-500 text-slate-900 font-black rounded-xl hover:bg-emerald-400 transition-all shadow-[0_0_20px_rgba(52,211,153,0.4)] text-lg flex items-center justify-center gap-2">
+                    Reveal My Career Matches <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAREER EXPLORER (Sidebar + Grid) -->
+    <section class="py-12 bg-slate-50 min-h-screen relative z-10" id="explorer-section">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-8">
+            
+            <!-- LEFT SIDEBAR FILTERS -->
+            <aside class="w-full lg:w-[280px] shrink-0 lg:sticky top-[100px] h-fit lg:max-h-[calc(100vh-120px)] overflow-y-auto custom-scroll bg-white rounded-[2rem] shadow-sm border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                    <h2 class="font-black text-lg text-slate-800"><i class="fa-solid fa-filter text-indigo-500 mr-2"></i> Filter Roles</h2>
+                    <button onclick="clearFilters()" class="text-xs font-bold text-indigo-600 hover:text-red-500 bg-indigo-50 px-2 py-1 rounded transition">Clear</button>
+                </div>
+
+                <!-- Sector Filter -->
+                <div class="mb-6">
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm">Industry Sector</h3>
+                    <div class="space-y-2.5">
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="tech" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">IT & Web Tech</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="medical" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Healthcare & Life Sci</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="business" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Business & Finance</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="creative" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Creative & Media</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="trades" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Trades & Technical</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="science" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Science & Research</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="engineering" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Core Engineering</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="education" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Education & Social</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="law" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Law & Public Policy</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="hospitality" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Hospitality & Tourism</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="agri" class="filter-checkbox sector-filter"> <span class="text-sm font-bold text-slate-600 group-hover:text-indigo-600">Agriculture & Env.</span></label>
+                    </div>
+                </div>
+
+                <!-- Education Filter -->
+                <div class="mb-6 border-t border-slate-100 pt-5">
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm">Required Education</h3>
+                    <div class="space-y-2.5">
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="degree" class="filter-checkbox edu-filter"> <span class="text-sm font-bold text-slate-600">Bachelors Degree</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="advanced" class="filter-checkbox edu-filter"> <span class="text-sm font-bold text-slate-600">Masters/Doctorate (MD, PhD)</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="diploma" class="filter-checkbox edu-filter"> <span class="text-sm font-bold text-slate-600">Diploma / Certificate</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="apprentice" class="filter-checkbox edu-filter"> <span class="text-sm font-bold text-slate-600">Apprenticeship</span></label>
+                    </div>
+                </div>
+
+                <!-- Salary Potential -->
+                <div class="border-t border-slate-100 pt-5">
+                    <h3 class="font-bold text-slate-800 mb-3 text-sm">Salary Potential</h3>
+                    <div class="space-y-2.5">
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="high" class="filter-checkbox sal-filter"> <span class="text-sm font-bold text-slate-600">High (₹15L+ / yr)</span></label>
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="medium" class="filter-checkbox sal-filter"> <span class="text-sm font-bold text-slate-600">Medium (₹6L - ₹15L / yr)</span></label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- RIGHT GRID -->
+            <main class="flex-1">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                    <h2 class="text-2xl font-extrabold text-slate-900" id="results-title">All Career Paths</h2>
+                    <span class="bg-white border border-slate-200 px-4 py-1.5 rounded-full text-sm font-bold text-slate-600 shadow-sm" id="result-count">0 paths found</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="career-grid">
+                    <!-- Cards injected by JS -->
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <!-- DEEP DIVE MODAL -->
+    <div id="career-modal" class="modal-overlay fixed inset-0 z-50 bg-slate-900/70 flex items-center justify-center p-4 sm:p-6 overflow-y-auto custom-scroll">
+        <div class="modal-content bg-white w-full max-w-5xl rounded-[2.5rem] shadow-2xl relative flex flex-col lg:flex-row my-auto min-h-[600px] lg:max-h-[85vh] overflow-hidden">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 lg:top-6 lg:right-6 w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-red-100 hover:text-red-600 transition z-30 font-bold border border-slate-200">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Left Panel -->
+            <div class="lg:w-2/5 p-8 lg:p-12 text-white relative flex flex-col overflow-hidden shrink-0" id="modal-left">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+                
+                <div class="relative z-10 flex-grow">
+                    <div class="flex justify-between items-start mb-6">
+                        <div id="modal-icon" class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner border border-white/30"></div>
+                        <span id="modal-sector" class="bg-white/20 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border border-white/30">Sector</span>
+                    </div>
+                    
+                    <h2 id="modal-title" class="text-3xl lg:text-4xl font-extrabold mb-3 leading-tight tracking-tight">Job Title</h2>
+                    <p id="modal-short-desc" class="text-white/90 font-medium mb-8 text-[15px] leading-relaxed">Short description.</p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md flex justify-between items-center">
+                            <span class="text-[10px] text-white/70 uppercase font-black tracking-widest">Entry Salary</span>
+                            <span id="modal-salary-start" class="text-lg font-black text-white">₹0L</span>
+                        </div>
+                        <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md flex justify-between items-center">
+                            <span class="text-[10px] text-white/70 uppercase font-black tracking-widest">Peak Salary</span>
+                            <span id="modal-salary-high" class="text-xl font-black text-emerald-300 drop-shadow-md">₹0L+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="lg:w-3/5 p-8 lg:p-10 bg-white overflow-y-auto custom-scroll relative">
+                
+                <div class="mb-8">
+                    <h3 class="text-lg font-extrabold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-briefcase text-indigo-500"></i> The Reality Check</h3>
+                    <p id="modal-long-desc" class="text-slate-600 text-sm font-medium leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        Detailed description of what you actually do on a day-to-day basis.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                    <div class="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
+                        <h4 class="text-emerald-800 font-extrabold text-xs uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-heart text-emerald-500"></i> Good Fit If...</h4>
+                        <ul id="modal-love" class="text-emerald-700 text-sm font-medium space-y-2 list-none pl-1"></ul>
+                    </div>
+                    <div class="bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
+                        <h4 class="text-rose-800 font-extrabold text-xs uppercase tracking-widest mb-3 flex items-center gap-2"><i class="fa-solid fa-face-frown text-rose-500"></i> Bad Fit If...</h4>
+                        <ul id="modal-hate" class="text-rose-700 text-sm font-medium space-y-2 list-none pl-1"></ul>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-lg font-extrabold text-slate-900 mb-4 flex items-center gap-2"><i class="fa-solid fa-map-location-dot text-orange-500"></i> Typical Entry Path</h3>
+                    <div class="relative pl-10 space-y-6" id="modal-roadmap">
+                        <div class="timeline-line"></div>
+                        <!-- Roadmap injected via JS -->
+                    </div>
+                </div>
+
+                <div class="sticky bottom-0 bg-white pt-4 border-t border-slate-100">
+                    <button onclick="goToColleges()" class="w-full bg-slate-900 text-white px-8 py-4 rounded-xl font-extrabold hover:bg-indigo-600 transition-all text-center flex items-center justify-center gap-3 shadow-xl hover:-translate-y-1">
+                        Find Best Colleges for this <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Sample careers database (replace with actual data)
+        // 🚀 SAFE NAVIGATION FUNCTION (Fixes URL error in iframe)
+        function safeNavigate(url) {
+            if (!url) return;
+            const a = document.createElement('a');
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // THE MASSIVE CAREER DATABASE
         const careersDB = [
-            { title: 'Software Engineer', sector: 'tech', edu: 'degree' },
-            { title: 'Doctor', sector: 'medical', edu: 'advanced' },
-            { title: 'Business Analyst', sector: 'business', edu: 'degree' },
-            { title: 'Graphic Designer', sector: 'creative', edu: 'diploma' },
-            { title: 'Lawyer', sector: 'law', edu: 'advanced' }
-            // Add more careers as needed
+            // --- IT, WEB & EMERGING TECH ---
+            {
+                id: 'sw1', sector: 'tech', sectorName: 'IT & Tech', title: 'Software Engineer', icon: '💻', color: 'from-blue-600 to-indigo-800',
+                edu: 'degree', salTier: 'high', salStart: '₹6L', salHigh: '₹40L+', entryPath: 'B.Tech CS / BCA + MCA',
+                shortDesc: 'Build apps, websites, and high-performance software systems.',
+                longDesc: 'As a Software Engineer, you are a digital builder. You write code to create websites, mobile apps, or backend systems. Your day involves solving logic puzzles, fixing bugs, and collaborating with teams.',
+                love: ['Solving logic puzzles', 'Building things from scratch', 'High salary potential'], hate: ['Sitting at a desk all day', 'Constantly learning new languages', 'Debugging frustrating errors']
+            },
+            {
+                id: 'sw2', sector: 'tech', sectorName: 'Data & AI', title: 'Data Scientist', icon: '🧠', color: 'from-indigo-500 to-purple-700',
+                edu: 'degree', salTier: 'high', salStart: '₹8L', salHigh: '₹50L+', entryPath: 'B.Tech / B.Sc Stats + Data Bootcamp',
+                shortDesc: 'Analyze complex data to help companies make smart decisions.',
+                longDesc: 'Data Scientists are modern fortune tellers. You use Mathematics, Statistics, and Machine Learning to analyze massive amounts of data and predict trends to increase profits or efficiency.',
+                love: ['Working with numbers', 'Finding patterns', 'Predictive modeling'], hate: ['Cleaning messy data', 'Dealing with non-technical managers', 'Ambiguous goals']
+            },
+            {
+                id: 'sw3', sector: 'tech', sectorName: 'AI & Robotics', title: 'AI / ML Engineer', icon: '🤖', color: 'from-cyan-500 to-blue-600',
+                edu: 'degree', salTier: 'high', salStart: '₹10L', salHigh: '₹60L+', entryPath: 'B.Tech AI/ML / Masters in CS',
+                shortDesc: 'Train machines to think and act like humans.',
+                longDesc: 'You design and build AI models that can understand language (like ChatGPT) or recognize images. It requires heavy mathematics, specifically linear algebra and calculus, along with Python coding.',
+                love: ['Advanced mathematics', 'Cutting-edge tech', 'Building smart algorithms'], hate: ['Theoretical math', 'Long model training times', 'Dealing with biased data']
+            },
+            {
+                id: 'sw4', sector: 'tech', sectorName: 'Cybersecurity', title: 'Cybersecurity Specialist', icon: '🛡️', color: 'from-emerald-600 to-teal-800',
+                edu: 'diploma', salTier: 'high', salStart: '₹6L', salHigh: '₹35L+', entryPath: 'B.Tech / Diploma + CEH/CISSP Certs',
+                shortDesc: 'Protect networks and data from hackers.',
+                longDesc: 'You are the digital bodyguard. You monitor networks for security breaches, investigate violations, and conduct penetration testing (legally hacking your own systems) to find vulnerabilities.',
+                love: ['Thinking like a hacker', 'High stakes problem solving', 'Continuous learning'], hate: ['High stress during breaches', 'Writing incident reports', 'Routine monitoring']
+            },
+
+            // --- HEALTHCARE & LIFE SCIENCES ---
+            {
+                id: 'med1', sector: 'medical', sectorName: 'Healthcare', title: 'Medical Doctor (MBBS)', icon: '🩺', color: 'from-teal-500 to-emerald-700',
+                edu: 'advanced', salTier: 'high', salStart: '₹8L', salHigh: '₹40L+', entryPath: 'NEET -> MBBS (5.5 Yrs) -> MD/MS',
+                shortDesc: 'Diagnose illnesses, prescribe treatments, and save lives.',
+                longDesc: 'A highly respected and demanding profession. You will diagnose patients, perform procedures, and manage treatment plans. It requires years of rigorous study, residency, and emotional resilience.',
+                love: ['Saving lives', 'Human biology', 'High social respect'], hate: ['10+ years of studying', 'Grueling hospital shifts', 'Dealing with loss']
+            },
+            {
+                id: 'med2', sector: 'medical', sectorName: 'Healthcare', title: 'Nurse (RN / BSN)', icon: '💉', color: 'from-rose-400 to-pink-600',
+                edu: 'degree', salTier: 'medium', salStart: '₹3L', salHigh: '₹12L+', entryPath: 'B.Sc Nursing / GNM Diploma',
+                shortDesc: 'Provide critical care and support to patients.',
+                longDesc: 'Nurses are the backbone of hospitals. They administer medication, monitor patient recovery, and provide emotional support to patients and families during difficult times.',
+                love: ['Direct patient care', 'Active, on-your-feet work', 'Global job opportunities'], hate: ['Very long shifts', 'Physically exhausting', 'Exposure to bodily fluids']
+            },
+            {
+                id: 'med3', sector: 'medical', sectorName: 'Pharmacy', title: 'Pharmacist', icon: '💊', color: 'from-cyan-500 to-blue-600',
+                edu: 'degree', salTier: 'medium', salStart: '₹3L', salHigh: '₹15L+', entryPath: 'B.Pharm / Pharm.D',
+                shortDesc: 'Dispense medications and advise on drug interactions.',
+                longDesc: 'Pharmacists don\'t just hand out pills. They understand complex chemical interactions, ensure prescriptions are safe, and counsel patients on how to take their medicines properly.',
+                love: ['Chemistry and biology', 'A clean, structured environment', 'Patient interaction'], hate: ['Standing for long hours', 'Strict regulations', 'Dealing with angry customers']
+            },
+
+            // --- CORE ENGINEERING & TRADES ---
+            {
+                id: 'eng1', sector: 'engineering', sectorName: 'Core Engineering', title: 'Mechanical Engineer', icon: '⚙️', color: 'from-slate-600 to-slate-800',
+                edu: 'degree', salTier: 'medium', salStart: '₹4L', salHigh: '₹20L+', entryPath: 'B.Tech Mechanical Engineering',
+                shortDesc: 'Design, build, and test mechanical devices and machines.',
+                longDesc: 'From car engines to HVAC systems and manufacturing plants, Mechanical Engineers use physics and materials science to design and manufacture physical systems.',
+                love: ['Physics and mechanics', 'Seeing physical products built', 'Versatile industries'], hate: ['Slower salary growth than IT', 'Heavy CAD software work', 'Factory environments']
+            },
+            {
+                id: 'eng2', sector: 'engineering', sectorName: 'Core Engineering', title: 'Electrical Engineer', icon: '⚡', color: 'from-yellow-500 to-orange-600',
+                edu: 'degree', salTier: 'medium', salStart: '₹4.5L', salHigh: '₹22L+', entryPath: 'B.Tech Electrical / Electronics',
+                shortDesc: 'Design electrical systems, from microchips to power grids.',
+                longDesc: 'You deal with the technology of electricity. This could mean designing massive power grids for cities or micro-circuits for smartphones and electric vehicles.',
+                love: ['Circuit design', 'Renewable energy tech', 'Complex problem solving'], hate: ['Abstract, invisible concepts', 'High risk hazards (power)', 'Heavy mathematics']
+            },
+            {
+                id: 'trd1', sector: 'trades', sectorName: 'Vocational', title: 'Electrician / Plumber', icon: '🔧', color: 'from-amber-600 to-red-700',
+                edu: 'apprentice', salTier: 'medium', salStart: '₹3L', salHigh: '₹12L+', entryPath: 'ITI Diploma / Apprenticeship',
+                shortDesc: 'Highly skilled hands-on technical professionals.',
+                longDesc: 'Trades are the foundation of society. Skilled electricians and plumbers install, maintain, and repair critical infrastructure in homes and commercial buildings. Highly in demand globally.',
+                love: ['Working with your hands', 'Zero student debt', 'Starting your own business'], hate: ['Physically taxing', 'Working in tight/dirty spaces', 'Irregular hours']
+            },
+
+            // --- BUSINESS, FINANCE & MANAGEMENT ---
+            {
+                id: 'biz1', sector: 'business', sectorName: 'Finance', title: 'Investment Banker', icon: '📊', color: 'from-emerald-600 to-teal-800',
+                edu: 'advanced', salTier: 'high', salStart: '₹12L', salHigh: '₹1Cr+', entryPath: 'B.Com/BBA -> Top Tier MBA Finance',
+                shortDesc: 'Help big companies raise money and merge together.',
+                longDesc: 'A high-stakes job where you help corporations buy other companies (M&A) or issue shares (IPO). It pays incredibly well, but the work hours are extremely long (80+ hours/week).',
+                love: ['Making serious money', 'High-profile deals', 'Financial modeling'], hate: ['Extreme work hours', 'High stress', 'Corporate politics']
+            },
+            {
+                id: 'biz2', sector: 'business', sectorName: 'Management', title: 'Product Manager', icon: '🎯', color: 'from-orange-500 to-red-600',
+                edu: 'degree', salTier: 'high', salStart: '₹10L', salHigh: '₹50L+', entryPath: 'B.Tech / BBA + MBA',
+                shortDesc: 'The "Mini-CEO" of a specific app or product.',
+                longDesc: 'A PM sits between business, design, and tech. You decide *what* needs to be built next by understanding user problems. You manage the strategy without writing the code yourself.',
+                love: ['Leadership', 'Solving user problems', 'Cross-team collaboration'], hate: ['Countless meetings', 'Leading without direct authority', 'Taking blame for failures']
+            },
+            {
+                id: 'biz3', sector: 'business', sectorName: 'Human Resources', title: 'HR Specialist', icon: '🤝', color: 'from-rose-400 to-pink-600',
+                edu: 'degree', salTier: 'medium', salStart: '₹4L', salHigh: '₹25L+', entryPath: 'BBA / B.A. Psych -> MBA HR',
+                shortDesc: 'Recruit talent, build culture, and manage employee relations.',
+                longDesc: 'You manage a company\'s most valuable asset: its people. This includes hiring the best candidates, handling payroll, resolving conflicts, and building a positive office culture.',
+                love: ['Interacting with people', 'Building culture', 'Psychology'], hate: ['Firing people', 'Administrative paperwork', 'Office drama']
+            },
+
+            // --- CREATIVE & MEDIA ---
+            {
+                id: 'crt1', sector: 'creative', sectorName: 'Design', title: 'UX / UI Designer', icon: '✨', color: 'from-fuchsia-500 to-purple-600',
+                edu: 'diploma', salTier: 'medium', salStart: '₹5L', salHigh: '₹25L+', entryPath: 'B.Des / Self-taught Portfolio',
+                shortDesc: 'Design intuitive and beautiful digital interfaces.',
+                longDesc: 'You combine psychology and art to make apps easy to use (UX) and visually stunning (UI). You use tools like Figma to create prototypes before developers code them.',
+                love: ['Aesthetics and art', 'Understanding human behavior', 'Creative freedom'], hate: ['Clients rejecting your designs', 'Pixel-pushing', 'Tight deadlines']
+            },
+            {
+                id: 'crt2', sector: 'creative', sectorName: 'Media', title: 'Content Creator', icon: '✍️', color: 'from-yellow-400 to-orange-500',
+                edu: 'diploma', salTier: 'medium', salStart: '₹3L', salHigh: '₹20L+', entryPath: 'Any Degree + Strong Portfolio',
+                shortDesc: 'Write copy, scripts, or create videos for brands.',
+                longDesc: 'You create engaging content—blogs, video scripts, social media posts, or ad copy. The goal is to capture attention and tell compelling stories for brands or personal channels.',
+                love: ['Writing and storytelling', 'Flexible/Freelance work', 'Creativity'], hate: ['Writer\'s block', 'Unstable freelance income', 'Constant content treadmill']
+            },
+
+            // --- LAW, PUBLIC SERVICE & EDUCATION ---
+            {
+                id: 'law1', sector: 'law', sectorName: 'Legal', title: 'Lawyer / Attorney', icon: '⚖️', color: 'from-slate-700 to-black',
+                edu: 'degree', salTier: 'high', salStart: '₹5L', salHigh: '₹50L+', entryPath: 'CLAT -> BA LLB (5 Years)',
+                shortDesc: 'Advise clients and represent them in legal matters.',
+                longDesc: 'Whether fighting in court (litigation) or drafting massive contracts for tech companies (corporate law), lawyers use deep knowledge of the legal system to protect their clients.',
+                love: ['Arguing and debating', 'Reading complex documents', 'High corporate salaries'], hate: ['Reading 1000-page files', 'Intense initial struggle', 'Stressful deadlines']
+            },
+            {
+                id: 'edu1', sector: 'education', sectorName: 'Education', title: 'Teacher / Professor', icon: '📚', color: 'from-indigo-400 to-blue-600',
+                edu: 'advanced', salTier: 'medium', salStart: '₹4L', salHigh: '₹20L+', entryPath: 'B.Ed / Masters -> UGC NET -> PhD',
+                shortDesc: 'Teach students and mold the next generation.',
+                longDesc: 'You mold the minds of young adults in schools or universities. The job is a mix of delivering lectures, grading papers, and conducting academic research (for professors).',
+                love: ['Mentoring students', 'Academic freedom', 'Subject mastery'], hate: ['Academic politics', 'Grading hundreds of papers', 'Lower starting pay']
+            }
         ];
 
-        let currentSelectedTitle = null;
+        // LOGIC FOR FILTERING
+        function runSmartMatch() {
+            const interest = document.getElementById('wiz-interest').value;
+            const edu = document.getElementById('wiz-edu').value;
+            const salary = document.getElementById('wiz-salary').value;
 
-        // Function to populate career list
-        function populateCareers() {
-            const careerList = document.getElementById('careerList');
-            careersDB.forEach(career => {
-                const li = document.createElement('li');
-                li.className = 'career-item';
-                li.textContent = career.title;
-                li.onclick = () => selectCareer(career.title);
-                careerList.appendChild(li);
-            });
-        }
-
-        // Function to select a career
-        function selectCareer(title) {
-            currentSelectedTitle = title;
-            redirectToUniversities();
-        }
-
-        // Function to redirect to universities page
-        function redirectToUniversities() {
-            let targetUrl = 'edtech-universities.html';
-
-            if (currentSelectedTitle) {
-                // Find career data
-                const data = careersDB.find(c => c.title === currentSelectedTitle);
-
-                if (!data) {
-                    alert('Career data not found!');
-                    return;
-                }
-
-                // Map career sector to university stream
-                const streamMap = {
-                    'tech': 'Engineering',
-                    'medical': 'Medical',
-                    'business': 'Management',
-                    'creative': 'Design',
-                    'law': 'Law'
-                };
-                const mappedStream = streamMap[data.sector] || '';
-
-                // Map career education to university level
-                const levelMap = {
-                    'degree': 'UG',
-                    'advanced': 'PG',
-                    'diploma': 'Diploma'
-                };
-                const mappedLevel = levelMap[data.edu] || '';
-
-                // Build URL with parameters
-                const params = new URLSearchParams();
-                params.append('career', currentSelectedTitle);
-                if (mappedStream) params.append('stream', mappedStream);
-                if (mappedLevel) params.append('level', mappedLevel);
-
-                targetUrl += '?' + params.toString();
+            // Set sidebar checkboxes
+            clearFilters(false);
+            
+            if(interest !== 'all') {
+                const cb = document.querySelector(`.sector-filter[value="${interest}"]`);
+                if(cb) cb.checked = true;
+            }
+            if(edu !== 'all') {
+                const cb = document.querySelector(`.edu-filter[value="${edu}"]`);
+                if(cb) cb.checked = true;
+            }
+            if(salary !== 'all') {
+                const cb = document.querySelector(`.sal-filter[value="${salary}"]`);
+                if(cb) cb.checked = true;
             }
 
-            // Redirect using window.location for simplicity
-            window.location.href = targetUrl;
+            applyFilters();
+            document.getElementById('explorer-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', populateCareers);
+        function clearFilters(render = true) {
+            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
+            if(render) applyFilters();
+        }
+
+        function applyFilters() {
+            // Get selected values
+            const getChecked = (selector) => Array.from(document.querySelectorAll(selector + ':checked')).map(cb => cb.value);
+            
+            const sectors = getChecked('.sector-filter');
+            const edus = getChecked('.edu-filter');
+            const sals = getChecked('.sal-filter');
+
+            // Filter Array
+            const filtered = careersDB.filter(c => {
+                const matchSector = sectors.length === 0 || sectors.includes(c.sector);
+                const matchEdu = edus.length === 0 || edus.includes(c.edu);
+                const matchSal = sals.length === 0 || sals.includes(c.salTier);
+                return matchSector && matchEdu && matchSal;
+            });
+
+            // Update UI
+            const grid = document.getElementById('career-grid');
+            document.getElementById('result-count').innerText = `${filtered.length} paths found`;
+            
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-20 text-center text-slate-500 font-bold bg-white rounded-[2rem] border border-slate-200 border-dashed"><i class="fa-solid fa-magnifying-glass text-4xl mb-4 block text-slate-300"></i> No exact matches found for these tight filters. Try removing some!</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(c => `
+                <div class="career-card p-6 lg:p-8 bg-white relative overflow-hidden group" onclick="openModal('${c.id}')">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${c.color} opacity-5 rounded-bl-full z-0 transition-transform duration-500 group-hover:scale-150"></div>
+                    
+                    <div class="relative z-10 flex-grow">
+                        <div class="flex justify-between items-start mb-5">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br ${c.color} text-white flex items-center justify-center text-2xl shadow-md shadow-slate-200 group-hover:scale-110 transition-transform duration-300">${c.icon}</div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 bg-slate-50 border border-slate-200 px-2 py-1 rounded">${c.sectorName}</span>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-slate-900 mb-2 group-hover:text-indigo-600 transition leading-tight">${c.title}</h3>
+                        <p class="text-slate-500 text-sm font-medium mb-4 leading-relaxed">${c.shortDesc}</p>
+                    </div>
+                    
+                    <div class="relative z-10 pt-4 mt-auto">
+                        <p class="text-xs font-bold text-slate-400 mb-3 bg-slate-50 px-2 py-1.5 rounded inline-block border border-slate-100">
+                            <i class="fa-solid fa-graduation-cap text-indigo-400 mr-1"></i> ${c.entryPath.split('/')[0]}
+                        </p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <div>
+                                <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-0.5">Top Salary</p>
+                                <p class="font-black text-emerald-600 text-sm">${c.salHigh}</p>
+                            </div>
+                            <button type="button" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition flex items-center gap-1">Explore <i class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // MODAL LOGIC
+        let currentSelectedTitle = "";
+
+        function openModal(id) {
+            const data = careersDB.find(c => c.id === id);
+            if(!data) return;
+
+            currentSelectedTitle = data.title; 
+
+            // Setup Left Panel
+            document.getElementById('modal-left').className = `lg:w-2/5 p-8 lg:p-12 text-white relative flex flex-col overflow-hidden shrink-0 bg-gradient-to-br ${data.color}`;
+            document.getElementById('modal-icon').innerText = data.icon;
+            document.getElementById('modal-sector').innerText = data.sectorName;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-short-desc').innerText = data.shortDesc;
+            document.getElementById('modal-salary-start').innerText = data.salStart;
+            document.getElementById('modal-salary-high').innerText = data.salHigh;
+
+            // Setup Right Panel
+            document.getElementById('modal-long-desc').innerText = data.longDesc;
+            
+            document.getElementById('modal-love').innerHTML = data.love.map(i => `<li class="flex items-start gap-2"><i class="fa-solid fa-check mt-1 text-emerald-500 opacity-70"></i> <span>${i}</span></li>`).join('');
+            document.getElementById('modal-hate').innerHTML = data.hate.map(i => `<li class="flex items-start gap-2"><i class="fa-solid fa-xmark mt-1 text-rose-500 opacity-70"></i> <span>${i}</span></li>`).join('');
+            
+            // Build Roadmap
+            const pathSteps = data.entryPath.split('->').map(s => s.trim());
+            let roadmapHTML = `<div class="timeline-line"></div>`;
+            
+            if(pathSteps.length === 1 && pathSteps[0].includes('/')) {
+                roadmapHTML += `
+                    <div class="relative z-10 pl-8 mb-6">
+                        <div class="absolute -left-[22px] top-1 w-5 h-5 bg-indigo-500 rounded-full flex items-center justify-center shadow-sm border-4 border-white"></div>
+                        <h4 class="font-extrabold text-slate-900 text-sm mb-1">Undergraduate Education</h4>
+                        <p class="text-slate-600 text-sm font-medium bg-slate-50 p-3 rounded-xl border border-slate-100">${pathSteps[0]}</p>
+                    </div>
+                    <div class="relative z-10 pl-8">
+                        <div class="absolute -left-[22px] top-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center shadow-sm border-4 border-white"></div>
+                        <h4 class="font-extrabold text-slate-900 text-sm mb-1">Core Skills</h4>
+                        <p class="text-slate-600 text-sm font-medium bg-slate-50 p-3 rounded-xl border border-slate-100">Internships & Specialized Skills</p>
+                    </div>`;
+            } else {
+                pathSteps.forEach((step, i) => {
+                    let color = i === pathSteps.length-1 ? 'bg-emerald-500' : 'bg-indigo-500';
+                    roadmapHTML += `
+                        <div class="relative z-10 pl-8 mb-6">
+                            <div class="absolute -left-[22px] top-1 w-5 h-5 ${color} rounded-full flex items-center justify-center shadow-sm border-4 border-white"></div>
+                            <h4 class="font-extrabold text-slate-900 text-sm mb-1">Step ${i+1}</h4>
+                            <p class="text-slate-600 text-sm font-medium bg-slate-50 p-3 rounded-xl border border-slate-100">${step}</p>
+                        </div>`;
+                });
+            }
+            document.getElementById('modal-roadmap').innerHTML = roadmapHTML;
+
+            // Open Modal
+            document.body.style.overflow = 'hidden'; 
+            document.getElementById('career-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.body.style.overflow = 'auto';
+            document.getElementById('career-modal').classList.remove('active');
+        }
+
+        // 🚀 SMART FILTERS TO UNIVERSITIES PAGE 🚀
+        function goToColleges() {
+            let targetUrl = 'edtech-universities.html';
+            
+            if (currentSelectedTitle) {
+                const data = careersDB.find(c => c.title === currentSelectedTitle);
+                if (data) {
+                    const streamMap = {
+                        'tech': 'Engineering',
+                        'medical': 'Medical',
+                        'business': 'Management',
+                        'creative': 'Design',
+                        'law': 'Law'
+                    };
+                    const levelMap = {
+                        'degree': 'UG',
+                        'advanced': 'PG',
+                        'diploma': 'Diploma'
+                    };
+                    
+                    let mappedStream = streamMap[data.sector] || '';
+                    let mappedLevel = levelMap[data.edu] || '';
+
+                    targetUrl += `?career=${encodeURIComponent(currentSelectedTitle)}`;
+                    if(mappedStream) targetUrl += `&stream=${encodeURIComponent(mappedStream)}`;
+                    if(mappedLevel) targetUrl += `&level=${encodeURIComponent(mappedLevel)}`;
+                }
+            }
+            
+            safeNavigate(targetUrl);
+        }
+
+        document.getElementById('career-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Initialize Filter Watchers
+        document.querySelectorAll('.filter-checkbox').forEach(cb => {
+            cb.addEventListener('change', applyFilters);
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            applyFilters(); // Load all by default
+        });
     </script>
 </body>
 </html>
