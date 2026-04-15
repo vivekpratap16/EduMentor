@@ -316,10 +316,10 @@
                     </div>
                 </div>
 
-                <!-- Fixed Bottom CTA Button -->
-                <div class="sticky bottom-0 bg-white pt-4 border-t border-slate-100">
-                    <button type="button" onclick="goToColleges()" class="w-full bg-slate-900 text-white px-8 py-4 rounded-xl font-extrabold hover:bg-indigo-600 transition-all text-center flex items-center justify-center gap-3 shadow-xl hover:-translate-y-1 text-lg">
-                        Find Best Colleges for this <i class="fa-solid fa-arrow-right"></i>
+                <!-- Dynamic & Premium CTA Button -->
+                <div class="sticky bottom-0 bg-white pt-6 pb-2 border-t border-slate-100 z-20">
+                    <button type="button" id="modal-action-btn" onclick="goToColleges()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-black hover:shadow-xl hover:shadow-indigo-500/30 transition-all text-center flex items-center justify-center gap-3 hover:-translate-y-1 text-lg">
+                        Find Colleges <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
@@ -454,7 +454,7 @@
                 return;
             }
 
-            // HTML for Career Cards (Yahan se UI change kar sakte hain)
+            // HTML for Career Cards
             grid.innerHTML = filtered.map(c => `
                 <div class="career-card p-6 bg-white relative overflow-hidden group" onclick="openModal('${c.id}')">
                     <!-- Background Design -->
@@ -510,10 +510,13 @@
             // Modal Right (Basic Data)
             document.getElementById('modal-long-desc').innerText = data.longDesc || 'No detailed description available.';
             
-            // Modal Right (NEW FIELDS added here)
+            // Modal Right (NEW FIELDS)
             document.getElementById('modal-skills').innerText = data.skills || 'General skills required';
             document.getElementById('modal-roles').innerText = data.entryRoles || 'Junior/Trainee level';
             document.getElementById('modal-scope').innerText = data.futureScope || 'Standard growth projected';
+
+            // Modal Button update (Dynamic Text)
+            document.getElementById('modal-action-btn').innerHTML = `Find Colleges for ${data.title} <i class="fa-solid fa-arrow-right"></i>`;
 
             // Handle Arrays for Love/Hate
             const loveList = Array.isArray(data.love) ? data.love : [];
@@ -582,6 +585,7 @@
             if (currentSelectedTitle) {
                 const data = careersDB.find(c => c.title === currentSelectedTitle);
                 if (data) {
+                    // Mapping career sector to university stream
                     const streamMap = {
                         'tech': 'Engineering', 'medical': 'Medical', 'business': 'Management', 'creative': 'Design', 'law': 'Law'
                     };
