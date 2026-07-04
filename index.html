@@ -3,279 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduMentor | Authorized College Vidya Partner - Find Your Path</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>EduMentor | Authorized College Vidya Partner Ecosystem</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fafcff; color: #334155; overflow-x: hidden; }
+        :root {
+            --primary-color: #003366;
+            --accent-color: #ff9900;
+            --text-color: #333333;
+            --bg-light: #f4f7f6;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            color: var(--text-color); 
+            background-color: #ffffff;
+            line-height: 1.6;
+        }
+        header { 
+            background: linear-gradient(135deg, var(--primary-color), #00509e); 
+            color: white; 
+            padding: 60px 20px; 
+            text-align: center; 
+            border-bottom: 5px solid var(--accent-color);
+        }
+        h1 { margin: 0; font-size: 3em; letter-spacing: 1px; }
+        .subtitle { font-size: 1.3em; margin-top: 10px; font-weight: 300; opacity: 0.9; }
         
-        /* Glassmorphism Nav & UI Components */
-        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9; }
-        .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
         
-        /* Floating decorative elements */
-        .blob { position: absolute; filter: blur(90px); z-index: 0; opacity: 0.35; animation: float 12s infinite ease-in-out alternate; }
-        @keyframes float { 0% { transform: translate(0px, 0px) scale(1); } 100% { transform: translate(30px, -40px) scale(1.15); } }
+        .hero-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+        }
+        .hero-text h2 { font-size: 2.2em; color: var(--primary-color); }
+        .hero-text p { font-size: 1.1em; color: #555; }
+
+        .features { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 30px; 
+        }
+        .feature-card { 
+            flex: 1 1 calc(33.333% - 30px); 
+            background: var(--bg-light); 
+            padding: 30px 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            text-align: center; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            border-top: 4px solid var(--accent-color);
+        }
+        .feature-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 { color: var(--primary-color); margin-top: 0; }
+
+        .cta-section { 
+            text-align: center; 
+            padding: 60px 20px; 
+            background: var(--primary-color); 
+            color: white;
+            margin-top: 60px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,51,102,0.2);
+        }
+        .cta-section h2 { margin-top: 0; font-size: 2.2em; }
+        .cta-section p { font-size: 1.1em; margin-bottom: 30px; opacity: 0.9; }
+        
+        .btn { 
+            display: inline-block; 
+            background: var(--accent-color); 
+            color: white; 
+            padding: 18px 40px; 
+            text-decoration: none; 
+            font-size: 1.2em; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            transition: background 0.3s ease; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn:hover { background: #e68a00; }
+        
+        footer { 
+            text-align: center; 
+            padding: 25px; 
+            margin-top: 50px; 
+            background: #1a1a1a; 
+            color: #888; 
+            font-size: 0.9em;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .feature-card { flex: 1 1 100%; }
+            h1 { font-size: 2.2em; }
+        }
     </style>
 </head>
-<body class="relative">
+<body>
+    <header>
+        <h1>EduMentor</h1>
+        <div class="subtitle">An Authorized College Vidya Partner Ecosystem</div>
+    </header>
 
-    <div class="blob w-96 h-96 bg-indigo-400 top-[-5%] left-[-10%] rounded-full"></div>
-    <div class="blob w-[500px] h-[500px] bg-emerald-300 top-[40%] right-[-15%] rounded-full animation-delay-2000"></div>
+    <div class="container">
+        <div class="hero-text">
+            <h2>Upgrade Your Career Without Quitting Your Job!</h2>
+            <p>Get a UGC-Approved Online MBA or MCA from India’s top NAAC A+ Universities. Compare courses based on fees, placements, and university approvals to find your perfect fit—completely free.</p>
+        </div>
 
-    <nav class="sticky top-0 z-50 glass-nav transition-all">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-3">
-                    <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-xl transition">
-                        <i class="fa-solid fa-bars-staggered text-xl"></i>
-                    </button>
-                    <div onclick="window.location.href='index.html'" class="cursor-pointer flex flex-col">
-                        <span class="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                            EduMentor <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">PRO</span>
-                        </span>
-                        <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase flex items-center gap-1">
-                            <i class="fa-solid fa-circle-check text-emerald-500"></i> Authorized College Vidya Partner
-                        </span>
-                    </div>
-                </div>
-
-                <div class="hidden lg:flex items-center gap-8 font-semibold text-sm text-slate-600">
-                    <a href="career-compass.html" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-compass text-indigo-500"></i> Career Compass</a>
-                    <a href="edtech-universities.html" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-university text-indigo-500"></i> Online Degrees</a>
-                    <a href="exam-radar.html" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-bolt text-indigo-500"></i> Entrance Radar</a>
-                    <a href="edtech-admin.html" class="text-slate-400 hover:text-slate-900 transition flex items-center gap-1"><i class="fa-solid fa-lock text-[11px]"></i> Portal</a>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <a href="tel:+919557848356" class="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-emerald-100 transition">
-                        <i class="fa-solid fa-phone-volume"></i> +91 95578 48356
-                    </a>
-                    <button onclick="window.location.href='edtech-universities.html'" class="px-5 py-2.5 bg-slate-900 hover:bg-indigo-600 text-white font-bold text-xs tracking-wide uppercase rounded-xl transition shadow-lg shadow-slate-900/10 flex items-center gap-2">
-                        Compare Now <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
+        <div class="features">
+            <div class="feature-card">
+                <h3>100+ Online Universities</h3>
+                <p>Compare top UGC & DEB approved institutions in just 2 minutes using our Unbiased AI Comparison Filters.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Direct Payments & Subsidy</h3>
+                <p>Ensure 100% security with Direct University Payments, plus get access to an exclusive up to ₹10,000 CV Subsidy.</p>
+            </div>
+            <div class="feature-card">
+                <h3>₹0/- Cost EMI Options</h3>
+                <p>Avoid heavy loans with affordable fee structures and flexible, easy 0% cost EMI plans tailored for professionals.</p>
             </div>
         </div>
-    </nav>
 
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none z-50 transition-opacity duration-300"></div>
-    <div id="main-sidebar" class="fixed top-0 left-0 bottom-0 w-80 bg-white z-50 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl">
-        <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-            <div>
-                <h4 class="text-lg font-black text-slate-900">EduMentor</h4>
-                <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider"><i class="fa-solid fa-shield-halved"></i> Authorized CV Partner</p>
-            </div>
-            <button onclick="toggleSidebar()" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-500 hover:bg-slate-50 shadow-sm"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="p-6 flex flex-col gap-4 flex-grow font-semibold text-slate-700">
-            <a href="career-compass.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition text-sm"><i class="fa-solid fa-compass text-indigo-500 text-lg w-6"></i> Career Compass</a>
-            <a href="edtech-universities.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition text-sm"><i class="fa-solid fa-university text-indigo-500 text-lg w-6"></i> Compare Online Universities</a>
-            <a href="exam-radar.html" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 transition text-sm"><i class="fa-solid fa-bolt text-indigo-500 text-lg w-6"></i> Entrance Exam Radar</a>
-            <hr class="border-slate-100 my-2">
-            <a href="career-admin.html" class="flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:text-slate-900 transition text-xs"><i class="fa-solid fa-sliders w-6"></i> Career Path Management</a>
-            <a href="edtech-admin.html" class="flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:text-slate-900 transition text-xs"><i class="fa-solid fa-database w-6"></i> University Sync Panel</a>
-        </div>
-        <div class="p-6 border-t border-slate-100 bg-slate-50 text-center">
-            <a href="https://wa.me/919557848356" target="_blank" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 text-xs shadow-lg shadow-emerald-600/20"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Support Chat</a>
+        <div class="cta-section">
+            <h2>Ready to Fast-Track Your Promotion?</h2>
+            <p>Connect directly with Vivek Kumar for a Free 1-on-1 Counseling Call and get your personalized Top 3 University Comparison Report.</p>
+            <a href="https://wa.me/919557848356?text=Hi%20Vivek,%20I%20want%20to%20know%20more%20about%20Online%20MBA/MCA%20options!" class="btn">Chat on WhatsApp Now</a>
         </div>
     </div>
 
-    <header class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 z-10">
-        <div class="grid lg:grid-cols-12 gap-12 items-center">
-            
-            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                <div class="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-700 font-extrabold text-xs px-4 py-2 rounded-full uppercase tracking-wider mx-auto lg:mx-0">
-                    <i class="fa-solid fa-face-smile text-amber-500"></i> Empowering Confident Education Choices
-                </div>
-                
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]">
-                    Compare <span class="text-indigo-600 underline decoration-indigo-200 decoration-8">100+ Approved</span> Online Universities In 2 Mins!
-                </h1>
-                
-                <p class="text-base sm:text-lg text-slate-500 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                    Don't risk your future with filtered options or unwanted sales pitches. Access transparent comparison matrices across 30+ core metrics with professional 1-on-1 advice tailored for your goals.
-                </p>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 max-w-xl mx-auto lg:mx-0">
-                    <div class="bg-white border border-slate-100 p-3 rounded-xl flex items-center gap-2.5 shadow-sm">
-                        <i class="fa-solid fa-indian-rupee-sign text-emerald-500 text-lg bg-emerald-50 p-2 rounded-lg"></i>
-                        <div class="text-left"><p class="text-[11px] font-black uppercase text-slate-400 leading-none">Subsidy Match</p><span class="text-xs font-extrabold text-slate-800">Up to ₹10,000</span></div>
-                    </div>
-                    <div class="bg-white border border-slate-100 p-3 rounded-xl flex items-center gap-2.5 shadow-sm">
-                        <i class="fa-solid fa-building-columns text-indigo-500 text-lg bg-indigo-50 p-2 rounded-lg"></i>
-                        <div class="text-left"><p class="text-[11px] font-black uppercase text-slate-400 leading-none">Universities</p><span class="text-xs font-extrabold text-slate-800">UGC-Approved</span></div>
-                    </div>
-                    <div class="bg-white border border-slate-100 p-3 rounded-xl flex items-center gap-2.5 shadow-sm col-span-2 sm:col-span-1">
-                        <i class="fa-solid fa-shield-halved text-blue-500 text-lg bg-blue-50 p-2 rounded-lg"></i>
-                        <div class="text-left"><p class="text-[11px] font-black uppercase text-slate-400 leading-none">Fees Account</p><span class="text-xs font-extrabold text-slate-800">100% Direct Pay</span></div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                    <button onclick="window.location.href='edtech-universities.html'" class="px-8 py-4.5 bg-slate-900 hover:bg-indigo-600 text-white font-extrabold rounded-2xl transition duration-300 shadow-xl shadow-slate-900/20 text-[15px] flex items-center justify-center gap-3">
-                        <i class="fa-solid fa-magnifying-glass-chart text-indigo-300"></i> Start Unbiased Comparison
-                    </button>
-                    <a href="https://wa.me/919557848356" target="_blank" class="px-8 py-4.5 bg-white hover:bg-slate-50 text-slate-800 font-extrabold rounded-2xl border border-slate-200 transition duration-300 text-[15px] flex items-center justify-center gap-3 shadow-sm">
-                        <i class="fa-brands fa-whatsapp text-emerald-500 text-lg"></i> Book 1-on-1 Free Call
-                    </a>
-                </div>
-            </div>
-
-            <div class="lg:col-span-5 relative">
-                <div class="glass-card p-6 sm:p-8 rounded-[2rem] shadow-2xl shadow-slate-200/80 space-y-6 relative z-10">
-                    <div class="flex justify-between items-center border-b border-slate-100 pb-4">
-                        <span class="text-xs font-black uppercase tracking-widest text-slate-400"><i class="fa-solid fa-network-wired text-indigo-500"></i> Verified Ecosystem Tools</span>
-                        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div onclick="window.safeNavigate('career-compass.html')" class="group bg-white/70 hover:bg-white p-4.5 rounded-2xl border border-slate-100 hover:border-indigo-200 shadow-sm cursor-pointer transition flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-indigo-50 group-hover:bg-indigo-600 text-indigo-600 group-hover:text-white flex items-center justify-center transition duration-300 text-xl"><i class="fa-solid fa-compass"></i></div>
-                                <div>
-                                    <h3 class="font-bold text-slate-800 text-sm group-hover:text-indigo-600 transition">Career Compass Navigator</h3>
-                                    <p class="text-xs text-slate-400 font-medium">Map domain profiles to high-paying pathways</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-slate-300 group-hover:translate-x-1 transition"></i>
-                        </div>
-
-                        <div onclick="window.safeNavigate('edtech-universities.html')" class="group bg-white/70 hover:bg-white p-4.5 rounded-2xl border border-slate-100 hover:border-emerald-200 shadow-sm cursor-pointer transition flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-emerald-50 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white flex items-center justify-center transition duration-300 text-xl"><i class="fa-solid fa-scale-balanced"></i></div>
-                                <div>
-                                    <h3 class="font-bold text-slate-800 text-sm group-hover:text-emerald-600 transition">AI-Powered Course Finder</h3>
-                                    <p class="text-xs text-slate-400 font-medium">Filter parameters across 80,000+ courses</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-slate-300 group-hover:translate-x-1 transition"></i>
-                        </div>
-
-                        <div onclick="window.safeNavigate('exam-radar.html')" class="group bg-white/70 hover:bg-white p-4.5 rounded-2xl border border-slate-100 hover:border-amber-200 shadow-sm cursor-pointer transition flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-amber-50 group-hover:bg-amber-500 text-amber-600 group-hover:text-white flex items-center justify-center transition duration-300 text-xl"><i class="fa-solid fa-bolt"></i></div>
-                                <div>
-                                    <h3 class="font-bold text-slate-800 text-sm group-hover:text-amber-600 transition">Smart Entrance Tracker</h3>
-                                    <p class="text-xs text-slate-400 font-medium">Live application windows and difficulty matrices</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-slate-300 group-hover:translate-x-1 transition"></i>
-                        </div>
-                    </div>
-
-                    <div class="bg-gradient-to-r from-slate-900 to-indigo-950 p-4 rounded-2xl text-white flex items-center justify-between shadow-lg">
-                        <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-gift text-2xl text-amber-400 animate-bounce"></i>
-                            <div>
-                                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-wider leading-none">Exclusive Benefit</p>
-                                <span class="text-sm font-black text-white">₹20 Cr Subsidy Pool Live</span>
-                            </div>
-                        </div>
-                        <span class="text-[11px] font-extrabold bg-white/10 px-2.5 py-1 rounded-md border border-white/10 uppercase tracking-wide">Secure Seat</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section class="bg-white border-y border-slate-100 py-16 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <span class="text-xs font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1.5 rounded-lg">Why Choose Our Framework?</span>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight mt-3">The Transformed College Vidya Partner System</h2>
-                <p class="text-slate-500 font-medium mt-2 text-sm sm:text-base">Eliminating industry malpractices by providing direct ecosystem integration with universities.</p>
-            </div>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-lg mb-4 font-bold"><i class="fa-solid fa-percent"></i></div>
-                    <h4 class="font-extrabold text-slate-900 text-base mb-1">0% EMI Loan Options</h4>
-                    <p class="text-xs text-slate-500 font-medium leading-relaxed">Break down structured university fees into comfortable monthly micro-payments with no added interest charges.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg mb-4 font-bold"><i class="fa-solid fa-building-shield"></i></div>
-                    <h4 class="font-extrabold text-slate-900 text-base mb-1">100% Financial Guard</h4>
-                    <p class="text-xs text-slate-500 font-medium leading-relaxed">Students pay directly into the university's official account via a verified portal link—eliminating middleman interference.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition">
-                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg mb-4 font-bold"><i class="fa-solid fa-clipboard-check"></i></div>
-                    <h4 class="font-extrabold text-slate-900 text-base mb-1">UGC-Approved Validation</h4>
-                    <p class="text-xs text-slate-500 font-medium leading-relaxed">Every course listed is strictly checked and verified against real-time regulatory body data fields.</p>
-                </div>
-                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-md transition">
-                    <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-lg mb-4 font-bold"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <h4 class="font-extrabold text-slate-900 text-base mb-1">Post-Admission Guidance</h4>
-                    <p class="text-xs text-slate-500 font-medium leading-relaxed">Receive consistent guidance even after enrollment, featuring specialized mock interview runs and ERP operations usage help.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-slate-900 text-slate-400 text-xs py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
-                <div class="space-y-3">
-                    <h5 class="text-white font-bold text-sm tracking-wide">EduMentor System</h5>
-                    <p class="font-medium text-slate-400 leading-relaxed">Providing student-centric, unbiased counsel mapping out verified distance and online university programs across India.</p>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold text-sm tracking-wide mb-3">Advisory Hubs</h5>
-                    <ul class="space-y-2 font-medium">
-                        <li><a href="career-compass.html" class="hover:text-white transition">Career Path Navigator</a></li>
-                        <li><a href="edtech-universities.html" class="hover:text-white transition">Online Degrees Matrices</a></li>
-                        <li><a href="exam-radar.html" class="hover:text-white transition">Entrance Timelines Tracker</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold text-sm tracking-wide mb-3">Ecosystem Verification</h5>
-                    <ul class="space-y-2 font-medium">
-                        <li class="flex items-center gap-1.5"><i class="fa-solid fa-shield text-indigo-400 text-[10px]"></i> Authorized CV Partner</li>
-                        <li class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-400 text-[10px]"></i> UGC-Approved Matrix</li>
-                        <li class="flex items-center gap-1.5"><i class="fa-solid fa-wallet text-amber-400 text-[10px]"></i> Direct University Accounts</li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="text-white font-bold text-sm tracking-wide mb-3">Direct Support Desk</h5>
-                    <p class="font-medium text-slate-300 leading-relaxed">Office Hours: 10 AM to 6 PM</p>
-                    <p class="font-bold text-emerald-400 mt-1"><i class="fa-solid fa-phone"></i> +91 95578 48356</p>
-                </div>
-            </div>
-            
-            <div class="text-center font-medium text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px]">
-                <p>&copy; 2026 EduMentor Framework. Designed for Transparent Student Onboarding.</p>
-                <p class="bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800/60"><i class="fa-solid fa-infinity text-indigo-500"></i> Partner Hub Email: <span class="text-slate-300">info@collegevidyapartners.com</span></p>
-            </div>
-        </div>
+    <footer>
+        <p>&copy; 2026 EduMentor | Career Launchpad by Vivek Kumar | Authorized Educational Consultant</p>
     </footer>
-
-    <script>
-        // Prevent canvas iframe navigation failures inside sandbox wrappers
-        window.safeNavigate = function(url) {
-            if (!url) return;
-            const linkElement = document.createElement('a');
-            linkElement.href = url;
-            document.body.appendChild(linkElement);
-            linkElement.click();
-            document.body.removeChild(linkElement);
-        }
-
-        // Toggle Sidebar state logic
-        function toggleSidebar() {
-            const sidebarElement = document.getElementById('main-sidebar');
-            const overlayElement = document.getElementById('sidebar-overlay');
-            
-            if (sidebarElement.classList.contains('-translate-x-full')) {
-                sidebarElement.classList.remove('-translate-x-full');
-                overlayElement.classList.remove('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = 'hidden';
-            } else {
-                sidebarElement.classList.add('-translate-x-full');
-                overlayElement.classList.add('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = 'auto';
-            }
-        }
-    </script>
 </body>
 </html>
