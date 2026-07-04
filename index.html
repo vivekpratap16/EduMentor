@@ -100,6 +100,54 @@
             .feature-card { flex: 1 1 100%; }
             h1 { font-size: 2.2em; }
         }
+        /* Top Universities Section Styles */
+        .partners-section {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #ffffff;
+            border-top: 1px solid #eaeaea;
+            margin-top: 40px;
+        }
+        .partners-section h2 {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+        }
+        .partner-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .partner-logo {
+            background: var(--bg-light);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px 15px;
+            width: calc(25% - 40px); 
+            min-width: 180px;
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .partner-logo:hover {
+            border-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+        }
+        
+        /* Mobile adjustment for the partner grid */
+        @media (max-width: 768px) {
+            .partner-logo { width: calc(50% - 30px); min-width: 140px; font-size: 0.9em;}
+        }
     </style>
 </head>
 <body>
