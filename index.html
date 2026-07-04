@@ -5,6 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduMentor | Authorized College Vidya Partner</title>
     <style>
+        /* Hero Section Layout for Panel */
+        .hero-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: -40px auto 40px auto; /* Pulls it up slightly over the header */
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* The Lead Panel Design */
+        .lead-panel {
+            background: var(--white);
+            padding: 35px 30px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            flex: 1 1 350px;
+            max-width: 400px;
+            border-top: 5px solid var(--accent-color);
+            z-index: 10;
+        }
+        .lead-panel h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        .panel-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .panel-btn:hover { background: #e68a00; }
         :root {
             --primary-color: #003366;
             --accent-color: #ff9900;
