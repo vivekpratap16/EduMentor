@@ -7,24 +7,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-royal-blue: #1e3a8a;
+            --primary-blue-hover: #172554;
+            --accent-vibrant-orange: #ea580c;
+            --accent-orange-hover: #c2410c;
+            --light-bg-tint: #f8fafc;
+            --dark-slate-base: #0f172a;
+            --border-slate-light: #e2e8f0;
+        }
+
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fafcff; color: #334155; }
         .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9; }
         .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .trust-badge-strip { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 0.95rem; }
+        .trust-badge-pill { display: inline-flex; align-items: center; gap: 0.55rem; background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); border: 1px solid #bfdbfe; color: #1e3a8a; padding: 0.6rem 0.85rem; border-radius: 999px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; box-shadow: 0 8px 18px -12px rgba(30, 58, 138, 0.45); }
+        .trust-badge-pill i { color: #ea580c; font-size: 0.85rem; }
+        .trust-badge-ugc { background: linear-gradient(135deg, #fff7ed 0%, #ffffff 100%); border-color: #fdba74; color: #9a2c00; }
+        .trust-badge-ugc i { color: #ea580c; }
 
         .compass-wizard-card {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
+            border: 2px solid var(--border-slate-light);
+            border-top: 6px solid var(--primary-royal-blue);
             border-radius: 16px;
-            padding: 2rem;
-            max-width: 100%;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            max-width: 950px;
+            margin: 3rem auto;
+            box-shadow: 0 20px 25px -5px rgba(30, 58, 138, 0.05);
+            font-family: 'Arial', sans-serif;
         }
         .wizard-header { margin-bottom: 2rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1.25rem; }
         .wizard-progress-bar { background: #f1f5f9; height: 6px; border-radius: 9999px; margin-bottom: 1rem; overflow: hidden; }
-        .progress-fill { background: #2563eb; height: 100%; width: 33.33%; }
-        .wizard-step-badge { color: #2563eb; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+        .progress-fill { background: var(--accent-vibrant-orange); height: 100%; width: 33.33%; transition: width 0.4s ease-in-out; }
+        .wizard-step-badge { color: var(--primary-royal-blue); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
         .wizard-main-title { font-size: 1.4rem; color: #0f172a; font-weight: 800; margin: 0 0 0.35rem 0; }
         .wizard-subtitle { color: #64748b; margin: 0; font-size: 0.92rem; }
         .form-segment { margin-bottom: 1.5rem; }
@@ -32,22 +49,34 @@
         .segment-label .required { color: #ef4444; }
         .profile-grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem; }
         .grid-4-columns { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-        .profile-radio-tile { position: relative; border: 2px solid #e2e8f0; border-radius: 12px; padding: 1rem; cursor: pointer; background: #ffffff; transition: all 0.2s ease; display: flex; flex-direction: column; }
-        .profile-radio-tile input[type="radio"] { position: absolute; top: 1rem; right: 1rem; accent-color: #2563eb; width: 16px; height: 16px; }
-        .profile-radio-tile:hover { border-color: #cbd5e1; background: #f8fafc; }
-        .profile-radio-tile:has(input[type="radio"]:checked) { border-color: #2563eb; background-color: #eff6ff; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08); }
+        .profile-radio-tile { position: relative; border: 2px solid var(--border-slate-light); border-radius: 12px; padding: 1.25rem; cursor: pointer; background: #ffffff; transition: all 0.2s ease-in-out; display: flex; flex-direction: column; }
+        .profile-radio-tile input[type="radio"] { position: absolute; top: 1rem; right: 1rem; accent-color: var(--accent-vibrant-orange); width: 16px; height: 16px; }
+        .profile-radio-tile:hover { border-color: var(--primary-royal-blue); background: #f0f4ff; }
+        .profile-radio-tile:has(input[type="radio"]:checked) { border-color: var(--accent-vibrant-orange); background-color: #fff7ed; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.08); }
         .tile-content { display: flex; flex-direction: column; gap: 4px; padding-right: 1.4rem; }
         .tile-title { font-size: 0.95rem; font-weight: 700; color: #0f172a; }
         .tile-desc { font-size: 0.8rem; color: #64748b; line-height: 1.4; }
         .wizard-action-footer { display: flex; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid #f1f5f9; padding-top: 1rem; }
-        .compass-next-btn { background: #0f172a; color: #ffffff; border: none; padding: 0.8rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s ease; }
-        .compass-next-btn:hover { background: #1e293b; }
+        .compass-next-btn { background: var(--primary-royal-blue); color: #ffffff; border: none; padding: 0.9rem 2.25rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background 0.15s ease-in-out; }
+        .compass-next-btn:hover { background: var(--primary-blue-hover); }
+        .compass-back-btn { background: none; border: none; color: #64748b; font-weight: 700; cursor: pointer; }
+        .stepper-indicator-container { display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative; }
+        .step-node { width: 36px; height: 36px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; position: relative; z-index: 2; transition: all 0.3s; }
+        .step-node.active { background: var(--primary-royal-blue); color: #ffffff; box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.2); }
+        .step-label { position: absolute; top: 42px; white-space: nowrap; font-size: 11px; font-weight: 700; color: #94a3b8; }
+        .step-node.active .step-label { color: var(--primary-royal-blue); }
+        .stepper-progress-bar-bg { position: absolute; top: 15px; left: 0; right: 0; height: 4px; background: #e2e8f0; z-index: 1; }
+        .wizard-step-pane { display: none; }
+        .wizard-step-pane.active { display: block; }
+        .funnel-input-dropdown { width: 100%; padding: 0.85rem; border: 2px solid #e2e8f0; border-radius: 8px; font-weight: 600; background: #fff; }
+        .tile-selection-wrapper { border: 2px solid #e2e8f0; border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; background: #f8fafc; }
+        .tile-selection-wrapper:has(input:checked) { border-color: var(--accent-vibrant-orange); background: #fff7ed; }
         .profile-status-card { margin-top: 1rem; border: 1px solid #dbeafe; background: linear-gradient(135deg, #eff6ff, #f8fbff); border-radius: 12px; padding: 1rem 1.1rem; }
-        .profile-status-card .status-label { font-size: 0.72rem; font-weight: 800; color: #2563eb; text-transform: uppercase; letter-spacing: 0.08em; }
+        .profile-status-card .status-label { font-size: 0.72rem; font-weight: 800; color: var(--primary-royal-blue); text-transform: uppercase; letter-spacing: 0.08em; }
         .profile-status-card .status-title { font-size: 1rem; font-weight: 800; color: #0f172a; margin-top: 0.25rem; }
         .profile-status-card .status-meta { font-size: 0.85rem; color: #475569; margin-top: 0.35rem; }
         .compass-output-wrapper { max-width: 950px; margin: 2rem auto; }
-        .analysis-results-wrapper { background: #0f172a; color: #f8fafc; border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); margin-top: 1rem; }
+        .analysis-results-wrapper { background: var(--dark-slate-base); color: #f8fafc; border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); margin-top: 1rem; }
         .analysis-header-block { margin-bottom: 1rem; }
         .pulse-indicator-node { display: inline-flex; align-items: center; gap: 8px; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding: 4px 12px; border-radius: 9999px; margin-bottom: 1rem; }
         .pulse-dot-core { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; }
@@ -55,19 +84,19 @@
         .pathway-vector-title { font-size: 1.6rem; font-weight: 800; color: #ffffff; margin: 0 0 0.75rem 0; }
         .roi-metric-badge { display: inline-block; background: #1e293b; border: 1px solid #334155; padding: 8px 16px; border-radius: 8px; font-size: 0.95rem; color: #94a3b8; }
         .roi-metric-badge strong { color: #38bdf8; }
-        .block-section-heading { font-size: 1rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em; margin: 2rem 0 1rem 0; border-left: 3px solid #2563eb; padding-left: 8px; }
+        .block-section-heading { font-size: 1rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em; margin: 2rem 0 1rem 0; border-left: 3px solid var(--primary-royal-blue); padding-left: 8px; }
         .degrees-stack-layout { display: flex; flex-direction: column; gap: 1rem; }
         .degree-recommendation-card { background: #1e293b; border: 1px solid #334155; padding: 1.25rem; border-radius: 10px; transition: border-color 0.15s ease; }
-        .degree-recommendation-card:hover { border-color: #2563eb; }
+        .degree-recommendation-card:hover { border-color: var(--primary-royal-blue); }
         .degree-title { display: block; font-size: 1.15rem; font-weight: 700; color: #ffffff; margin-bottom: 4px; }
         .institute-pill { display: block; font-size: 0.85rem; color: #38bdf8; font-weight: 600; }
         .skills-flex-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
         .matrix-skill-tag { background: #1e293b; color: #cbd5e1; font-size: 0.85rem; padding: 6px 12px; border-radius: 6px; font-weight: 600; }
         .analysis-footer-action-gate { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #334155; display: flex; justify-content: flex-end; }
-        .compass-finalize-btn { background: #2563eb; color: #ffffff; border: none; padding: 1rem 2.5rem; border-radius: 8px; font-weight: 700; font-size: 1.05rem; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: background 0.15s ease-in-out, transform 0.1s ease; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3); }
-        .compass-finalize-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
-        .final-recommendation-shell { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 1.25rem; box-shadow: 0 18px 40px -20px rgba(15, 23, 42, 0.3); }
-        .final-hero-card { background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%); color: #ffffff; border-radius: 14px; padding: 1.25rem; }
+        .compass-finalize-btn { background: var(--primary-royal-blue); color: #ffffff; border: none; padding: 1rem 2.5rem; border-radius: 8px; font-weight: 700; font-size: 1.05rem; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; transition: background 0.15s ease-in-out, transform 0.1s ease; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3); }
+        .compass-finalize-btn:hover { background: var(--primary-blue-hover); transform: translateY(-1px); }
+        .final-recommendation-shell { background: #ffffff; border: 2px solid var(--border-slate-light); border-radius: 18px; padding: 1.25rem; box-shadow: 0 18px 40px -20px rgba(15, 23, 42, 0.3); }
+        .final-hero-card { background: linear-gradient(135deg, var(--primary-royal-blue) 0%, var(--dark-slate-base) 100%); color: #ffffff; border-radius: 14px; padding: 1.25rem; }
         .final-tag { display: inline-block; background: rgba(255,255,255,0.14); padding: 0.35rem 0.65rem; border-radius: 999px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
         .final-title { font-size: 1.35rem; font-weight: 800; margin: 0 0 0.35rem; }
         .final-subtitle { font-size: 0.95rem; color: #e2e8f0; margin: 0 0 0.3rem; }
@@ -76,23 +105,23 @@
         .metric-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.9rem; }
         .metric-label { display: block; font-size: 0.72rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
         .metric-value { font-size: 0.95rem; font-weight: 700; color: #0f172a; }
-        .metric-value strong { color: #2563eb; }
+        .metric-value strong { color: var(--primary-royal-blue); }
         .final-action-bar { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
         .final-action-bar a, .final-action-bar button { flex: 1; min-width: 220px; border: none; border-radius: 10px; padding: 0.85rem 1rem; font-weight: 700; text-decoration: none; text-align: center; cursor: pointer; }
         .final-action-bar a { background: #16a34a; color: white; }
-        .final-action-bar button { background: #0f172a; color: white; }
+        .final-action-bar button { background: var(--primary-royal-blue); color: white; }
         .final-action-bar a:hover { background: #15803d; }
-        .final-action-bar button:hover { background: #1e293b; }
+        .final-action-bar button:hover { background: var(--primary-blue-hover); }
         .animate-fade-in { animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .ux-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; text-transform: uppercase; }
-        .dual-spec-badge { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
-        .emi-badge { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .dual-spec-badge { background: rgba(30, 58, 138, 0.1); color: var(--primary-royal-blue); border: 1px solid rgba(30, 58, 138, 0.2); }
+        .emi-badge { background: rgba(234, 88, 12, 0.1); color: var(--accent-vibrant-orange); border: 1px solid rgba(234, 88, 12, 0.2); }
         .financial-guard-banner { background: #f0fdfa; border: 1px solid #ccfbf1; border-left: 4px solid #0d9488; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem; }
         .shield-icon-wrapper { background: #0d9488; color: #ffffff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
         .guard-title { margin: 0 0 2px 0; font-size: 1rem; font-weight: 700; color: #115e59; }
         .guard-desc { margin: 0; font-size: 0.85rem; color: #134e4a; line-height: 1.5; }
-        .subsidy-voucher-box { background: #f0fdf4; border: 2px dashed #bbf7d0; border-radius: 10px; padding: 1.25rem; }
-        .subsidy-value-pill { background: #16a34a; color: #ffffff; font-weight: 800; font-size: 0.95rem; padding: 6px 16px; border-radius: 6px; box-shadow: 0 4px 10px rgba(22, 163, 74, 0.15); }
+        .subsidy-voucher-box { background: #fff7ed; border: 2px dashed #fdba74; border-radius: 10px; padding: 1.25rem; }
+        .subsidy-value-pill { background: var(--accent-vibrant-orange); color: #ffffff; font-weight: 800; font-size: 0.95rem; padding: 6px 16px; border-radius: 6px; box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15); }
         .cv-capture-funnel-card { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 1px solid #e2e8f0; border-radius: 14px; padding: 2rem; margin-top: 2rem; box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.02); }
         .funnel-grid-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: center; }
         .live-timer-badge { display: inline-flex; align-items: center; gap: 6px; background: #fef2f2; color: #ef4444; border: 1px solid #fee2e2; padding: 5px 12px; border-radius: 9999px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem; }
@@ -106,9 +135,9 @@
         .input-icon-wrapper { position: relative; display: flex; align-items: center; }
         .input-icon-node { position: absolute; left: 12px; color: #94a3b8; font-size: 14px; }
         .funnel-input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.25rem; border: 1px solid #e2e8f0; background: #f8fafc; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #0f172a; outline: none; transition: all 0.2s; }
-        .funnel-input:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
-        .funnel-submit-cta { width: 100%; background: #2563eb; color: #ffffff; font-weight: 700; padding: 0.85rem; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; transition: background 0.15s; box-shadow: 0 4px 10px rgba(37,99,235,0.2); }
-        .funnel-submit-cta:hover { background: #1d4ed8; }
+        .funnel-input:focus { border-color: var(--primary-royal-blue); background: #ffffff; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
+        .funnel-submit-cta { width: 100%; background: var(--accent-vibrant-orange); color: #ffffff; font-weight: 700; padding: 0.85rem; border-radius: 8px; border: none; cursor: pointer; transition: background 0.15s; }
+        .funnel-submit-cta:hover { background: var(--accent-orange-hover); }
         .form-security-note { font-size: 11px; color: #94a3b8; text-align: center; margin: 8px 0 0 0; font-weight: 500; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulseActive { 0% { transform: scale(0.9); opacity: 0.6; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.9); opacity: 0.6; } }
@@ -150,6 +179,16 @@
 
     <!-- Main Container Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full grid lg:grid-cols-12 gap-8 items-start">
+        <section class="lg:col-span-12">
+            <div class="glass-card p-6 rounded-2xl shadow-xl shadow-slate-100 border border-slate-200/60">
+                <div class="trust-badge-strip">
+                    <div class="trust-badge-pill"><i class="fa-solid fa-circle-check"></i><span>Authorized College Vidya Partner</span></div>
+                    <div class="trust-badge-pill trust-badge-ugc"><i class="fa-solid fa-award"></i><span>UGC-DEB Approved</span></div>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Career Compass Navigator: Map Your Domain to High-Paying Pathways</h1>
+                <p class="text-sm text-slate-500 font-medium mt-2">Use the guided matrix to align your profile with strong academic pathways, salary growth opportunities, and trusted university options.</p>
+            </div>
+        </section>
         
         <!-- Left Pane: Selector Tool Options -->
         <div class="lg:col-span-4 space-y-6">
@@ -463,6 +502,10 @@
 
             outputTarget.innerHTML = `
                 <div class="recommendation-result-panel animate-fade-in" style="margin-top: 2.5rem; border: 2px solid #e2e8f0; background: #ffffff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);">
+                    <div class="trust-badge-strip" style="margin-bottom: 1rem;">
+                        <div class="trust-badge-pill"><i class="fa-solid fa-circle-check"></i><span>Authorized College Vidya Partner</span></div>
+                        <div class="trust-badge-pill trust-badge-ugc"><i class="fa-solid fa-award"></i><span>UGC-DEB Approved</span></div>
+                    </div>
                     <div style="border-bottom: 1px solid #f1f5f9; padding-bottom: 1.25rem; margin-bottom: 1.5rem;">
                         <div style="background: rgba(34, 197, 94, 0.1); color: #16a34a; font-weight: 800; display: inline-block; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; text-transform: uppercase;">✓ Mapping Profile Authenticated</div>
                         <h3 style="font-size: 1.65rem; font-weight: 800; color: #0f172a; margin: 8px 0 4px 0;">Recommended Track: ${result.recommendation}</h3>
@@ -596,6 +639,10 @@
 
             outputContainer.innerHTML = `
                 <div class="analysis-results-wrapper animate-fade-in">
+                    <div class="trust-badge-strip" style="margin-bottom: 1rem;">
+                        <div class="trust-badge-pill"><i class="fa-solid fa-circle-check"></i><span>Authorized College Vidya Partner</span></div>
+                        <div class="trust-badge-pill trust-badge-ugc"><i class="fa-solid fa-award"></i><span>UGC-DEB Approved</span></div>
+                    </div>
                     <div class="analysis-header-block">
                         <div class="pulse-indicator-node">
                             <span class="pulse-dot-core"></span>
@@ -668,6 +715,186 @@
         }
 
         // Render Career Projections
+        function transitionToStep(targetStep) {
+            document.querySelectorAll('.wizard-step-pane').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.step-node').forEach(node => node.classList.remove('active'));
+
+            const targetPane = document.getElementById(`pane_step${targetStep}`);
+            const targetNode = document.getElementById(`node_step${targetStep}`);
+            const progressBar = document.getElementById('wizard_progress');
+
+            if (targetPane) targetPane.classList.add('active');
+            if (targetNode) targetNode.classList.add('active');
+            if (progressBar) {
+                if (targetStep === 1) progressBar.style.width = '0%';
+                if (targetStep === 2) progressBar.style.width = '50%';
+                if (targetStep === 3) progressBar.style.width = '100%';
+            }
+        }
+
+        function processEngineFinalMapping() {
+            const qual = document.getElementById('academic_qualification').value;
+            const stream = document.getElementById('academic_stream').value;
+
+            if (!qual || !stream) {
+                alert('Kripya Step 1 ke andar Academic Qualification aur Stream preferences complete fill kijiye.');
+                transitionToStep(1);
+                return;
+            }
+
+            const intentGoal = document.querySelector('input[name="career_intent"]:checked').value;
+            const profilePayload = {
+                qualificationProfile: qual,
+                industryVerticalTarget: stream,
+                primaryVelocityGoal: intentGoal,
+                timestamp: new Date().toISOString()
+            };
+
+            sessionStorage.setItem('activeStudentDomainProfile', JSON.stringify(profilePayload));
+            activeDomainProfile = profilePayload;
+            transitionToStep(3);
+
+            let optimalTrackA = {};
+            let optimalTrackB = {};
+
+            if (intentGoal === 'Switch' || (qual === 'Working Professional' && stream === 'Science')) {
+                optimalTrackA = {
+                    recommendation: 'MCA (Artificial Intelligence & Machine Learning Specialization)',
+                    profile: qual,
+                    goal: 'High Salary / Tech Growth',
+                    universities: [
+                        { name: 'UPES Online', fee: '₹1.7L (MCA Specs)', link: 'https://upesonline.ac.in/' },
+                        { name: 'Chandigarh University', fee: '₹1.2L - ₹1.4L', link: 'https://www.onlinecu.in/index.php' }
+                    ]
+                };
+                optimalTrackB = {
+                    recommendation: 'M.Sc Data Science & Analytics',
+                    profile: qual,
+                    goal: 'High Salary / Tech Growth',
+                    universities: [
+                        { name: 'Christ University', fee: '₹2.5L - ₹2.75L', link: 'https://online.christuniversity.in/' },
+                        { name: 'VIT Online Website', fee: '₹1.4L - ₹1.6L', link: 'https://vitonline.in/' }
+                    ]
+                };
+            } else if (intentGoal === 'Security' || stream === 'Commerce') {
+                optimalTrackA = {
+                    recommendation: 'MBA (Global Corporate Finance) with Premium Dual Specialization Strategy',
+                    profile: qual,
+                    goal: 'Corporate Finance / Global Career',
+                    universities: [
+                        { name: 'Amity University', fee: '₹3.02L (MBA ACCA Matrix)', link: 'https://amityonline.com/' },
+                        { name: 'Lovely Professional University (LPU)', fee: '₹1.6L (MBA Dual Setup)', link: 'https://www.lpuonline.com/' }
+                    ]
+                };
+                optimalTrackB = {
+                    recommendation: 'MBA (General Management Strategy Controls Framework)',
+                    profile: qual,
+                    goal: 'Budget Friendly Higher Ed',
+                    universities: [
+                        { name: 'Sikkim Manipal University', fee: '₹75k - ₹1.2L', link: 'https://www.onlinemanipal.com/' },
+                        { name: 'Shoolini University', fee: '₹1.2L - ₹1.6L', link: 'https://shoolini.online/' }
+                    ]
+                };
+            } else {
+                optimalTrackA = {
+                    recommendation: 'Online MBA (General Management Strategic Execution Node)',
+                    profile: 'Any Stream',
+                    goal: 'Budget Friendly Higher Ed',
+                    universities: [
+                        { name: 'Parul University', fee: '₹40k - ₹99k', link: 'http://www.paruluniversity.online' },
+                        { name: 'Kurushetra University', fee: '₹50k - ₹80k', link: 'https://www.kukonline.in/' }
+                    ]
+                };
+                optimalTrackB = {
+                    recommendation: 'Online BBA / Commerce Professional Degree Tracking Base',
+                    profile: 'Any Stream',
+                    goal: 'Budget Friendly Higher Ed',
+                    universities: [
+                        { name: 'Vivekanand Global University (VGU)', fee: '₹1.1L - ₹1.3L', link: 'https://onlinevgu.com/' },
+                        { name: 'Uttaranchal University', fee: '₹60k - ₹90k', link: 'https://www.onlineuu.in' }
+                    ]
+                };
+            }
+
+            renderCompoundRecommendationsUI(optimalTrackA, optimalTrackB);
+        }
+
+        function renderCompoundRecommendationsUI(track1, track2) {
+            const targetDiv = document.getElementById('compass-analysis-output-view');
+            if (!targetDiv) return;
+
+            function buildTrackCardHTML(result, priorityTag) {
+                const itemsHTML = result.universities.map(u => `
+                    <div style="background:#1e293b; padding:1rem; border-radius:8px; display:flex; justify-content:space-between; align-items:center; margin-top:0.75rem; flex-wrap:wrap; gap:10px;">
+                        <div>
+                            <strong style="color:#ffffff; font-size:1rem; display:block;">${u.name}</strong>
+                            <span style="color:#94a3b8; font-size:0.85rem;">2026 Structured Investment: <strong>${u.fee}</strong></span>
+                        </div>
+                        <a href="${u.link}" target="_blank" style="background:var(--accent-vibrant-orange); color:white; padding:0.5rem 1rem; border-radius:6px; font-weight:700; text-decoration:none; font-size:0.85rem;">Visit Official Portal</a>
+                    </div>
+                `).join('');
+
+                return `
+                    <div style="border:2px solid #e2e8f0; border-left:6px solid var(--primary-royal-blue); border-radius:12px; padding:1.5rem; margin-bottom:1.5rem; background:#ffffff;">
+                        <span style="background:#f0f4ff; color:var(--primary-royal-blue); font-weight:800; font-size:0.75rem; padding:4px 10px; border-radius:9999px; text-transform:uppercase;">${priorityTag} Path Choice</span>
+                        <h3 style="margin:8px 0; font-size:1.4rem; color:#0f172a;">${result.recommendation}</h3>
+                        <p style="margin:0 0 1rem 0; color:#64748b; font-size:0.9rem;">Mapped profile vector match matching performance thresholds.</p>
+                        <div style="background:#0f172a; padding:1.25rem; border-radius:10px;">
+                            <span style="color:#94a3b8; font-size:0.8rem; font-weight:700; text-transform:uppercase;">Verified Match Nodes:</span>
+                            ${itemsHTML}
+                        </div>
+                    </div>
+                `;
+            }
+
+            targetDiv.innerHTML = `
+                <div class="recommendation-result-panel animate-fade-in" style="margin-top: 2.5rem; border: 2px solid #e2e8f0; background: #ffffff; border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);">
+                    <div class="trust-badge-strip" style="margin-bottom: 1rem;">
+                        <div class="trust-badge-pill"><i class="fa-solid fa-circle-check"></i><span>Authorized College Vidya Partner</span></div>
+                        <div class="trust-badge-pill trust-badge-ugc"><i class="fa-solid fa-award"></i><span>UGC-DEB Approved</span></div>
+                    </div>
+                    <div class="rec-banner-header" style="margin-bottom:2rem;">
+                        <span style="background:var(--accent-vibrant-orange); color:white; padding:4px 12px; border-radius:9999px; font-size:0.75rem; font-weight:700;">✓ ANALYSIS UNLOCKED</span>
+                        <h2 style="margin:10px 0 4px 0; font-size:1.8rem;">Aapke Top 2 Recommended Pathways Mapped!</h2>
+                        <p style="margin:0; color:#93c5fd; font-size:0.95rem;">EduMentor matching algorithm optimization completed for 2026 cycles.</p>
+                    </div>
+
+                    ${buildTrackCardHTML(track1, 'Primary Alpha')}
+                    ${buildTrackCardHTML(track2, 'Secondary Beta')}
+
+                    <div class="financial-guard-banner" style="background:#f0fdfa; border-left:4px solid #0d9488; padding:1rem; border-radius:8px; margin-bottom:2rem;">
+                        <strong style="color:#115e59; display:block;"><i class="fa-solid fa-shield-halved"></i> 100% Direct University Financial Guard Enabled</strong>
+                        <span style="color:#134e4a; font-size:0.85rem;">Aapki safety compliance parameters ke anusaar, fee structure ka direct deposit hamesha university ke official payment collection gateways par secure hoga. EduMentor zero intermediate tracking system use krta he.</span>
+                    </div>
+
+                    <div class="cv-capture-funnel-card" style="background:#f8fafc; border:1px solid #cbd5e1; padding:2rem; border-radius:12px;">
+                        <span class="live-timer-badge" style="background:#fef2f2; color:#ef4444; font-weight:800; padding:4px 8px; border-radius:4px; font-size:11px;">15-MIN ACTION SLA</span>
+                        <h3 style="margin:8px 0 4px 0;">Secure 1-on-1 Free Path Custom Allocation Strategy Call</h3>
+                        <p style="color:#475569; font-size:0.9rem; margin-bottom:1.5rem;">Aapka unique matching index session dynamic form tracking par compile ho chuka he. Apne ₹10,000 corporate matching voucher ko claim karne ke liye context token save karein.</p>
+
+                        <form id="compassFollowUpForm" style="display:grid; grid-template-columns:1fr 1fr auto; gap:12px; align-items:end;">
+                            <input type="hidden" id="hidden_rec_track" value="${track1.recommendation}">
+                            <div>
+                                <label style="font-size:11px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">STUDENT FULL NAME</label>
+                                <input type="text" id="follow_name" placeholder="Enter Legal Name" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #cbd5e1;">
+                            </div>
+                            <div>
+                                <label style="font-size:11px; font-weight:700; color:#475569; display:block; margin-bottom:4px;">WHATSAPP CONTACT NO</label>
+                                <input type="tel" id="follow_phone" pattern="[0-9]{10}" placeholder="10-Digit Mobile Number" required style="width:100%; padding:10px; border-radius:6px; border:1px solid #cbd5e1;">
+                            </div>
+                            <button type="submit" id="followUpSubmitBtn" class="funnel-submit-cta" style="background:var(--accent-vibrant-orange); color:white; font-weight:700; padding:11px 20px; border-radius:6px; border:none; cursor:pointer; height:42px;">Lock My Subsidy Coupon</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+            const followUpForm = document.getElementById('compassFollowUpForm');
+            if (followUpForm) {
+                followUpForm.addEventListener('submit', handleCompassFollowUpSubmit);
+            }
+            targetDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
         function renderOutputPanel() {
             const activeObj = domainMatrixData.find(d => d.id === selectedDomainId);
             const container = document.getElementById('compass-output-panel');
@@ -677,79 +904,100 @@
             container.innerHTML = `
                 <div class="space-y-6">
                     <div class="compass-wizard-card">
-                        <div class="wizard-header">
-                            <div class="wizard-progress-bar">
-                                <div class="progress-fill"></div>
+                        <div class="stepper-indicator-container">
+                            <div class="step-node active" id="node_step1">1 <span class="step-label">Academic Profile</span></div>
+                            <div class="step-node" id="node_step2">2 <span class="step-label">Career Goal</span></div>
+                            <div class="step-node" id="node_step3">3 <span class="step-label">AI Recommendation</span></div>
+                            <div class="stepper-progress-bar-bg">
+                                <div class="progress-fill" id="wizard_progress" style="width: 0%;"></div>
                             </div>
-                            <div class="wizard-step-badge">Step 1 of 3: Domain Profile Setup</div>
-                            <h2 class="wizard-main-title">Design Your Academic Profile Matrix</h2>
-                            <p class="wizard-subtitle">Mapping high-paying pathways optimized for corporate growth and future-ready career pivots.</p>
                         </div>
 
-                        <form id="domainProfileForm" class="wizard-form-flow">
-                            <div class="form-segment">
-                                <label class="segment-label">1. What is your current highest qualification? <span class="required">*</span></label>
-                                <div class="profile-grid-options">
-                                    <label class="profile-radio-tile">
-                                        <input type="radio" name="qualification" value="12th" required>
-                                        <div class="tile-content"><span class="tile-title">High School (12th Pass)</span><span class="tile-desc">Direct UG Entry Tracks</span></div>
-                                    </label>
-                                    <label class="profile-radio-tile">
-                                        <input type="radio" name="qualification" value="Graduate">
-                                        <div class="tile-content"><span class="tile-title">Graduate (B.Com/BBA/BTech)</span><span class="tile-desc">Advanced PG / Management Specialization</span></div>
-                                    </label>
-                                    <label class="profile-radio-tile">
-                                        <input type="radio" name="qualification" value="Working Professional">
-                                        <div class="tile-content"><span class="tile-title">Working Professional</span><span class="tile-desc">Executive Tracks & Skill Pivots</span></div>
-                                    </label>
+                        <form id="careerCompassStepperForm">
+                            <div class="wizard-step-pane active" id="pane_step1">
+                                <div class="wizard-step-badge">Step 01 / 03</div>
+                                <h2 style="font-size: 1.6rem; color: var(--primary-royal-blue); margin-top: 0;">Configure Academic Footprint</h2>
+                                <p style="color: #64748b; margin-bottom: 2rem;">Apni current education aur profile details select karein taaki engine parameters optimize ho sakein.</p>
+                                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                    <div class="form-input-group">
+                                        <label class="input-field-label">Current Qualification</label>
+                                        <select id="academic_qualification" class="funnel-input-dropdown" required>
+                                            <option value="">-- Select Status --</option>
+                                            <option value="12th Pass">12th Pass</option>
+                                            <option value="Graduate">Graduate</option>
+                                            <option value="Working Professional">Working Professional</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-input-group">
+                                        <label class="input-field-label">Academic Stream Background</label>
+                                        <select id="academic_stream" class="funnel-input-dropdown" required>
+                                            <option value="">-- Select Stream --</option>
+                                            <option value="Commerce">Commerce</option>
+                                            <option value="Science">Science (IT / Non-IT)</option>
+                                            <option value="Arts">Arts / Humanities</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-input-group">
+                                        <label class="input-field-label">Past Academic Performance Indicator (10th/12th Aggregate)</label>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem;">
+                                            <label class="tile-selection-wrapper">
+                                                <input type="radio" name="perf_range" value="Elite" checked> <span>Above 80%</span>
+                                            </label>
+                                            <label class="tile-selection-wrapper">
+                                                <input type="radio" name="perf_range" value="Mid"> <span>60% - 80%</span>
+                                            </label>
+                                            <label class="tile-selection-wrapper">
+                                                <input type="radio" name="perf_range" value="Pass"> <span>Below 60%</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right; margin-top: 2.5rem; border-top: 1px solid #f1f5f9; padding-top: 1.5rem;">
+                                    <button type="button" class="compass-next-btn" onclick="transitionToStep(2)">Proceed to Intent Mapping <i class="fa-solid fa-arrow-right"></i></button>
                                 </div>
                             </div>
 
-                            <div class="form-segment">
-                                <label class="segment-label">2. Select your preferred Industry Vertical: <span class="required">*</span></label>
-                                <div class="profile-grid-options grid-4-columns">
-                                    <label class="profile-radio-tile vertical-theme">
-                                        <input type="radio" name="industryVertical" value="IT_Data Science" required>
-                                        <div class="tile-content"><span class="tile-title">IT & Data Science</span><span class="tile-desc">AI, SQL, Web Dev</span></div>
+                            <div class="wizard-step-pane" id="pane_step2" style="display: none;">
+                                <div class="wizard-step-badge">Step 02 / 03</div>
+                                <h2 style="font-size: 1.6rem; color: var(--primary-royal-blue); margin-top: 0;">Map Intent Vector & Long-term Targets</h2>
+                                <p style="color: #64748b; margin-bottom: 2rem;">Aap higher education ke baad career mein primary objective kya achieve karna chahte hain?</p>
+                                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                    <label class="profile-radio-tile">
+                                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                            <input type="radio" name="career_intent" value="Growth" checked style="margin-top: 4px;">
+                                            <div>
+                                                <strong style="color: #0f172a; display: block; font-size: 1.05rem;">Tech-Growth & Hikes (High Salary / Tech Growth)</strong>
+                                                <span style="color: #64748b; font-size: 0.85rem;">I want aggressive salary increments, tech progression, or direct transition into corporate software sectors.</span>
+                                            </div>
+                                        </div>
                                     </label>
-                                    <label class="profile-radio-tile vertical-theme">
-                                        <input type="radio" name="industryVertical" value="Management_Business">
-                                        <div class="tile-content"><span class="tile-title">Management & Leadership</span><span class="tile-desc">MBA, Exec Supply Chain</span></div>
+                                    <label class="profile-radio-tile">
+                                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                            <input type="radio" name="career_intent" value="Switch" style="margin-top: 4px;">
+                                            <div>
+                                                <strong style="color: #0f172a; display: block; font-size: 1.05rem;">Domain Pivot to Tech Role (AI/ML/Data Science Tech Switch)</strong>
+                                                <span style="color: #64748b; font-size: 0.85rem;">Mera stream chahe jo bhi ho, mujhe explicitly advanced high-computing tech systems, management algorithms, ya tools me switch krna hai.</span>
+                                            </div>
+                                        </div>
                                     </label>
-                                    <label class="profile-radio-tile vertical-theme">
-                                        <input type="radio" name="industryVertical" value="Healthcare_Logistics">
-                                        <div class="tile-content"><span class="tile-title">Healthcare Admin</span><span class="tile-desc">Hospital Operations</span></div>
+                                    <label class="profile-radio-tile">
+                                        <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                            <input type="radio" name="career_intent" value="Security" style="margin-top: 4px;">
+                                            <div>
+                                                <strong style="color: #0f172a; display: block; font-size: 1.05rem;">Corporate Leadership & Management Security (Corporate Finance / Global Career)</strong>
+                                                <span style="color: #64748b; font-size: 0.85rem;">Mujhe stable, global management profiles corporate jobs chahiye jo specialized business functions validate karein.</span>
+                                            </div>
+                                        </div>
                                     </label>
-                                    <label class="profile-radio-tile vertical-theme">
-                                        <input type="radio" name="industryVertical" value="Finance_Fintech">
-                                        <div class="tile-content"><span class="tile-title">Banking & Fintech</span><span class="tile-desc">Investment & Auditing</span></div>
-                                    </label>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 2.5rem; border-top: 1px solid #f1f5f9; padding-top: 1.5rem;">
+                                    <button type="button" class="compass-back-btn" onclick="transitionToStep(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                                    <button type="button" class="compass-next-btn" style="background:var(--accent-vibrant-orange);" onclick="processEngineFinalMapping()">Generate Best-Fit Track AI Report <i class="fa-solid fa-wand-magic-sparkles"></i></button>
                                 </div>
                             </div>
 
-                            <div class="form-segment">
-                                <label class="segment-label">3. What is your primary career velocity goal? <span class="required">*</span></label>
-                                <div class="profile-grid-options">
-                                    <label class="profile-radio-tile goal-theme">
-                                        <input type="radio" name="careerGoal" value="Salary Growth" required>
-                                        <div class="tile-content"><span class="tile-title">Aggressive Salary Growth</span><span class="tile-desc">Targeting maximum direct placement ROI</span></div>
-                                    </label>
-                                    <label class="profile-radio-tile goal-theme">
-                                        <input type="radio" name="careerGoal" value="Skill Shift">
-                                        <div class="tile-content"><span class="tile-title">Core Technology Skill Shift</span><span class="tile-desc">Transitioning into deep tech domains</span></div>
-                                    </label>
-                                    <label class="profile-radio-tile goal-theme">
-                                        <input type="radio" name="careerGoal" value="Corporate Promotion">
-                                        <div class="tile-content"><span class="tile-title">Corporate Executive Rank</span><span class="tile-desc">Securing internal organizational promotion</span></div>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="wizard-action-footer">
-                                <button type="submit" class="compass-next-btn">
-                                    Analyze Profile Vectors
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                                </button>
+                            <div class="wizard-step-pane" id="pane_step3" style="display: none;">
+                                <div id="compass-analysis-output-view"></div>
                             </div>
                         </form>
                     </div>
@@ -761,8 +1009,6 @@
                             <div class="status-meta">Qualification: <strong>${profileToShow.qualificationProfile}</strong> • Vertical: <strong>${profileToShow.industryVerticalTarget}</strong> • Goal: <strong>${profileToShow.primaryVelocityGoal}</strong></div>
                         </div>
                     ` : ''}
-
-                    <div id="compass-analysis-output-view" class="compass-output-wrapper"></div>
 
                     <div class="space-y-6">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-5">
@@ -818,14 +1064,7 @@
                 </div>
             `;
 
-            const form = document.getElementById('domainProfileForm');
-            if (form) {
-                form.addEventListener('submit', handleDomainProfileSubmit);
-            }
-
-            if (profileToShow) {
-                renderStepBAnalysisDashboard(getStepBMatchData(profileToShow));
-            }
+            transitionToStep(1);
         }
 
         // Initialize state configuration on page mount load
