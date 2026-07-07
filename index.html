@@ -6,14 +6,35 @@
     <title>EduMentor | Authorized College Vidya Partner - Find Your Path</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
         :root {
+            --primary-blue: #002366;
+            --accent-orange: #FF8C00;
+            --light-bg: #f4f7f9;
             --white: #ffffff;
-            --accent-color: #f59e0b;
-            --primary-color: #0f172a;
+            --accent-color: var(--accent-orange);
+            --primary-color: var(--primary-blue);
         }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fafcff; color: #334155; overflow-x: hidden; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: #334155;
+            overflow-x: hidden;
+        }
+        .btn-primary {
+            background-color: var(--accent-orange);
+            border: none;
+            font-weight: bold;
+        }
+        .header-top {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px;
+        }
         
         /* Hero Section Layout for Panel */
         .hero-container {
@@ -361,6 +382,37 @@
                                     <option value="design">Design</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <select name="WorkExperience" required>
+                                    <option value="" disabled selected>Total Work Experience</option>
+                                    <option value="Fresher">Fresher (0 Years)</option>
+                                    <option value="1-3 Years">1 - 3 Years</option>
+                                    <option value="3-5 Years">3 - 5 Years</option>
+                                    <option value="5+ Years">5+ Years</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select name="Qualification" required>
+                                    <option value="" disabled selected>Highest Qualification</option>
+                                    <option value="12th Pass">12th Pass</option>
+                                    <option value="Graduate">Graduate (BA, BCom, BSc, etc.)</option>
+                                    <option value="Post Graduate">Post Graduate</option>
+                                    <option value="Diploma">Diploma Holder</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="advance-search" name="University" style="width: 100%;" required>
+                                    <option value="" disabled selected>Search & Select University...</option>
+                                    <option value="Amity University">Amity University Online</option>
+                                    <option value="NMIMS">NMIMS Global Access</option>
+                                    <option value="LPU">LPU Online</option>
+                                    <option value="Manipal">Manipal University Jaipur</option>
+                                    <option value="UPES">UPES Online</option>
+                                    <option value="Amrita">Amrita AHEAD</option>
+                                    <option value="Chandigarh">Chandigarh University</option>
+                                    <option value="Galgotias">Galgotias University</option>
+                                </select>
+                            </div>
                             <button type="submit" class="panel-btn">Get Expert Guidance</button>
                         </form>
                     </div>
@@ -373,6 +425,12 @@
 
             header.insertAdjacentElement('afterend', panelSection);
             const form = panelSection.querySelector('.lead-panel-form');
+            if (window.jQuery && $.fn.select2) {
+                $('.advance-search').select2({
+                    placeholder: 'Search & Select...',
+                    allowClear: true
+                });
+            }
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
                 alert('Thanks! Our team will reach out to you shortly.');
