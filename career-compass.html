@@ -3,619 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Compass | Find Your Path - EduMentor</title>
-    <!-- Tailwind CSS (Design ke liye) -->
+    <title>EduMentor | Career Compass Navigator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome (Icons ke liye) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* Google Font Import */
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
-        
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #f8fafc; 
-            color: #334155; 
-            overflow-x: hidden; 
-        }
-        
-        /* Navbar Glass Effect */
-        .glass-nav { 
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(12px); 
-            border-bottom: 1px solid #f1f5f9; 
-        }
-        
-        /* Background Floating Blobs Animation */
-        .blob { position: absolute; filter: blur(80px); z-index: 0; opacity: 0.5; animation: float 10s infinite ease-in-out alternate; }
-        @keyframes float { 
-            0% { transform: translate(0px, 0px) scale(1); } 
-            100% { transform: translate(30px, -50px) scale(1.1); } 
-        }
-        
-        /* Career Cards Hover Effect (Yahan se card ka animation change kar sakte hain) */
-        .career-card { 
-            background: white; 
-            border-radius: 1.5rem; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03); 
-            border: 1px solid #e2e8f0; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            cursor: pointer; 
-            display: flex; 
-            flex-direction: column;
-        }
-        .career-card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.15); 
-            border-color: #c7d2fe; 
-            z-index: 10; 
-        }
-        
-        /* Checkbox Design (Filters ke liye) */
-        .filter-checkbox { appearance: none; width: 1.2rem; height: 1.2rem; border: 2px solid #cbd5e1; border-radius: 0.375rem; outline: none; cursor: pointer; transition: all 0.2s; position: relative; flex-shrink: 0; }
-        .filter-checkbox:checked { background-color: #4f46e5; border-color: #4f46e5; }
-        .filter-checkbox:checked::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; font-size: 0.65rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fafcff; color: #334155; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9; }
+        .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.8); }
 
-        /* Modal (Popup) Animation */
-        .modal-overlay { opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(8px); }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { transform: translateY(50px) scale(0.95); opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); opacity: 1; }
-        
-        /* Timeline Line (Modal ke andar roadmap ke liye) */
-        .timeline-line { position: absolute; left: 23px; top: 40px; bottom: 40px; width: 2px; background: #e2e8f0; z-index: 0; }
-        
-        /* Custom Scrollbar */
-        .custom-scroll::-webkit-scrollbar { width: 6px; }
-        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .compass-wizard-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 100%;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .wizard-header { margin-bottom: 2rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1.25rem; }
+        .wizard-progress-bar { background: #f1f5f9; height: 6px; border-radius: 9999px; margin-bottom: 1rem; overflow: hidden; }
+        .progress-fill { background: #2563eb; height: 100%; width: 33.33%; }
+        .wizard-step-badge { color: #2563eb; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+        .wizard-main-title { font-size: 1.4rem; color: #0f172a; font-weight: 800; margin: 0 0 0.35rem 0; }
+        .wizard-subtitle { color: #64748b; margin: 0; font-size: 0.92rem; }
+        .form-segment { margin-bottom: 1.5rem; }
+        .segment-label { display: block; font-size: 0.96rem; font-weight: 700; color: #1e293b; margin-bottom: 0.9rem; }
+        .segment-label .required { color: #ef4444; }
+        .profile-grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem; }
+        .grid-4-columns { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+        .profile-radio-tile { position: relative; border: 2px solid #e2e8f0; border-radius: 12px; padding: 1rem; cursor: pointer; background: #ffffff; transition: all 0.2s ease; display: flex; flex-direction: column; }
+        .profile-radio-tile input[type="radio"] { position: absolute; top: 1rem; right: 1rem; accent-color: #2563eb; width: 16px; height: 16px; }
+        .profile-radio-tile:hover { border-color: #cbd5e1; background: #f8fafc; }
+        .profile-radio-tile:has(input[type="radio"]:checked) { border-color: #2563eb; background-color: #eff6ff; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08); }
+        .tile-content { display: flex; flex-direction: column; gap: 4px; padding-right: 1.4rem; }
+        .tile-title { font-size: 0.95rem; font-weight: 700; color: #0f172a; }
+        .tile-desc { font-size: 0.8rem; color: #64748b; line-height: 1.4; }
+        .wizard-action-footer { display: flex; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid #f1f5f9; padding-top: 1rem; }
+        .compass-next-btn { background: #0f172a; color: #ffffff; border: none; padding: 0.8rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s ease; }
+        .compass-next-btn:hover { background: #1e293b; }
+        .profile-status-card { margin-top: 1rem; border: 1px solid #dbeafe; background: linear-gradient(135deg, #eff6ff, #f8fbff); border-radius: 12px; padding: 1rem 1.1rem; }
+        .profile-status-card .status-label { font-size: 0.72rem; font-weight: 800; color: #2563eb; text-transform: uppercase; letter-spacing: 0.08em; }
+        .profile-status-card .status-title { font-size: 1rem; font-weight: 800; color: #0f172a; margin-top: 0.25rem; }
+        .profile-status-card .status-meta { font-size: 0.85rem; color: #475569; margin-top: 0.35rem; }
+        @media (max-width: 640px) { .compass-wizard-card { padding: 1.25rem; } .profile-grid-options { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body class="relative">
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- ============================================== -->
-    <!-- 1. TOP NAVBAR -->
-    <!-- ============================================== -->
-    <nav class="fixed w-full z-40 glass-nav top-0 shadow-sm">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Logo Section -->
-            <div class="flex items-center gap-2 cursor-pointer" onclick="safeNavigate('index.html')">
-                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg">E</div>
-                <span class="text-2xl font-black tracking-tight text-slate-900">Edu<span class="text-indigo-600">Mentor</span></span>
-            </div>
-            <!-- Navigation Links -->
-            <div class="flex items-center gap-6">
-                <button onclick="safeNavigate('edtech-universities.html')" class="hidden md:block text-slate-600 font-bold hover:text-indigo-600 transition bg-transparent">Explore Colleges</button>
-                <button onclick="safeNavigate('index.html')" class="text-slate-500 font-extrabold hover:text-indigo-600 transition flex items-center gap-2 bg-slate-50 px-5 py-2.5 rounded-full border border-slate-200 shadow-sm">
-                    <i class="fa-solid fa-house"></i> Home
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ============================================== -->
-    <!-- 2. HERO SECTION (AI Matchmaker Form) -->
-    <!-- ============================================== -->
-    <section class="pt-32 pb-20 relative overflow-hidden bg-slate-900 border-b-4 border-indigo-500 min-h-[60vh] flex flex-col justify-center">
-        <!-- Background Animations -->
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 z-0"></div>
-        <div class="blob bg-indigo-500/30 w-[500px] h-[500px] rounded-full top-[-20%] left-[-10%]"></div>
-        <div class="blob bg-emerald-500/20 w-[400px] h-[400px] rounded-full bottom-[-10%] right-[-5%]" style="animation-delay: 2s;"></div>
-
-        <div class="max-w-6xl mx-auto px-6 relative z-10 w-full">
-            <!-- Headers -->
-            <div class="text-center mb-10">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-black uppercase tracking-widest mb-6 shadow-sm text-emerald-400">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Career Compass
-                </div>
-                <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight text-white leading-tight">
-                    Find a career that fits <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Your Rules & Ambitions.</span>
-                </h1>
-                <p class="text-slate-400 font-medium text-lg max-w-2xl mx-auto">
-                    Answer 3 simple questions below. Our AI will analyze <span id="db-count-hero" class="text-white font-bold">...</span> careers from our Live Database and recommend the best paths.
-                </p>
-            </div>
-
-            <!-- Quiz Box -->
-            <div class="bg-white/10 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-white/20 shadow-2xl max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <!-- Question 1 -->
-                    <div>
-                        <label class="block text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2">1. Main Interest</label>
-                        <select id="wiz-interest" class="w-full bg-white/5 border border-white/20 text-white font-bold rounded-xl px-4 py-3.5 outline-none focus:border-emerald-400 [&>option]:text-slate-800">
-                            <option value="all">Anything / Not Sure</option>
-                            <option value="tech">IT & Web Tech</option>
-                            <option value="medical">Healthcare & Life Sci</option>
-                            <option value="business">Business & Finance</option>
-                            <option value="creative">Creative & Media</option>
-                            <option value="trades">Trades & Technical</option>
-                            <option value="science">Science & Research</option>
-                            <option value="engineering">Core Engineering</option>
-                        </select>
-                    </div>
-                    <!-- Question 2 -->
-                    <div>
-                        <label class="block text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2">2. Education Plan</label>
-                        <select id="wiz-edu" class="w-full bg-white/5 border border-white/20 text-white font-bold rounded-xl px-4 py-3.5 outline-none focus:border-emerald-400 [&>option]:text-slate-800">
-                            <option value="all">Doesn't Matter</option>
-                            <option value="degree">3-4 Years (Bachelors)</option>
-                            <option value="diploma">1-2 Years (Diploma)</option>
-                            <option value="advanced">5+ Years (Masters/PhD)</option>
-                            <option value="apprentice">Apprenticeship</option>
-                        </select>
-                    </div>
-                    <!-- Question 3 -->
-                    <div>
-                        <label class="block text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2">3. Salary Goal</label>
-                        <select id="wiz-salary" class="w-full bg-white/5 border border-white/20 text-white font-bold rounded-xl px-4 py-3.5 outline-none focus:border-emerald-400 [&>option]:text-slate-800">
-                            <option value="all">Just want a good job</option>
-                            <option value="high">High Paying (₹15L+ / yr)</option>
-                            <option value="medium">Stable (₹6L - ₹15L / yr)</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="button" onclick="runSmartMatch()" class="w-full py-4 bg-emerald-500 text-slate-900 font-black rounded-xl hover:bg-emerald-400 transition-all shadow-[0_0_20px_rgba(52,211,153,0.4)] text-lg flex items-center justify-center gap-2">
-                    Reveal My Career Matches <i class="fa-solid fa-bolt"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================== -->
-    <!-- 3. CAREER EXPLORER (Sidebar Filters + Grid) -->
-    <!-- ============================================== -->
-    <section class="py-12 bg-slate-50 min-h-screen relative z-10" id="explorer-section">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-8">
-            
-            <!-- --- Left Sidebar (Filters) --- -->
-            <aside class="w-full lg:w-[300px] shrink-0 lg:sticky top-[100px] h-fit lg:max-h-[calc(100vh-120px)] overflow-y-auto custom-scroll bg-white rounded-[2rem] shadow-sm border border-slate-200 p-6">
-                <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
-                    <h2 class="font-black text-lg text-slate-800"><i class="fa-solid fa-filter text-indigo-500 mr-2"></i> Filter Roles</h2>
-                    <button type="button" onclick="clearFilters()" class="text-xs font-bold text-indigo-600 hover:text-white bg-indigo-50 hover:bg-indigo-500 px-3 py-1.5 rounded transition">Clear All</button>
-                </div>
-
-                <!-- Sector/Industry Filter -->
-                <div class="mb-6">
-                    <h3 class="font-bold text-slate-800 mb-3 text-sm">Industry Sector</h3>
-                    <div class="space-y-3">
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="tech" class="filter-checkbox sector-filter"> <span class="text-sm font-semibold text-slate-600 group-hover:text-indigo-600">IT & Web Tech</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="medical" class="filter-checkbox sector-filter"> <span class="text-sm font-semibold text-slate-600 group-hover:text-indigo-600">Healthcare & Life Sci</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="business" class="filter-checkbox sector-filter"> <span class="text-sm font-semibold text-slate-600 group-hover:text-indigo-600">Business & Finance</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="creative" class="filter-checkbox sector-filter"> <span class="text-sm font-semibold text-slate-600 group-hover:text-indigo-600">Creative & Media</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="trades" class="filter-checkbox sector-filter"> <span class="text-sm font-semibold text-slate-600 group-hover:text-indigo-600">Trades & Technical</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="engineering" class="filter-checkbox sector-filter"> <span class="text-sm font-semibold text-slate-600 group-hover:text-indigo-600">Core Engineering</span></label>
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3" onclick="window.location.href='index.html'" class="cursor-pointer">
+                    <div class="cursor-pointer flex flex-col">
+                        <span class="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                            EduMentor <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">PRO</span>
+                        </span>
+                        <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase">
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i> Authorized College Vidya Partner
+                        </span>
                     </div>
                 </div>
 
-                <!-- Education Level Filter -->
-                <div class="mb-6 border-t border-slate-100 pt-5">
-                    <h3 class="font-bold text-slate-800 mb-3 text-sm">Required Education</h3>
-                    <div class="space-y-3">
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="degree" class="filter-checkbox edu-filter"> <span class="text-sm font-semibold text-slate-600">Bachelors Degree</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="advanced" class="filter-checkbox edu-filter"> <span class="text-sm font-semibold text-slate-600">Masters/Doctorate</span></label>
-                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" value="diploma" class="filter-checkbox edu-filter"> <span class="text-sm font-semibold text-slate-600">Diploma / Certificate</span></label>
-                    </div>
-                </div>
-            </aside>
-
-            <!-- --- Right Side (Cards Grid) --- -->
-            <main class="flex-1">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
-                    <h2 class="text-xl font-extrabold text-slate-900" id="results-title">All Career Paths</h2>
-                    <span class="bg-indigo-50 border border-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm" id="result-count">0 paths found</span>
+                <div class="hidden lg:flex items-center gap-8 font-semibold text-sm text-slate-600">
+                    <a href="career-compass.html" class="text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-compass"></i> Career Compass</a>
+                    <a href="edtech-universities.html" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-university"></i> Online Degrees</a>
+                    <a href="exam-radar.html" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-bolt"></i> Entrance Radar</a>
                 </div>
 
-                <!-- Yahan saare cards JavaScript ke through aayenge -->
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="career-grid">
-                    <!-- Loading State (Jab tak DB se data na aaye) -->
-                    <div class="col-span-full py-32 text-center" id="loading-state">
-                        <div class="inline-block w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
-                        <h3 class="text-xl font-extrabold text-slate-800">Connecting to Database...</h3>
-                        <p class="text-slate-500 font-medium mt-2">Fetching real-time career data from Firebase.</p>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </section>
-
-    <!-- ============================================== -->
-    <!-- 4. MODAL (Pop-up for Detailed Reality Check) -->
-    <!-- ============================================== -->
-    <div id="career-modal" class="modal-overlay fixed inset-0 z-50 bg-slate-900/70 flex items-center justify-center p-4 sm:p-6 overflow-y-auto custom-scroll">
-        <div class="modal-content bg-white w-full max-w-6xl rounded-[2rem] shadow-2xl relative flex flex-col lg:flex-row my-auto min-h-[600px] lg:max-h-[90vh] overflow-hidden">
-            
-            <!-- Close Button -->
-            <button type="button" onclick="closeModal()" class="absolute top-4 right-4 lg:top-6 lg:right-6 w-10 h-10 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition z-30 font-bold border border-slate-200 shadow-sm">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <!-- --- Modal Left Panel (Visual Banner) --- -->
-            <div class="lg:w-1/3 p-8 lg:p-12 text-white relative flex flex-col overflow-hidden shrink-0" id="modal-left">
-                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-                
-                <div class="relative z-10 flex-grow">
-                    <div class="flex justify-between items-start mb-6">
-                        <div id="modal-icon" class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl shadow-inner border border-white/30"></div>
-                        <span id="modal-sector" class="bg-white/20 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border border-white/30">Sector</span>
-                    </div>
-                    
-                    <h2 id="modal-title" class="text-3xl lg:text-4xl font-extrabold mb-3 leading-tight tracking-tight">Job Title</h2>
-                    <p id="modal-short-desc" class="text-white/90 font-medium mb-8 text-[15px] leading-relaxed">Short description.</p>
-
-                    <div class="space-y-3 mb-6">
-                        <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md flex justify-between items-center">
-                            <span class="text-[10px] text-white/70 uppercase font-black tracking-widest">Entry Salary</span>
-                            <span id="modal-salary-start" class="text-lg font-black text-white">₹0L</span>
-                        </div>
-                        <div class="bg-black/20 p-4 rounded-xl border border-white/10 backdrop-blur-md flex justify-between items-center">
-                            <span class="text-[10px] text-white/70 uppercase font-black tracking-widest">Peak Salary</span>
-                            <span id="modal-salary-high" class="text-2xl font-black text-emerald-300 drop-shadow-md">₹0L+</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- --- Modal Right Panel (Detailed Content) --- -->
-            <div class="lg:w-2/3 p-8 lg:p-10 bg-white overflow-y-auto custom-scroll relative">
-                
-                <!-- Detailed Description -->
-                <div class="mb-8">
-                    <h3 class="text-lg font-extrabold text-slate-900 mb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-briefcase text-indigo-500"></i> The Reality Check
-                    </h3>
-                    <p id="modal-long-desc" class="text-slate-600 text-sm font-medium leading-relaxed bg-slate-50 p-5 rounded-2xl border border-slate-100"></p>
-                </div>
-
-                <!-- NEW FIELDS: Scope, Skills, Roles -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-                    <div class="bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
-                        <p class="text-[11px] text-blue-700 font-extrabold uppercase tracking-widest mb-1.5"><i class="fa-solid fa-bolt mr-1"></i> Core Skills Needed</p>
-                        <p id="modal-skills" class="text-sm font-bold text-slate-700 leading-snug">Skills...</p>
-                    </div>
-                    <div class="bg-purple-50/50 p-4 rounded-2xl border border-purple-100">
-                        <p class="text-[11px] text-purple-700 font-extrabold uppercase tracking-widest mb-1.5"><i class="fa-solid fa-rocket mr-1"></i> Future Scope</p>
-                        <p id="modal-scope" class="text-sm font-bold text-slate-700 leading-snug">Future scope...</p>
-                    </div>
-                </div>
-
-                <div class="mb-8 border-l-4 border-emerald-400 pl-4 bg-slate-50 py-3 pr-3 rounded-r-xl">
-                    <p class="text-[11px] text-slate-500 font-extrabold uppercase tracking-widest mb-1">Entry Level Roles</p>
-                    <p id="modal-roles" class="text-sm font-bold text-slate-800">Junior Roles...</p>
-                </div>
-
-                <!-- Personality Match (Love / Hate) -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                    <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100">
-                        <h4 class="text-emerald-800 font-extrabold text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-heart text-emerald-500"></i> Good Fit If...
-                        </h4>
-                        <ul id="modal-love" class="text-emerald-700 text-sm font-medium space-y-2 list-none pl-1"></ul>
-                    </div>
-                    <div class="bg-rose-50/50 p-5 rounded-2xl border border-rose-100">
-                        <h4 class="text-rose-800 font-extrabold text-xs uppercase tracking-widest mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-face-frown text-rose-500"></i> Bad Fit If...
-                        </h4>
-                        <ul id="modal-hate" class="text-rose-700 text-sm font-medium space-y-2 list-none pl-1"></ul>
-                    </div>
-                </div>
-
-                <!-- Career Roadmap (Visual Timeline) -->
-                <div class="mb-10">
-                    <div class="flex justify-between items-end mb-5">
-                        <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-map-location-dot text-orange-500"></i> The Growth Path
-                        </h3>
-                    </div>
-                    
-                    <div class="relative pl-8 space-y-6" id="modal-roadmap">
-                        <!-- Background Timeline Line -->
-                        <div class="timeline-line"></div>
-                        <!-- JavaScript yahan roadmap steps inject karega -->
-                    </div>
-                </div>
-
-                <!-- Dynamic & Premium CTA Button -->
-                <div class="sticky bottom-0 bg-white pt-6 pb-2 border-t border-slate-100 z-20">
-                    <button type="button" id="modal-action-btn" onclick="goToColleges()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-black hover:shadow-xl hover:shadow-indigo-500/30 transition-all text-center flex items-center justify-center gap-3 hover:-translate-y-1 text-lg">
-                        Find Colleges <i class="fa-solid fa-arrow-right"></i>
+                <div>
+                    <button onclick="window.location.href='edtech-universities.html'" class="px-5 py-2.5 bg-slate-900 hover:bg-indigo-600 text-white font-bold text-xs tracking-wide uppercase rounded-xl transition shadow-md">
+                        Compare Degrees <i class="fa-solid fa-arrow-right ml-1"></i>
                     </button>
                 </div>
             </div>
         </div>
-    </div>
+    </nav>
 
+    <!-- Main Container Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full grid lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Pane: Selector Tool Options -->
+        <div class="lg:col-span-4 space-y-6">
+            <div class="glass-card p-6 rounded-2xl shadow-xl shadow-slate-100 border border-slate-200/60">
+                <div class="mb-4">
+                    <span class="text-[10px] bg-indigo-50 text-indigo-700 font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">AI Alignment</span>
+                    <h2 class="text-xl font-black text-slate-900 mt-2">Career Compass Matrix</h2>
+                    <p class="text-xs text-slate-400 font-medium mt-1">Select a core technical or commercial domain to calculate live job roles, dynamic progression structures, and critical training credentials.</p>
+                </div>
 
-    <!-- ============================================== -->
-    <!-- 5. JAVASCRIPT & FIREBASE LOGIC -->
-    <!-- ============================================== -->
-    <script type="module">
-        // 1. Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+                <div class="space-y-2" id="domain-selectors-wrapper">
+                    <!-- JavaScript populates domain options here -->
+                </div>
+            </div>
 
-        // 2. Safe Navigation (Fixes Canvas Iframe issues)
-        window.safeNavigate = function(url) {
-            if (!url) return;
-            const a = document.createElement('a');
-            a.href = url;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
-        // 3. Firebase Configuration (Apna credentials yahan verify karein)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAyxEZ4ukI8WRhV71RyS8JYJcXAICGAbto",
-            authDomain: "edtech-7d520.firebaseapp.com",
-            projectId: "edtech-7d520",
-            storageBucket: "edtech-7d520.firebasestorage.app",
-            messagingSenderId: "78074698553",
-            appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Global Variables
-        window.careersDB = []; 
-        let currentSelectedTitle = "";
-
-        // ==========================================
-        // MAIN FUNCTION: Firebase se Data Lana
-        // ==========================================
-        async function fetchCareersFromDB() {
-            try {
-                const querySnapshot = await getDocs(collection(db, "careers"));
-                careersDB = [];
-                
-                querySnapshot.forEach((doc) => {
-                    careersDB.push({ id: doc.id, ...doc.data() });
-                });
-
-                document.getElementById('db-count-hero').innerText = careersDB.length;
-                
-                // Data aane ke baad cards render karein
-                applyFilters();
-
-            } catch (error) {
-                console.error("Error fetching careers:", error);
-                document.getElementById('career-grid').innerHTML = `
-                    <div class="col-span-full py-10 text-center text-red-500 font-bold bg-red-50 rounded-[2rem] border border-red-200">
-                        Error connecting to database. Please check Firebase settings.
-                    </div>`;
-            }
-        }
-
-        // ==========================================
-        // HERO QUIZ FUNCTION: "Reveal Matches" button logic
-        // ==========================================
-        window.runSmartMatch = function() {
-            const interest = document.getElementById('wiz-interest').value;
-            const edu = document.getElementById('wiz-edu').value;
-            const salary = document.getElementById('wiz-salary').value;
-
-            // Pehle sab filters clear karo
-            clearFilters(false);
-            
-            // Jo select kiya hai uspe tick lagao
-            if(interest !== 'all') {
-                const cb = document.querySelector(`.sector-filter[value="${interest}"]`);
-                if(cb) cb.checked = true;
-            }
-            if(edu !== 'all') {
-                const cb = document.querySelector(`.edu-filter[value="${edu}"]`);
-                if(cb) cb.checked = true;
-            }
-            if(salary !== 'all') {
-                const cb = document.querySelector(`.sal-filter[value="${salary}"]`);
-                if(cb) cb.checked = true;
-            }
-
-            applyFilters();
-            // Scroll to results
-            document.getElementById('explorer-section').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        window.clearFilters = function(render = true) {
-            document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-            if(render) applyFilters();
-        }
-
-        // ==========================================
-        // FILTER & RENDER CARDS FUNCTION
-        // ==========================================
-        window.applyFilters = function() {
-            // Helper function to get checked values
-            const getChecked = (selector) => Array.from(document.querySelectorAll(selector + ':checked')).map(cb => cb.value);
-            
-            const sectors = getChecked('.sector-filter');
-            const edus = getChecked('.edu-filter');
-            const sals = getChecked('.sal-filter');
-
-            // Data filter karo
-            const filtered = careersDB.filter(c => {
-                const matchSector = sectors.length === 0 || sectors.includes(c.sector);
-                const matchEdu = edus.length === 0 || edus.includes(c.edu);
-                const matchSal = sals.length === 0 || sals.includes(c.salTier);
-                return matchSector && matchEdu && matchSal;
-            });
-
-            const grid = document.getElementById('career-grid');
-            document.getElementById('result-count').innerText = `${filtered.length} careers found`;
-            
-            // Agar koi match na mile
-            if(filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full py-20 text-center text-slate-500 font-bold bg-white rounded-[2rem] border border-slate-200 border-dashed">
-                        <i class="fa-solid fa-folder-open text-4xl mb-4 block text-slate-300"></i> 
-                        No careers match your exact filters. Try clearing some.
-                    </div>`;
-                return;
-            }
-
-            // HTML for Career Cards
-            grid.innerHTML = filtered.map(c => `
-                <div class="career-card p-6 bg-white relative overflow-hidden group" onclick="openModal('${c.id}')">
-                    <!-- Background Design -->
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${c.color || 'from-blue-600 to-indigo-800'} opacity-5 rounded-bl-full z-0 transition-transform duration-500 group-hover:scale-150"></div>
-                    
-                    <div class="relative z-10 flex-grow">
-                        <div class="flex justify-between items-start mb-5">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${c.color || 'from-blue-600 to-indigo-800'} text-white flex items-center justify-center text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
-                                ${c.icon || '💻'}
-                            </div>
-                            <span class="text-[9px] font-black uppercase tracking-widest text-slate-500 bg-slate-50 border border-slate-200 px-2 py-1 rounded">
-                                ${c.sectorName || 'Category'}
-                            </span>
-                        </div>
-                        <h3 class="text-lg font-extrabold text-slate-900 mb-2 group-hover:text-indigo-600 transition leading-tight">${c.title || 'Untitled Career'}</h3>
-                        <p class="text-slate-500 text-sm font-medium mb-4 leading-relaxed line-clamp-2">${c.shortDesc || ''}</p>
-                    </div>
-                    
-                    <div class="relative z-10 pt-4 mt-auto border-t border-slate-100 flex justify-between items-center">
-                        <div>
-                            <p class="text-[9px] uppercase font-bold text-slate-400 tracking-wider mb-0.5">Peak Salary</p>
-                            <p class="font-black text-emerald-600 text-sm">${c.salHigh || 'N/A'}</p>
-                        </div>
-                        <button type="button" class="bg-slate-50 text-indigo-600 px-3 py-1.5 rounded-lg text-xs font-bold group-hover:bg-indigo-600 group-hover:text-white transition shadow-sm">
-                            Details <i class="fa-solid fa-arrow-right ml-1"></i>
-                        </button>
+            <!-- Lead Generation Magnet Banner -->
+            <div class="bg-gradient-to-br from-slate-900 to-indigo-950 p-6 rounded-2xl text-white shadow-xl space-y-4">
+                <div class="flex gap-3 items-start">
+                    <i class="fa-solid fa-user-tie text-xl text-amber-400 bg-white/10 p-2.5 rounded-xl"></i>
+                    <div>
+                        <h4 class="font-bold text-sm">Confused About Domain Alignment?</h4>
+                        <p class="text-xs text-slate-300 font-medium mt-1 leading-relaxed">Unlock access to our exclusive ₹10,000 corporate subsidy package and map out tailored options with a senior counselor.</p>
                     </div>
                 </div>
-            `).join('');
-        }
+                <a href="https://wa.me/919557848356" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-900/20">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Connect To Senior Advisor
+                </a>
+            </div>
+        </div>
 
-        // ==========================================
-        // MODAL (POPUP) FILLING FUNCTION
-        // ==========================================
-        window.openModal = function(id) {
-            const data = careersDB.find(c => c.id === id);
-            if(!data) return;
+        <!-- Right Pane: Dynamic Framework Projection Display -->
+        <div class="lg:col-span-8 bg-white border border-slate-200/60 shadow-xl shadow-slate-100 rounded-2xl p-6 sm:p-8 min-h-[500px] flex flex-col justify-between" id="compass-output-panel">
+            <!-- Dynamic data drops inside through the display mapping function -->
+        </div>
+    </main>
 
-            currentSelectedTitle = data.title; 
+    <!-- Footer Area -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:flex sm:justify-between sm:items-center space-y-3 sm:space-y-0 font-medium">
+            <p>&copy; 2026 EduMentor Framework. Authorized College Vidya Corporate Ecosystem Hub.</p>
+            <div class="flex justify-center gap-4 text-slate-500 text-[11px]">
+                <span>Direct Account System Link Pay</span>
+                <span>•</span>
+                <span>UGC Regulation Verified Matrix</span>
+            </div>
+        </div>
+    </footer>
 
-            // Modal Left Color/Icon
-            document.getElementById('modal-left').className = `lg:w-1/3 p-8 lg:p-12 text-white relative flex flex-col overflow-hidden shrink-0 bg-gradient-to-br ${data.color || 'from-blue-600 to-indigo-800'}`;
-            document.getElementById('modal-icon').innerHTML = `<i class="fa-solid ${data.icon || 'fa-briefcase'}"></i>`;
-            // Agar Admin ne Emoji dala hai, to use display karein
-            if (data.icon && !data.icon.includes('fa-')) document.getElementById('modal-icon').innerText = data.icon; 
-            
-            document.getElementById('modal-sector').innerText = data.sectorName || 'Sector';
-            document.getElementById('modal-title').innerText = data.title || 'Untitled';
-            document.getElementById('modal-short-desc').innerText = data.shortDesc || '';
-            document.getElementById('modal-salary-start').innerText = data.salStart || 'N/A';
-            document.getElementById('modal-salary-high').innerText = data.salHigh || 'N/A';
-
-            // Modal Right (Basic Data)
-            document.getElementById('modal-long-desc').innerText = data.longDesc || 'No detailed description available.';
-            
-            // Modal Right (NEW FIELDS)
-            document.getElementById('modal-skills').innerText = data.skills || 'General skills required';
-            document.getElementById('modal-roles').innerText = data.entryRoles || 'Junior/Trainee level';
-            document.getElementById('modal-scope').innerText = data.futureScope || 'Standard growth projected';
-
-            // Modal Button update (Dynamic Text)
-            document.getElementById('modal-action-btn').innerHTML = `Find Colleges for ${data.title} <i class="fa-solid fa-arrow-right"></i>`;
-
-            // Handle Arrays for Love/Hate
-            const loveList = Array.isArray(data.love) ? data.love : [];
-            const hateList = Array.isArray(data.hate) ? data.hate : [];
-
-            document.getElementById('modal-love').innerHTML = loveList.length > 0 
-                ? loveList.map(i => `<li class="flex items-start gap-2"><i class="fa-solid fa-check mt-1 text-emerald-500 opacity-80"></i> <span class="text-slate-700">${i}</span></li>`).join('')
-                : `<li class="text-slate-400 italic">No specific data.</li>`;
-                
-            document.getElementById('modal-hate').innerHTML = hateList.length > 0
-                ? hateList.map(i => `<li class="flex items-start gap-2"><i class="fa-solid fa-xmark mt-1 text-rose-500 opacity-80"></i> <span class="text-slate-700">${i}</span></li>`).join('')
-                : `<li class="text-slate-400 italic">No specific data.</li>`;
-            
-            // ==========================================
-            // ROADMAP TIMELINE GENERATOR
-            // ==========================================
-            let roadmapHTML = `<div class="timeline-line"></div>`;
-            
-            // 1. Entry Path (Degree) Node
-            let themeColor = data.color ? data.color.split(' ')[0].replace('from-', 'bg-') : 'bg-indigo-500';
-            
-            roadmapHTML += `
-                <div class="relative z-10 pl-10 mb-6">
-                    <div class="absolute -left-3 top-1 w-6 h-6 ${themeColor} rounded-full flex items-center justify-center shadow-md border-4 border-white text-white text-[8px]"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <h4 class="font-extrabold text-slate-900 text-sm mb-1 uppercase tracking-wider">Step 1: Education</h4>
-                    <p class="text-slate-600 text-sm font-bold bg-white p-3 rounded-xl border border-slate-200 shadow-sm">${data.entryPath || 'Relevant Degree'}</p>
-                </div>`;
-            
-            // 2. Growth Path Nodes (Splitting string by '->' or ',')
-            if(data.growthPath) {
-                let steps = data.growthPath.includes('->') ? data.growthPath.split('->') : data.growthPath.split(',');
-                steps = steps.map(s => s.trim()).filter(s => s);
-                
-                steps.forEach((step, index) => {
-                    let isLast = index === steps.length - 1;
-                    let icon = isLast ? 'fa-crown' : 'fa-briefcase';
-                    let nodeColor = isLast ? 'bg-emerald-500' : 'bg-slate-400';
-                    
-                    roadmapHTML += `
-                        <div class="relative z-10 pl-10 ${isLast ? '' : 'mb-6'}">
-                            <div class="absolute -left-3 top-1 w-6 h-6 ${nodeColor} rounded-full flex items-center justify-center shadow-md border-4 border-white text-white text-[8px]"><i class="fa-solid ${icon}"></i></div>
-                            <h4 class="font-extrabold text-slate-900 text-sm mb-1 uppercase tracking-wider">${isLast ? 'Peak Career' : 'Step ' + (index + 2)}</h4>
-                            <p class="text-slate-600 text-sm font-bold bg-slate-50 p-3 rounded-xl border border-slate-100">${step}</p>
-                        </div>`;
-                });
+    <!-- App Data Model Logic Injection & Interaction Scripts -->
+    <script>
+        // Matrix dataset covering Indian job paths, benchmarks, and required certifications
+        const domainMatrixData = [
+            {
+                id: "domain-cs-ai",
+                title: "Computer Science & AI Engineering",
+                icon: "fa-solid fa-microchip",
+                color: "indigo",
+                tagline: "Software, Cloud Architecture, & Intelligent Systems Systems",
+                roles: ["Machine Learning Architect", "Full-Stack Dev Lead", "Cloud Solutions DevOps Engineer"],
+                payRange: "₹6.5 LPA - ₹24 LPA",
+                certifications: ["Online MCA in Artificial Intelligence", "B.Tech Cloud Computing Work-Degree Infrastructure", "Advanced Analytics PG Diplomas"],
+                milestones: [
+                    { level: "Entry Node", title: "Junior DevOps Tech / Cloud Developer Consultant", work: "Manage baseline container automation clusters and continuous integration builds." },
+                    { level: "Mid Tier", title: "Senior Enterprise Software Engineer", work: "Architect systemic microservice schemas and cross-border API endpoints safely." },
+                    { level: "Apex Rank", title: "Principal Artificial Intelligence Architect", work: "Direct large language data models engineering pipelines for enterprise workflows." }
+                ]
+            },
+            {
+                id: "domain-data-analytics",
+                title: "Data Analytics & Business Intelligence",
+                icon: "fa-solid fa-chart-line",
+                color: "emerald",
+                tagline: "Strategic Database Modeling, Statistical Science & Dashboard Scaling",
+                roles: ["Enterprise Data Analyst", "Predictive Operations Scientist", "BI Product Lead"],
+                payRange: "₹5.0 LPA - ₹18 LPA",
+                certifications: ["Online M.Sc in Data Science", "Executive MBA in Business Analytics", "UGC Approved PGDM Analytics Programs"],
+                milestones: [
+                    { level: "Entry Node", title: "Data Visualization Specialist", work: "Produce data layers pipelines across transactional systems with dashboard apps." },
+                    { level: "Mid Tier", title: "Predictive Modeler / Data Engineer Lead", work: "Construct clean, unified relational databases models to secure complex predictive analytical layers." },
+                    { level: "Apex Rank", title: "Director of Business Intelligence Systems", work: "Govern company-wide semantic metrics and structural digital strategy operations." }
+                ]
+            },
+            {
+                id: "domain-finance-bfsi",
+                title: "Corporate Finance & Fintech Operations",
+                icon: "fa-solid fa-building-columns",
+                color: "amber",
+                tagline: "Investment Metrics, Risk Underwriting & Financial Technology Control",
+                roles: ["Investment Analyst Officer", "Fintech Portfolio Lead", "Risk Governance Controller"],
+                payRange: "₹6.0 LPA - ₹22 LPA",
+                certifications: ["Online MBA in Corporate Finance", "Professional M.Com in Fintech Analytics", "Executive PGDM Investment Banking"],
+                milestones: [
+                    { level: "Entry Node", title: "Junior Risk Underwriter Analyst", work: "Audit general credit portfolios and asset risk variables against local guidelines." },
+                    { level: "Mid Tier", title: "Senior Strategic Portfolio Controller", work: "Deploy capital allocation strategies across commercial investment accounts safely." },
+                    { level: "Apex Rank", title: "Chief Financial & Technology Officer (CFTO)", work: "Govern international fiscal operations while supervising automation tech pipelines." }
+                ]
+            },
+            {
+                id: "domain-digital-marketing",
+                title: "Digital Marketing & Growth Strategy",
+                icon: "fa-solid fa-bullhorn",
+                color: "rose",
+                tagline: "Performance Optimization, Brand Architecture & Consumer Metrics",
+                roles: ["Growth Marketing Manager", "Performance Acquisition Architect", "Brand Director"],
+                payRange: "₹4.5 LPA - ₹15 LPA",
+                certifications: ["Online MBA in Digital Marketing Operations", "BBA Strategic Growth and Performance Marketing", "Post Graduate Program in Brand Scaling"],
+                milestones: [
+                    { level: "Entry Node", title: "Performance Acquisition Specialist", work: "Oversee algorithmic digital ad spend budgets, improving customer acquisition costs (CAC)." },
+                    { level: "Mid Tier", title: "Growth Marketing Director", work: "Map and scale omnichannel funnels to retain active user bases across core products." },
+                    { level: "Apex Rank", title: "Chief Marketing Officer (CMO)", work: "Formulate macro brand identity, pricing models, and international scaling budgets." }
+                ]
             }
+        ];
 
-            document.getElementById('modal-roadmap').innerHTML = roadmapHTML;
+        let selectedDomainId = domainMatrixData[0].id;
+        let activeDomainProfile = null;
 
-            // Show Modal
-            document.body.style.overflow = 'hidden'; 
-            document.getElementById('career-modal').classList.add('active');
+        // Render Selector Buttons
+        function initSelectors() {
+            const wrapper = document.getElementById('domain-selectors-wrapper');
+            wrapper.innerHTML = domainMatrixData.map(dom => {
+                const isActive = dom.id === selectedDomainId;
+                return `
+                    <div onclick="switchDomain('${dom.id}')" class="group p-4 rounded-xl border transition cursor-pointer flex items-center gap-3 ${isActive ? 'bg-indigo-900 border-indigo-900 text-white shadow-md' : 'bg-white border-slate-100 hover:border-slate-200 text-slate-700'}">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center text-sm ${isActive ? 'bg-white/10 text-white' : 'bg-slate-50 text-slate-500 group-hover:bg-indigo-50 group-hover:text-indigo-600'} transition"><i class="${dom.icon}"></i></div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-xs tracking-tight leading-none">${dom.title}</h4>
+                            <p class="text-[10px] mt-1 font-medium ${isActive ? 'text-indigo-200' : 'text-slate-400'} line-clamp-1">${dom.tagline}</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-40 group-hover:translate-x-0.5 transition"></i>
+                    </div>
+                `;
+            }).join('');
         }
 
-        window.closeModal = function() {
-            document.body.style.overflow = 'auto';
-            document.getElementById('career-modal').classList.remove('active');
+        // Handle Selector Switching Logic
+        window.switchDomain = function(id) {
+            selectedDomainId = id;
+            initSelectors();
+            renderOutputPanel();
         }
 
-        // ==========================================
-        // SMART REDIRECT TO UNIVERSITIES
-        // ==========================================
-        window.goToColleges = function() {
-            let targetUrl = 'edtech-universities.html';
-            
-            if (currentSelectedTitle) {
-                const data = careersDB.find(c => c.title === currentSelectedTitle);
-                if (data) {
-                    // Mapping career sector to university stream
-                    const streamMap = {
-                        'tech': 'Engineering', 'medical': 'Medical', 'business': 'Management', 'creative': 'Design', 'law': 'Law'
-                    };
-                    const levelMap = {
-                        'degree': 'UG', 'advanced': 'PG', 'diploma': 'Diploma'
-                    };
-                    
-                    let mappedStream = streamMap[data.sector] || '';
-                    let mappedLevel = levelMap[data.edu] || '';
+        function getStoredDomainProfile() {
+            const stored = sessionStorage.getItem('activeStudentDomainProfile');
+            if (!stored) return null;
+            try { return JSON.parse(stored); } catch (error) { return null; }
+        }
 
-                    targetUrl += `?career=${encodeURIComponent(currentSelectedTitle)}`;
-                    if(mappedStream) targetUrl += `&stream=${encodeURIComponent(mappedStream)}`;
-                    if(mappedLevel) targetUrl += `&level=${encodeURIComponent(mappedLevel)}`;
-                }
+        function handleDomainProfileSubmit(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.currentTarget);
+            const payload = {
+                qualificationProfile: formData.get('qualification'),
+                industryVerticalTarget: formData.get('industryVertical'),
+                primaryVelocityGoal: formData.get('careerGoal'),
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('[Trust Engine Activation]: Step A Domain Profile Locked cleanly:', payload);
+            sessionStorage.setItem('activeStudentDomainProfile', JSON.stringify(payload));
+            activeDomainProfile = payload;
+            initiateStepBScoringWeightagePipeline(payload);
+            renderOutputPanel();
+        }
+
+        function initiateStepBScoringWeightagePipeline(profile) {
+            activeDomainProfile = profile;
+        }
+
+        // Render Career Projections
+        function renderOutputPanel() {
+            const activeObj = domainMatrixData.find(d => d.id === selectedDomainId);
+            const container = document.getElementById('compass-output-panel');
+            const storedProfile = getStoredDomainProfile();
+            const profileToShow = activeDomainProfile || storedProfile;
+
+            container.innerHTML = `
+                <div class="space-y-6">
+                    <div class="compass-wizard-card">
+                        <div class="wizard-header">
+                            <div class="wizard-progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="wizard-step-badge">Step 1 of 3: Domain Profile Setup</div>
+                            <h2 class="wizard-main-title">Design Your Academic Profile Matrix</h2>
+                            <p class="wizard-subtitle">Mapping high-paying pathways optimized for corporate growth and future-ready career pivots.</p>
+                        </div>
+
+                        <form id="domainProfileForm" class="wizard-form-flow">
+                            <div class="form-segment">
+                                <label class="segment-label">1. What is your current highest qualification? <span class="required">*</span></label>
+                                <div class="profile-grid-options">
+                                    <label class="profile-radio-tile">
+                                        <input type="radio" name="qualification" value="12th" required>
+                                        <div class="tile-content"><span class="tile-title">High School (12th Pass)</span><span class="tile-desc">Direct UG Entry Tracks</span></div>
+                                    </label>
+                                    <label class="profile-radio-tile">
+                                        <input type="radio" name="qualification" value="Graduate">
+                                        <div class="tile-content"><span class="tile-title">Graduate (B.Com/BBA/BTech)</span><span class="tile-desc">Advanced PG / Management Specialization</span></div>
+                                    </label>
+                                    <label class="profile-radio-tile">
+                                        <input type="radio" name="qualification" value="Working Professional">
+                                        <div class="tile-content"><span class="tile-title">Working Professional</span><span class="tile-desc">Executive Tracks & Skill Pivots</span></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-segment">
+                                <label class="segment-label">2. Select your preferred Industry Vertical: <span class="required">*</span></label>
+                                <div class="profile-grid-options grid-4-columns">
+                                    <label class="profile-radio-tile vertical-theme">
+                                        <input type="radio" name="industryVertical" value="IT_Data Science" required>
+                                        <div class="tile-content"><span class="tile-title">IT & Data Science</span><span class="tile-desc">AI, SQL, Web Dev</span></div>
+                                    </label>
+                                    <label class="profile-radio-tile vertical-theme">
+                                        <input type="radio" name="industryVertical" value="Management_Business">
+                                        <div class="tile-content"><span class="tile-title">Management & Leadership</span><span class="tile-desc">MBA, Exec Supply Chain</span></div>
+                                    </label>
+                                    <label class="profile-radio-tile vertical-theme">
+                                        <input type="radio" name="industryVertical" value="Healthcare_Logistics">
+                                        <div class="tile-content"><span class="tile-title">Healthcare Admin</span><span class="tile-desc">Hospital Operations</span></div>
+                                    </label>
+                                    <label class="profile-radio-tile vertical-theme">
+                                        <input type="radio" name="industryVertical" value="Finance_Fintech">
+                                        <div class="tile-content"><span class="tile-title">Banking & Fintech</span><span class="tile-desc">Investment & Auditing</span></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-segment">
+                                <label class="segment-label">3. What is your primary career velocity goal? <span class="required">*</span></label>
+                                <div class="profile-grid-options">
+                                    <label class="profile-radio-tile goal-theme">
+                                        <input type="radio" name="careerGoal" value="Salary Growth" required>
+                                        <div class="tile-content"><span class="tile-title">Aggressive Salary Growth</span><span class="tile-desc">Targeting maximum direct placement ROI</span></div>
+                                    </label>
+                                    <label class="profile-radio-tile goal-theme">
+                                        <input type="radio" name="careerGoal" value="Skill Shift">
+                                        <div class="tile-content"><span class="tile-title">Core Technology Skill Shift</span><span class="tile-desc">Transitioning into deep tech domains</span></div>
+                                    </label>
+                                    <label class="profile-radio-tile goal-theme">
+                                        <input type="radio" name="careerGoal" value="Corporate Promotion">
+                                        <div class="tile-content"><span class="tile-title">Corporate Executive Rank</span><span class="tile-desc">Securing internal organizational promotion</span></div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="wizard-action-footer">
+                                <button type="submit" class="compass-next-btn">
+                                    Analyze Profile Vectors
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 18px; height: 18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    ${profileToShow ? `
+                        <div class="profile-status-card">
+                            <div class="status-label">Profile Locked</div>
+                            <div class="status-title">Your domain matrix is ready for Step B</div>
+                            <div class="status-meta">Qualification: <strong>${profileToShow.qualificationProfile}</strong> • Vertical: <strong>${profileToShow.industryVerticalTarget}</strong> • Goal: <strong>${profileToShow.primaryVelocityGoal}</strong></div>
+                        </div>
+                    ` : ''}
+
+                    <div class="space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-5">
+                            <div>
+                                <span class="text-[10px] font-black uppercase text-indigo-600 tracking-wider bg-indigo-50 px-2 py-1 rounded-md">Live Target Profile</span>
+                                <h3 class="text-2xl font-black text-slate-900 tracking-tight mt-1">${activeObj.title}</h3>
+                                <p class="text-xs text-slate-400 font-medium mt-0.5">${activeObj.tagline}</p>
+                            </div>
+                            <div class="bg-emerald-50 border border-emerald-100 px-4 py-2.5 rounded-xl text-left">
+                                <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block leading-none">Indian Pay Bracket</span>
+                                <span class="text-base font-black text-emerald-800">${activeObj.payRange}</span>
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div class="space-y-2.5">
+                                <h5 class="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-id-card text-indigo-500"></i> High-Demand Roles</h5>
+                                <div class="space-y-1.5">
+                                    ${activeObj.roles.map(r => `<div class="bg-slate-50 border border-slate-100/80 px-3 py-2 rounded-lg font-bold text-slate-700 text-xs flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500 text-[10px]"></i> ${r}</div>`).join('')}
+                                </div>
+                            </div>
+
+                            <div class="space-y-2.5">
+                                <h5 class="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> UGC-Approved Pathways</h5>
+                                <div class="space-y-1.5">
+                                    ${activeObj.certifications.map(c => `<div class="bg-slate-50 border border-slate-100/80 px-3 py-2 rounded-lg font-bold text-slate-700 text-xs flex items-center gap-2"><i class="fa-solid fa-university text-indigo-500 text-[10px]"></i> ${c}</div>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 pt-2">
+                            <h5 class="text-xs font-black text-slate-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-network-wired text-indigo-500"></i> Framework Career Roadmap Nodes</h5>
+                            <div class="space-y-3 relative before:absolute before:top-2 before:bottom-2 before:left-[17px] before:w-0.5 before:bg-slate-100">
+                                ${activeObj.milestones.map(m => `
+                                    <div class="flex gap-4 relative items-start bg-slate-50/40 hover:bg-slate-50 p-3 rounded-xl border border-transparent hover:border-slate-100 transition">
+                                        <span class="w-9 h-9 rounded-lg bg-white border border-slate-200 shadow-sm text-[9px] font-black text-slate-500 uppercase flex items-center justify-center shrink-0 tracking-tight z-10">${m.level}</span>
+                                        <div>
+                                            <h4 class="font-extrabold text-slate-800 text-sm leading-tight">${m.title}</h4>
+                                            <p class="text-xs text-slate-500 font-medium mt-1 leading-relaxed">${m.work}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 mt-6 pt-5 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <p class="text-xs font-medium text-slate-400 text-center sm:text-left">Use our AI Course Finder to compare academic parameters across every UGC-approved campus side-by-side.</p>
+                    <button onclick="window.location.href='edtech-universities.html'" class="w-full sm:w-auto px-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition duration-200 shrink-0 shadow-lg shadow-indigo-600/10">
+                        Compare Matched Campuses <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+                    </button>
+                </div>
+            `;
+
+            const form = document.getElementById('domainProfileForm');
+            if (form) {
+                form.addEventListener('submit', handleDomainProfileSubmit);
             }
-            safeNavigate(targetUrl);
         }
 
-        // Event Listeners
-        document.getElementById('career-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        document.querySelectorAll('.filter-checkbox').forEach(cb => {
-            cb.addEventListener('change', applyFilters);
-        });
-
-        // Start App
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchCareersFromDB();
+        // Initialize state configuration on page mount load
+        document.addEventListener("DOMContentLoaded", () => {
+            activeDomainProfile = getStoredDomainProfile();
+            initSelectors();
+            renderOutputPanel();
         });
     </script>
 </body>
