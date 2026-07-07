@@ -161,6 +161,61 @@
             text-decoration: underline;
             text-decoration-color: #86efac;
         }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .brand-logo {
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .auth-partner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .partner-verify-icon {
+            width: 16px;
+            height: 16px;
+            color: #1d4ed8;
+        }
+        .dot-pulse {
+            width: 7px;
+            height: 7px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
         @media (max-width: 640px) {
             .guard-badge {
                 flex-direction: column;
@@ -172,6 +227,12 @@
             }
             .guard-text {
                 font-size: 0.95rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .auth-partner-badge {
+                font-size: 0.7rem;
+                padding: 4px 8px;
             }
         }
     </style>
@@ -188,13 +249,16 @@
                     <button onclick="toggleSidebar()" class="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-xl transition">
                         <i class="fa-solid fa-bars-staggered text-xl"></i>
                     </button>
-                    <div onclick="window.location.href='index.html'" class="cursor-pointer flex flex-col">
-                        <span class="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                            EduMentor <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">PRO</span>
-                        </span>
-                        <span class="text-[10px] font-bold text-slate-400 tracking-wider uppercase flex items-center gap-1">
-                            <i class="fa-solid fa-circle-check text-emerald-500"></i> Authorized College Vidya Partner
-                        </span>
+                    <div onclick="window.location.href='index.html'" class="cursor-pointer flex items-center gap-3">
+                        <div class="logo-area">
+                            <a href="index.html" class="brand-logo">EduMentor</a>
+                            <span class="auth-partner-badge">
+                                <svg class="partner-verify-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.403 12.652a5.5 5.5 0 0 0-.773-5.714 5.5 5.5 0 0 0-6.737-1.19A5.5 5.5 0 1 0 16.403 12.652ZM10 4.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm2.78 4.28a.75.75 0 0 0-1.06-1.06L9 10.44 7.78 9.22a.75.75 0 0 0-1.06 1.06l1.75 1.75a.75.75 0 0 0 1.06 0l3.25-3.25Z" clip-rule="evenodd" />
+                                </svg>
+                                Authorized College Vidya Partner
+                            </span>
+                        </div>
                     </div>
                 </div>
 
