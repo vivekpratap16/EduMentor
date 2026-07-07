@@ -96,6 +96,84 @@
         /* Floating decorative elements */
         .blob { position: absolute; filter: blur(90px); z-index: 0; opacity: 0.35; animation: float 12s infinite ease-in-out alternate; }
         @keyframes float { 0% { transform: translate(0px, 0px) scale(1); } 100% { transform: translate(30px, -40px) scale(1.15); } }
+
+        .financial-guard-banner {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-top: 1px solid #bbf7d0;
+            border-bottom: 1px solid #bbf7d0;
+            padding: 1rem 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .guard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .guard-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+        .guard-icon-wrapper {
+            background-color: #16a34a;
+            color: #ffffff;
+            padding: 0.6rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.2);
+        }
+        .guard-icon {
+            width: 24px;
+            height: 24px;
+        }
+        .guard-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .guard-tag {
+            background-color: #16a34a;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            display: inline-block;
+        }
+        .guard-text {
+            color: #166534;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .guard-text .highlight {
+            color: #15803d;
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: #86efac;
+        }
+        @media (max-width: 640px) {
+            .guard-badge {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .guard-content {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .guard-text {
+                font-size: 0.95rem;
+            }
+        }
     </style>
 </head>
 <body class="relative">
@@ -128,8 +206,8 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <a href="tel:+917505385015" class="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-emerald-100 transition">
-                        <i class="fa-solid fa-phone-volume"></i> +91 7505385015
+                    <a href="tel:+919557848356" class="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 font-bold text-xs px-4 py-2.5 rounded-xl hover:bg-emerald-100 transition">
+                        <i class="fa-solid fa-phone-volume"></i> +91 95578 48356
                     </a>
                     <button onclick="window.location.href='edtech-universities.html'" class="px-5 py-2.5 bg-slate-900 hover:bg-indigo-600 text-white font-bold text-xs tracking-wide uppercase rounded-xl transition shadow-lg shadow-slate-900/10 flex items-center gap-2">
                         Compare Now <i class="fa-solid fa-arrow-right"></i>
@@ -157,13 +235,13 @@
             <a href="edtech-admin.html" class="flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:text-slate-900 transition text-xs"><i class="fa-solid fa-database w-6"></i> University Sync Panel</a>
         </div>
         <div class="p-6 border-t border-slate-100 bg-slate-50 text-center">
-            <a href="https://wa.me/917505385015" target="_blank" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 text-xs shadow-lg shadow-emerald-600/20"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Support Chat</a>
+            <a href="https://wa.me/919557848356" target="_blank" class="w-full py-3 bg-emerald-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 text-xs shadow-lg shadow-emerald-600/20"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Support Chat</a>
         </div>
     </div>
 
     <header class="relative z-10">
         <div class="header-top text-center py-3 px-4 text-sm font-semibold tracking-wide">
-            <span>Authorized Associate Center & Partner of College Vidya | Call: +91 7505385015</span>
+            <span>Authorized Associate Center & Partner of College Vidya | Call: +91 95578 48356</span>
         </div>
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
@@ -184,7 +262,7 @@
                     <a href="edtech-universities.html" class="btn-primary px-8 py-4 rounded-2xl text-white font-extrabold shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2">
                         <i class="fa-solid fa-magnifying-glass-chart"></i> Compare Now
                     </a>
-                    <a href="https://wa.me/917505385015" target="_blank" class="px-8 py-4 rounded-2xl border border-emerald-200 bg-white text-emerald-700 font-extrabold shadow-sm flex items-center justify-center gap-2">
+                    <a href="https://wa.me/919557848356" target="_blank" class="px-8 py-4 rounded-2xl border border-emerald-200 bg-white text-emerald-700 font-extrabold shadow-sm flex items-center justify-center gap-2">
                         <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp Support Chat
                     </a>
                 </div>
@@ -202,6 +280,22 @@
                 <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm text-center">
                     <strong class="block text-slate-900">0% EMI Loan Options</strong>
                     <p class="mt-1 text-sm text-slate-500">Flexible payment support for eligible learners</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="financial-guard-banner" aria-label="Financial guard assurance">
+            <div class="guard-container">
+                <div class="guard-badge">
+                    <div class="guard-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="guard-icon">
+                            <path fill-rule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 7a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="guard-content">
+                        <span class="guard-tag">100% Financial Guard</span>
+                        <p class="guard-text">Pay Directly to University Portal — <span class="highlight">No Middleman, Zero Risk.</span></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -266,7 +360,7 @@
                 <div>
                     <h5 class="text-white font-bold text-sm tracking-wide mb-3">Direct Support Desk</h5>
                     <p class="font-medium text-slate-300 leading-relaxed">Office Hours: 10 AM to 6 PM</p>
-                    <p class="font-bold text-emerald-400 mt-1"><i class="fa-solid fa-phone"></i> +91 7505385015</p>
+                    <p class="font-bold text-emerald-400 mt-1"><i class="fa-solid fa-phone"></i> +91 95578 48356</p>
                 </div>
             </div>
             
@@ -314,15 +408,15 @@
                 <div class="hero-container">
                     <div class="lead-panel">
                         <h3>Get Free 1-on-1 Expert Advice</h3>
-                        <form class="lead-panel-form">
+                        <form id="leadCaptureForm" class="lead-panel-form">
                             <div class="form-group">
-                                <input type="text" name="studentName" placeholder="Full Name" required>
+                                <input id="studentName" type="text" name="studentName" placeholder="Full Name" required>
                             </div>
                             <div class="form-group">
-                                <input type="tel" name="studentPhone" placeholder="Phone Number (WhatsApp preferred)" required>
+                                <input id="studentPhone" type="tel" name="studentPhone" placeholder="Phone Number (WhatsApp preferred)" required>
                             </div>
                             <div class="form-group">
-                                <select name="selectedCourse" required>
+                                <select id="selectedCourse" name="selectedCourse" required>
                                     <option value="" disabled selected>Select Interested Course</option>
                                     <option value="MBA">Online MBA (90+ Specializations)</option>
                                     <option value="MCA">Online MCA</option>
@@ -333,7 +427,7 @@
                             <button type="submit" class="panel-btn">Connect with Expert</button>
                         </form>
                         <p class="text-center mt-4 text-sm text-slate-600">
-                            Or call us directly: <a href="tel:+917505385015" class="font-bold text-orange-600"><strong>+91 7505385015</strong></a>
+                            Or call us directly: <a href="tel:+919557848356" class="font-bold text-orange-600"><strong>+91 95578 48356</strong></a>
                         </p>
                     </div>
                     <div class="flex-1 min-w-[280px] px-4 py-8">
@@ -344,11 +438,24 @@
             `;
 
             header.insertAdjacentElement('afterend', panelSection);
-            const form = panelSection.querySelector('.lead-panel-form');
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                alert('Thanks! Our team will reach out to you shortly.');
-            });
+            const form = panelSection.querySelector('#leadCaptureForm');
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const formData = {
+                        name: document.getElementById('studentName').value,
+                        phone: document.getElementById('studentPhone').value,
+                        course: document.getElementById('selectedCourse').value,
+                        source: 'EduMentor_Web_Vivek',
+                        timestamp: new Date().toLocaleString()
+                    };
+
+                    console.log('Sending Lead to CV Partners App...', formData);
+                    alert('Namaste ' + formData.name + '! Aapki details receive ho gayi hain. Humare expert aapko 15 minute ke andar call karenge.');
+                    this.reset();
+                });
+            }
         }
 
         document.addEventListener('DOMContentLoaded', addHeroPanel);
