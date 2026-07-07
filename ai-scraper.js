@@ -1,6 +1,15 @@
 const admin = require("firebase-admin");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
+const allUniversities = [
+    { name: "Amity Online", reg: 0, exam: 0, loan: "FIBE/AVANSE", link: "https://amityonline.com/", dualSpec: true },
+    { name: "LPU Online", reg: 1000, exam: 2000, loan: "AVANSE/PROPELLED", link: "https://www.lpuonline.com/", dualSpec: true },
+    { name: "UPES Online", reg: 1000, exam: 0, loan: "JODO/KHUHU", link: "https://upesonline.ac.in/", dualSpec: false },
+    { name: "Chandigarh University Online", reg: 1000, exam: 0, loan: "AVANSE/GRAYQUEST", link: "https://uims.cuchd.in/", dualSpec: true },
+    { name: "Manipal University Jaipur", reg: 500, exam: 0, loan: "PROPELLED/FIBE", link: "https://jaipur.manipal.edu/", dualSpec: true },
+    { name: "Jain University Online", reg: 1000, exam: 0, loan: "AVANSE/PROPELLED", link: "https://onlinejain.com/", dualSpec: false }
+];
+
 // 1. Firebase Admin Setup
 // Dhyaan dein: File ka naam wahi rakhein jo aapke folder mein hai
 const serviceAccount = require("./serviceAccountKey.json"); 
