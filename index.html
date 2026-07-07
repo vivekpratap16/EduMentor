@@ -235,6 +235,86 @@
                 padding: 4px 8px;
             }
         }
+
+        .trust-stats-section {
+            background-color: #ffffff;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-family: 'Arial', sans-serif;
+        }
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            min-width: 250px;
+        }
+        .stat-icon-box {
+            padding: 0.85rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .blue-theme {
+            background-color: #eff6ff;
+            color: #2563eb;
+        }
+        .gold-theme {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+        .stat-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 0;
+            line-height: 1.2;
+        }
+        .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #64748b;
+            margin: 4px 0 0 0;
+        }
+        @media (max-width: 768px) {
+            .stats-container {
+                gap: 2rem;
+            }
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            .stat-label {
+                font-size: 0.85rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .stats-container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 2.5rem;
+            }
+            .stat-card {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body class="relative">
@@ -364,6 +444,34 @@
             </div>
         </section>
     </header>
+
+    <section class="trust-stats-section" aria-label="Trust dashboard">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon-box blue-theme">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="stat-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.174L12 6.22l7.74 3.954m-15.48 0L12 14.126l7.74-3.954M4.26 10.174v4.757a4.5 4.5 0 002.185 3.883l5.055 3.033a1.5 1.5 0 001.52 0l5.055-3.033a4.5 4.5 0 002.185-3.883v-4.757m-15.48 0L12 14.04l7.74-3.866M6.5 14.5v-1.75" />
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-number">92.76%</h3>
+                    <p class="stat-label">Student Retention Rate</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon-box gold-theme">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="stat-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.214.107a3.56 3.56 0 004.722L14.12 14M18 12a6 6 0 11-12 0 6 6 0 0112 0z" />
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-number">₹20 Cr+</h3>
+                    <p class="stat-label">Active Subsidy Pool</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="bg-white border-y border-slate-100 py-16 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
