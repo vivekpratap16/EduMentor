@@ -3,222 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Comparison - EduMentor by Vivek Kumar</title>
+    <title>University Sync Panel - EduMentor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-blue: #002366;
             --accent-orange: #FF8C00;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; }
-        .navbar { background-color: var(--primary-blue); }
-        .btn-orange { background-color: var(--accent-orange); color: white; font-weight: bold; }
-        .btn-orange:hover { background-color: #e67e00; color: white; }
-        .hero-banner { background: linear-gradient(135deg, var(--primary-blue) 0%, #0044cc 100%); color: white; padding: 40px 0; }
-        .table-container { background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 20px; margin-top: -30px; }
-        .badge-subsidy { background-color: var(--accent-orange); font-size: 0.9rem; }
-        .university-link { color: var(--primary-blue); font-weight: 600; text-decoration: none; }
+        body { background-color: #f4f7f9; font-family: 'Poppins', sans-serif; }
+        .navbar { background-color: var(--primary-blue); border-bottom: 4px solid var(--accent-orange); }
+        .hero-section { background: linear-gradient(rgba(0,35,102,0.9), rgba(0,35,102,0.9)), url('https://images.unsplash.com/photo-1523050853063-91a51e0181ad?auto=format&fit=crop&w=1350&q=80'); background-size: cover; color: white; padding: 60px 0; }
+        .filter-box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 20px; }
+        .uni-card { border: none; border-radius: 15px; transition: 0.3s; margin-bottom: 25px; overflow: hidden; background: white; }
+        .uni-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .uni-logo { height: 80px; object-fit: contain; padding: 10px; }
+        .badge-ugc { background: #28a745; color: white; font-size: 0.7rem; }
+        .badge-subsidy { background: var(--accent-orange); color: white; font-weight: bold; }
+        #viewWindow .modal-dialog { max-width: 95%; height: 95%; margin: 10px auto; }
+        #viewWindow .modal-content { height: 100%; border-radius: 15px; overflow: hidden; }
+        #liveIframe { width: 100%; height: calc(100% - 60px); border: none; }
+        .btn-direct { background-color: var(--accent-orange); color: white; font-weight: bold; border-radius: 8px; }
+        .btn-direct:hover { background-color: #e67e00; color: white; }
     </style>
 </head>
 <body>
 
-<div class="bg-dark text-white text-center py-2">
-    <small>Authorized Associate Center & Partner of College Vidya | <span class="text-warning">₹10,000 CV Subsidy Live!</span></small>
-</div>
-
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="index.html">EduMentor</a>
-        <div class="ms-auto text-white">
-            <a href="tel:9557848356" class="text-white text-decoration-none">Call: +91 95578 48356</a>
+<nav class="navbar navbar-dark py-3">
+    <div class="container d-flex justify-content-between">
+        <a class="navbar-brand fw-bold fs-3" href="index.html">EduMentor <span style="font-size: 0.8rem; font-weight: normal;">by Vivek Kumar</span></a>
+        <div class="text-white">
+            <span class="me-3"><i class="fas fa-phone"></i> +91 95578 48356</span>
+            <span class="badge badge-subsidy">₹20 Cr Subsidy Pool Live</span>
         </div>
     </div>
 </nav>
 
-<section class="hero-banner text-center">
+<section class="hero-section text-center">
     <div class="container">
-        <h1 class="display-5 fw-bold">Compare 25+ Top Online Universities</h1>
-        <p class="lead">UGC-DEB & AICTE Approved | 100% Direct University Payment</p>
+        <h1 class="display-5 fw-bold">Live University Sync Panel</h1>
+        <p class="lead">Compare 100+ Indian & International Universities with 100% Direct Pay Transparency</p>
     </div>
 </section>
 
-<div class="container mb-5">
-    <div class="table-container">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>University Name</th>
-                        <th>Reg. Fee</th>
-                        <th>Exam Fee</th>
-                        <th>Loan Partners</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Amity University (AU)</strong> <span class="badge badge-subsidy">Dual Spec</span></td>
-                        <td>₹0</td>
-                        <td>₹0</td>
-                        <td>FIBE, AVANSE, TCPL</td>
-                        <td><a href="https://amityonline.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Chandigarh University (CUOL)</strong></td>
-                        <td>₹1000</td>
-                        <td>₹0</td>
-                        <td>AVANSE, GRAYQUEST, FINZ</td>
-                        <td><a href="https://www.onlinecu.in/index.php" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>LPU Online</strong> <span class="badge badge-subsidy">MBA Dual</span></td>
-                        <td>₹1000</td>
-                        <td>₹2000/sem</td>
-                        <td>AVANSE, PROPELLED</td>
-                        <td><a href="https://www.lpuonline.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Manipal University (MUJ)</strong></td>
-                        <td>₹500</td>
-                        <td>₹0</td>
-                        <td>PROPELLED, FIBE, TCPL</td>
-                        <td><a href="https://www.onlinemanipal.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>UPES Online</strong></td>
-                        <td>₹1000</td>
-                        <td>₹0</td>
-                        <td>JODO/KHUHU (0% ROI)</td>
-                        <td><a href="https://upesonline.ac.in/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>NMIMS</strong></td>
-                        <td>₹1200</td>
-                        <td>₹800/sub</td>
-                        <td>AVANS, PROPELLED, FINZ</td>
-                        <td><a href="https://online.nmims.edu/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sikkim Manipal (SMU)</strong></td>
-                        <td>₹500</td>
-                        <td>₹0</td>
-                        <td>PROPELLED, FIBE, TCPL</td>
-                        <td><a href="https://www.onlinemanipal.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Amrita University</strong></td>
-                        <td>₹500</td>
-                        <td>₹2500/sem</td>
-                        <td>PROPELLED (6% ROI)</td>
-                        <td><a href="https://onlineamrita.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Uttaranchal University (UU)</strong></td>
-                        <td>₹0</td>
-                        <td>₹2500/sem</td>
-                        <td>FIBE, PROPELLED</td>
-                        <td><a href="http://www.onlineuu.in" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sharda University</strong></td>
-                        <td>₹500</td>
-                        <td>₹3500/yr</td>
-                        <td>FIBE, AVANS</td>
-                        <td><a href="https://shardaonline.ac.in/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>DPU (Pune)</strong></td>
-                        <td>₹0</td>
-                        <td>₹24200 (Incl)</td>
-                        <td>AVANSE, PROPELLED, FIBE</td>
-                        <td><a href="https://www.dypatilonline.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Vivekanand Global (VGU)</strong></td>
-                        <td>₹1000</td>
-                        <td>₹1500/sem</td>
-                        <td>FIBE</td>
-                        <td><a href="https://onlinevgu.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ganeshi Lal Agrawal (GLA)</strong></td>
-                        <td>₹500</td>
-                        <td>₹1500/sem</td>
-                        <td>PROPELLED</td>
-                        <td><a href="https://glaonline.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shoolini University</strong></td>
-                        <td>₹500</td>
-                        <td>₹0</td>
-                        <td>FIBE, PROPELLED</td>
-                        <td><a href="https://shoolini.online/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Andhra University</strong></td>
-                        <td>₹1000</td>
-                        <td>₹1000/sem</td>
-                        <td>No Loan</td>
-                        <td><a href="https://onlineausde.andhrauniversity.edu.in/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Kurushetra (KUK)</strong></td>
-                        <td>₹1000</td>
-                        <td>₹0</td>
-                        <td>No Loan</td>
-                        <td><a href="https://www.kukonline.in/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>DPU (Navi Mumbai)</strong></td>
-                        <td>₹1500/1100</td>
-                        <td>₹0</td>
-                        <td>PROPELLED, FIBE</td>
-                        <td><a href="https://dypatiluniversityonline.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Parul University</strong></td>
-                        <td>₹500</td>
-                        <td>₹0</td>
-                        <td>Available</td>
-                        <td><a href="http://www.paruluniversity.online" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Galgotias University</strong></td>
-                        <td>₹1200</td>
-                        <td>₹4000/yr</td>
-                        <td>Propelled (9% ROI)</td>
-                        <td><a href="https://galgotiasonline.edu.in/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>OP JINDAL</strong></td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>Propelled</td>
-                        <td><a href="https://www.upgrad.com/" class="btn btn-sm btn-orange">Apply Now</a></td>
-                    </tr>
-                    <tr><td><strong>ADTU</strong></td><td>-</td><td>-</td><td>Available</td><td><a href="https://adtuonline.in/" class="btn btn-sm btn-orange">Apply Now</a></td></tr>
-                    <tr><td><strong>Alliance University</strong></td><td>-</td><td>-</td><td>Available</td><td><a href="https://allianceonline.edu.in/" class="btn btn-sm btn-orange">Apply Now</a></td></tr>
-                    <tr><td><strong>Christ University</strong></td><td>-</td><td>-</td><td>Available</td><td><a href="https://online.christuniversity.in/" class="btn btn-sm btn-orange">Apply Now</a></td></tr>
-                    <tr><td><strong>Bennett University</strong></td><td>-</td><td>-</td><td>Available</td><td><a href="https://www.bennettonline.com/" class="btn btn-sm btn-orange">Apply Now</a></td></tr>
-                    <tr><td><strong>VIT Online</strong></td><td>-</td><td>-</td><td>Available</td><td><a href="https://vitonline.in/" class="btn btn-sm btn-orange">Apply Now</a></td></tr>
-                </tbody>
-            </table>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="filter-box">
+                <h5 class="fw-bold mb-3"><i class="fas fa-filter"></i> Filters</h5>
+                <label class="small fw-bold">Select Degree</label>
+                <select class="form-select mb-3" id="courseType">
+                    <option value="all">All Degrees</option>
+                    <option value="MBA">MBA (90+ Specializations)</option>
+                    <option value="MCA">MCA / MSc</option>
+                    <option value="BBA">BBA / BCA / BCom</option>
+                </select>
+                
+                <label class="small fw-bold">Budget (Full Course)</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="budget" value="low">
+                    <label class="form-check-label">Under ₹1 Lakh</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="budget" value="mid">
+                    <label class="form-check-label">₹1 Lakh - ₹2 Lakh</label>
+                </div>
+                
+                <hr>
+                <div class="text-center">
+                    <p class="small text-muted">92.76% Student Retention</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/3/3a/UGC_India_logo.png" height="50" alt="UGC Approved">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9" id="uniGrid"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewWindow" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="modalTitle">Direct University Portal - 100% Secure</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="alert alert-info py-1 mb-0 rounded-0 text-center" style="font-size: 0.8rem;">
+                <i class="fas fa-shield-alt"></i> Financial Guard: You are paying directly to the University account. No middlemen.
+            </div>
+            <iframe id="liveIframe" src=""></iframe>
         </div>
     </div>
 </div>
 
-<footer class="bg-light py-4 border-top">
-    <div class="container text-center">
-        <p class="mb-1"><strong>92.76% Student Retention Rate</strong> | 1000+ Courses Offered</p>
-        <p class="text-muted small">EduMentor is an Authorized CV Partner. All leads are managed via CV Partners App for 15-minute response.</p>
-        <div class="mt-2">
-            <span class="mx-2">UGC-DEB Approved</span>
-            <span class="mx-2">AICTE Approved</span>
-            <span class="mx-2">NAAC A++ Status</span>
-        </div>
-    </div>
-</footer>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const universityData = [
+        { name: "Amity Online", img: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/Amity_University_logo.png/220px-Amity_University_logo.png", courses: "MBA, MCA, BBA, BCA", fees: "₹1.5L - ₹3.02L", loan: "0% ROI (Fibe/Avanse)", link: "https://amityonline.com/", type: "MBA", budget: "high" },
+        { name: "Sikkim Manipal (SMU)", img: "https://www.onlinemanipal.com/favicon.ico", courses: "MBA Dual, MCA, BBA", fees: "₹75k - ₹1.2L", loan: "0% No-Cost EMI", link: "https://www.onlinemanipal.com/", type: "MBA", budget: "mid" },
+        { name: "Christ University", img: "https://online.christuniversity.in/assets/images/logo.png", courses: "MCA, MSc AI/ML, BCom", fees: "₹1.6L - ₹2.75L", loan: "EMI Available", link: "https://online.christuniversity.in/", type: "MCA", budget: "high" },
+        { name: "LPU Online", img: "https://www.lpuonline.com/assets/images/logo.png", courses: "MBA, MCA, BCA", fees: "₹80k - ₹2L", loan: "20% Grant Available", link: "https://www.lpuonline.com/", type: "MBA", budget: "mid" },
+        { name: "UPES Online", img: "https://upesonline.ac.in/assets/images/logo.png", courses: "MBA Oil & Gas, BBA", fees: "₹1.5L - ₹2.2L", loan: "JODO/KHUHU 0% ROI", link: "https://upesonline.ac.in/", type: "MBA", budget: "high" },
+        { name: "Parul University", img: "http://www.paruluniversity.online/favicon.ico", courses: "30+ MBA Specs, MCA", fees: "₹40k - ₹99k", loan: "Financial Support", link: "http://www.paruluniversity.online", type: "MBA", budget: "low" },
+        { name: "Galgotias University", img: "https://galgotiasonline.edu.in/favicon.ico", courses: "MBA, MCA, BBA", fees: "₹77k - ₹84k", loan: "Propelled 9% ROI", link: "https://galgotiasonline.edu.in/", type: "BBA", budget: "low" },
+        { name: "Manipal University (MUJ)", img: "https://www.onlinemanipal.com/favicon.ico", courses: "MBA, MCA, BBA", fees: "₹99k - ₹1.8L", loan: "No Cost EMI", link: "https://www.onlinemanipal.com/", type: "MBA", budget: "mid" },
+        { name: "NMIMS", img: "https://online.nmims.edu/favicon.ico", courses: "MBA, MCA, BBA", fees: "₹1.2L - ₹2.5L", loan: "AVANS / PROPELLED", link: "https://online.nmims.edu/", type: "MBA", budget: "high" },
+        { name: "VIT Online", img: "https://vitonline.in/favicon.ico", courses: "MBA, MCA", fees: "₹1.1L - ₹2L", loan: "EMI Available", link: "https://vitonline.in/", type: "MCA", budget: "mid" },
+        { name: "Alliance University", img: "https://allianceonline.edu.in/favicon.ico", courses: "MBA, BBA", fees: "₹1L - ₹1.8L", loan: "EMI Available", link: "https://allianceonline.edu.in/", type: "MBA", budget: "mid" },
+        { name: "Bennett University", img: "https://www.bennettonline.com/favicon.ico", courses: "MBA, BBA", fees: "₹1.2L - ₹2.2L", loan: "EMI Available", link: "https://www.bennettonline.com/", type: "MBA", budget: "high" }
+    ];
+
+    function renderCards(data) {
+        const grid = document.getElementById('uniGrid');
+        grid.innerHTML = '';
+        data.forEach(uni => {
+            grid.innerHTML += `
+                <div class="uni-card p-3 shadow-sm d-flex align-items-center">
+                    <img src="${uni.img}" class="uni-logo me-4" alt="${uni.name}">
+                    <div class="flex-grow-1">
+                        <span class="badge badge-ugc mb-1">UGC-DEB & AICTE Approved</span>
+                        <h5 class="fw-bold mb-1">${uni.name}</h5>
+                        <p class="small text-muted mb-1"><i class="fas fa-book-open"></i> ${uni.courses}</p>
+                        <p class="small mb-1"><strong>Fees:</strong> ${uni.fees} | <strong>Loan:</strong> ${uni.loan}</p>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge badge-subsidy d-block mb-2">₹10,000 Assistance</span>
+                        <button class="btn btn-direct w-100 mb-2" onclick="openPortal('${uni.link}', '${uni.name}')">Live View</button>
+                        <a href="${uni.link}" target="_blank" class="text-decoration-none small">Official Site <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function openPortal(url, name) {
+        document.getElementById('modalTitle').innerText = name + " - Official Admission Portal";
+        document.getElementById('liveIframe').src = url;
+        new bootstrap.Modal(document.getElementById('viewWindow')).show();
+    }
+
+    renderCards(universityData);
+
+    document.getElementById('courseType').addEventListener('change', function() {
+        const type = this.value;
+        const filtered = type === 'all' ? universityData : universityData.filter(u => u.type === type);
+        renderCards(filtered);
+    });
+</script>
+
 </body>
 </html>
