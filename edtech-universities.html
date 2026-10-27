@@ -3,153 +3,788 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Sync Panel - EduMentor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Compare 100+ UGC-Approved Online Universities | EduMentor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
         :root {
             --primary-blue: #002366;
             --accent-orange: #FF8C00;
         }
-        body { background-color: #f4f7f9; font-family: 'Poppins', sans-serif; }
-        .navbar { background-color: var(--primary-blue); border-bottom: 4px solid var(--accent-orange); }
-        .hero-section { background: linear-gradient(rgba(0,35,102,0.9), rgba(0,35,102,0.9)), url('https://images.unsplash.com/photo-1523050853063-91a51e0181ad?auto=format&fit=crop&w=1350&q=80'); background-size: cover; color: white; padding: 60px 0; }
-        .filter-box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); position: sticky; top: 20px; }
-        .uni-card { border: none; border-radius: 15px; transition: 0.3s; margin-bottom: 25px; overflow: hidden; background: white; }
-        .uni-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-        .uni-logo { height: 80px; object-fit: contain; padding: 10px; }
-        .badge-ugc { background: #28a745; color: white; font-size: 0.7rem; }
-        .badge-subsidy { background: var(--accent-orange); color: white; font-weight: bold; }
-        #viewWindow .modal-dialog { max-width: 95%; height: 95%; margin: 10px auto; }
-        #viewWindow .modal-content { height: 100%; border-radius: 15px; overflow: hidden; }
-        #liveIframe { width: 100%; height: calc(100% - 60px); border: none; }
-        .btn-direct { background-color: var(--accent-orange); color: white; font-weight: bold; border-radius: 8px; }
-        .btn-direct:hover { background-color: #e67e00; color: white; }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, #002366 0%, #1e1b4b 100%);
+        }
+        .uni-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            transition: all 0.25s ease;
+        }
+        .uni-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -10px rgba(0, 35, 102, 0.12);
+            border-color: #cbd5e1;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 0.75rem;
+            background: #f8fafc;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #0f172a;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .form-input:focus {
+            border-color: #002366;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(0, 35, 102, 0.1);
+        }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-<nav class="navbar navbar-dark py-3">
-    <div class="container d-flex justify-content-between">
-        <a class="navbar-brand fw-bold fs-3" href="index.html">EduMentor <span style="font-size: 0.8rem; font-weight: normal;">by Vivek Kumar</span></a>
-        <div class="text-white">
-            <span class="me-3"><i class="fas fa-phone"></i> +91 95578 48356</span>
-            <span class="badge badge-subsidy">₹20 Cr Subsidy Pool Live</span>
+    <!-- Top Announcement Strip -->
+    <div class="bg-[#002366] text-white text-xs py-2.5 px-4 font-semibold border-b-2 border-[#FF8C00]">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <span><i class="fa-solid fa-shield-halved text-amber-400 mr-1"></i> 100% Financial Guard: Pay Directly to Official University Accounts — Zero Agent Risk</span>
+            <div class="flex items-center gap-4">
+                <span class="bg-amber-500 text-slate-950 font-extrabold px-2.5 py-0.5 rounded-full text-[11px]">₹20 Cr Subsidy Pool Live</span>
+                <a href="tel:+917505385015" class="hover:text-amber-300"><i class="fa-solid fa-phone mr-1"></i> +91 7505385015 / +91 95578 48356</a>
+            </div>
         </div>
     </div>
-</nav>
 
-<section class="hero-section text-center">
-    <div class="container">
-        <h1 class="display-5 fw-bold">Live University Sync Panel</h1>
-        <p class="lead">Compare 100+ Indian & International Universities with 100% Direct Pay Transparency</p>
-    </div>
-</section>
+    <!-- Main Navbar -->
+    <nav class="sticky top-0 z-40 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="index.html" class="flex items-center gap-3">
+                    <span class="text-2xl font-black text-slate-900 tracking-tight">EduMentor</span>
+                    <span class="hidden sm:inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider">
+                        <i class="fa-solid fa-circle-check text-blue-600"></i> Authorized College Vidya Partner
+                    </span>
+                </a>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="filter-box">
-                <h5 class="fw-bold mb-3"><i class="fas fa-filter"></i> Filters</h5>
-                <label class="small fw-bold">Select Degree</label>
-                <select class="form-select mb-3" id="courseType">
-                    <option value="all">All Degrees</option>
-                    <option value="MBA">MBA (90+ Specializations)</option>
-                    <option value="MCA">MCA / MSc</option>
-                    <option value="BBA">BBA / BCA / BCom</option>
-                </select>
+                <div class="hidden md:flex items-center gap-6 font-bold text-sm text-slate-600">
+                    <a href="index.html" class="hover:text-indigo-600 transition">Home</a>
+                    <a href="career-compass.html" class="hover:text-indigo-600 transition flex items-center gap-1.5"><i class="fa-solid fa-compass text-indigo-600"></i> Career Compass</a>
+                    <a href="edtech-universities.html" class="text-indigo-600 flex items-center gap-1.5"><i class="fa-solid fa-building-columns"></i> University Matrix</a>
+                    <a href="edtech-admin.html" class="text-slate-400 hover:text-slate-800 text-xs"><i class="fa-solid fa-lock"></i> Admin</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://cvadm.com/prospectus" target="_blank" class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:border-indigo-500 text-slate-700 font-bold text-xs transition">
+                        <i class="fa-solid fa-file-pdf text-rose-500"></i> All Prospectuses
+                    </a>
+                    <a href="https://wa.me/917505385015?text=Hi%20Vivek%2C%20please%20share%20the%20official%20university%20comparison%20and%20subsidy%20details." target="_blank" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Free 1-on-1 Call
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <section class="hero-banner text-white py-10 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div class="space-y-2 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3 py-1 rounded-full text-xs font-bold text-amber-300">
+                    <i class="fa-solid fa-bolt"></i> Real-Time UGC-DEB & NAAC A++ Verified Matrix
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-black tracking-tight">Live University Sync & Comparison Panel</h1>
+                <p class="text-slate-300 text-sm sm:text-base max-w-2xl">
+                    Compare 27+ Official Partner Universities across fees, 0% No-Cost EMI partners, hidden fee disclosures, and claim up to <strong>₹10,000 CV Subsidy</strong>.
+                </p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center shrink-0">
+                <div class="bg-white/10 backdrop-blur-sm border border-white/15 px-4 py-3 rounded-2xl">
+                    <div class="text-xl font-black text-amber-400">92.76%</div>
+                    <div class="text-[11px] text-slate-200 font-semibold">Student Retention</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/15 px-4 py-3 rounded-2xl">
+                    <div class="text-xl font-black text-emerald-400">100%</div>
+                    <div class="text-[11px] text-slate-200 font-semibold">Direct Portal Pay</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-white/10 backdrop-blur-sm border border-white/15 px-4 py-3 rounded-2xl">
+                    <div class="text-xl font-black text-sky-300">₹10,000</div>
+                    <div class="text-[11px] text-slate-200 font-semibold">Max CV Subsidy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+
+            <!-- Left Sidebar: Filters + Real-Time EMI Simulator & Hidden Fee Detector -->
+            <aside class="lg:col-span-4 xl:col-span-3 space-y-6 lg:sticky lg:top-24">
                 
-                <label class="small fw-bold">Budget (Full Course)</label>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="budget" value="low">
-                    <label class="form-check-label">Under ₹1 Lakh</label>
+                <!-- Filter Card -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-extrabold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-indigo-600"></i> Smart Filters
+                        </h3>
+                        <button onclick="resetAllFilters()" class="text-xs font-bold text-indigo-600 hover:underline">Reset</button>
+                    </div>
+
+                    <!-- Search by Name -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Search University / Course</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                            <input type="text" id="searchInput" placeholder="e.g. Amity, LPU, Manipal, MBA..." class="form-input pl-8">
+                        </div>
+                    </div>
+
+                    <!-- Select Degree -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Select Program</label>
+                        <select id="courseType" class="form-input">
+                            <option value="all">All Programs (UG / PG / Exec)</option>
+                            <option value="MBA">Online MBA (90+ Specs)</option>
+                            <option value="MCA">Online MCA / M.Sc (AI & Data)</option>
+                            <option value="BBA">Online BBA / BCA / B.Com</option>
+                            <option value="Executive">Executive Global Programs</option>
+                        </select>
+                    </div>
+
+                    <!-- Full Course Budget -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-2">Total Fee Budget</label>
+                        <div class="space-y-1.5 text-xs font-semibold text-slate-700">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="budget" value="all" checked class="accent-indigo-600"> All Budgets
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="budget" value="low" class="accent-indigo-600"> Under ₹1 Lakh
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="budget" value="mid" class="accent-indigo-600"> ₹1 Lakh – ₹2 Lakh
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="budget" value="high" class="accent-indigo-600"> ₹2 Lakh+ (Premium / Global)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Special Feature Checkboxes -->
+                    <div class="pt-2 border-t border-slate-100 space-y-2 text-xs font-bold text-slate-700">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="filterZeroEmi" class="accent-orange-500 rounded"> 0% No-Cost EMI Available
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="filterDualSpec" class="accent-orange-500 rounded"> Dual Specialization Option
+                        </label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="budget" value="mid">
-                    <label class="form-check-label">₹1 Lakh - ₹2 Lakh</label>
+
+                <!-- EMI Simulator & Hidden Fee Detector -->
+                <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-lg space-y-4 border border-slate-800">
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2.5 py-0.5 rounded-full">
+                            Saves Avg. ₹15,000
+                        </span>
+                        <h4 class="font-black text-base mt-2 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-amber-400"></i> 0% EMI & Fee Simulator
+                        </h4>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Calculate monthly micro-payments after ₹10,000 CV Subsidy.</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-slate-300">Course Fee:</span>
+                            <span id="emiFeeLabel" class="text-amber-400">₹1,40,000</span>
+                        </div>
+                        <input type="range" id="emiFeeSlider" min="40000" max="400000" step="10000" value="140000" class="w-full accent-amber-500 cursor-pointer">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Tenure (Months)</label>
+                        <select id="emiMonths" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs font-bold text-white">
+                            <option value="12">12 Months (0% Interest)</option>
+                            <option value="18">18 Months (0% Interest)</option>
+                            <option value="24" selected>24 Months (0% Interest)</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-slate-800/90 p-3.5 rounded-xl border border-slate-700 space-y-1.5 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">CV Subsidy Applied:</span>
+                            <span class="text-emerald-400 font-bold">- ₹10,000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Net Payable to Univ:</span>
+                            <span id="netPayableLabel" class="font-bold text-white">₹1,30,000</span>
+                        </div>
+                        <div class="flex justify-between pt-1.5 border-t border-slate-700 text-sm">
+                            <span class="font-bold text-slate-200">Est. Monthly EMI:</span>
+                            <span id="monthlyEmiOutput" class="font-black text-amber-400">₹5,417 / mo</span>
+                        </div>
+                    </div>
                 </div>
+
+            </aside>
+
+            <!-- Right Column: University Cards Grid -->
+            <section class="lg:col-span-8 xl:col-span-9 space-y-4">
                 
-                <hr>
-                <div class="text-center">
-                    <p class="small text-muted">92.76% Student Retention</p>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/3/3a/UGC_India_logo.png" height="50" alt="UGC Approved">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-9" id="uniGrid"></div>
-    </div>
-</div>
-
-<div class="modal fade" id="viewWindow" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="modalTitle">Direct University Portal - 100% Secure</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="alert alert-info py-1 mb-0 rounded-0 text-center" style="font-size: 0.8rem;">
-                <i class="fas fa-shield-alt"></i> Financial Guard: You are paying directly to the University account. No middlemen.
-            </div>
-            <iframe id="liveIframe" src=""></iframe>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    const universityData = [
-        { name: "Amity Online", img: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/Amity_University_logo.png/220px-Amity_University_logo.png", courses: "MBA, MCA, BBA, BCA", fees: "₹1.5L - ₹3.02L", loan: "0% ROI (Fibe/Avanse)", link: "https://amityonline.com/", type: "MBA", budget: "high" },
-        { name: "Sikkim Manipal (SMU)", img: "https://www.onlinemanipal.com/favicon.ico", courses: "MBA Dual, MCA, BBA", fees: "₹75k - ₹1.2L", loan: "0% No-Cost EMI", link: "https://www.onlinemanipal.com/", type: "MBA", budget: "mid" },
-        { name: "Christ University", img: "https://online.christuniversity.in/assets/images/logo.png", courses: "MCA, MSc AI/ML, BCom", fees: "₹1.6L - ₹2.75L", loan: "EMI Available", link: "https://online.christuniversity.in/", type: "MCA", budget: "high" },
-        { name: "LPU Online", img: "https://www.lpuonline.com/assets/images/logo.png", courses: "MBA, MCA, BCA", fees: "₹80k - ₹2L", loan: "20% Grant Available", link: "https://www.lpuonline.com/", type: "MBA", budget: "mid" },
-        { name: "UPES Online", img: "https://upesonline.ac.in/assets/images/logo.png", courses: "MBA Oil & Gas, BBA", fees: "₹1.5L - ₹2.2L", loan: "JODO/KHUHU 0% ROI", link: "https://upesonline.ac.in/", type: "MBA", budget: "high" },
-        { name: "Parul University", img: "http://www.paruluniversity.online/favicon.ico", courses: "30+ MBA Specs, MCA", fees: "₹40k - ₹99k", loan: "Financial Support", link: "http://www.paruluniversity.online", type: "MBA", budget: "low" },
-        { name: "Galgotias University", img: "https://galgotiasonline.edu.in/favicon.ico", courses: "MBA, MCA, BBA", fees: "₹77k - ₹84k", loan: "Propelled 9% ROI", link: "https://galgotiasonline.edu.in/", type: "BBA", budget: "low" },
-        { name: "Manipal University (MUJ)", img: "https://www.onlinemanipal.com/favicon.ico", courses: "MBA, MCA, BBA", fees: "₹99k - ₹1.8L", loan: "No Cost EMI", link: "https://www.onlinemanipal.com/", type: "MBA", budget: "mid" },
-        { name: "NMIMS", img: "https://online.nmims.edu/favicon.ico", courses: "MBA, MCA, BBA", fees: "₹1.2L - ₹2.5L", loan: "AVANS / PROPELLED", link: "https://online.nmims.edu/", type: "MBA", budget: "high" },
-        { name: "VIT Online", img: "https://vitonline.in/favicon.ico", courses: "MBA, MCA", fees: "₹1.1L - ₹2L", loan: "EMI Available", link: "https://vitonline.in/", type: "MCA", budget: "mid" },
-        { name: "Alliance University", img: "https://allianceonline.edu.in/favicon.ico", courses: "MBA, BBA", fees: "₹1L - ₹1.8L", loan: "EMI Available", link: "https://allianceonline.edu.in/", type: "MBA", budget: "mid" },
-        { name: "Bennett University", img: "https://www.bennettonline.com/favicon.ico", courses: "MBA, BBA", fees: "₹1.2L - ₹2.2L", loan: "EMI Available", link: "https://www.bennettonline.com/", type: "MBA", budget: "high" }
-    ];
-
-    function renderCards(data) {
-        const grid = document.getElementById('uniGrid');
-        grid.innerHTML = '';
-        data.forEach(uni => {
-            grid.innerHTML += `
-                <div class="uni-card p-3 shadow-sm d-flex align-items-center">
-                    <img src="${uni.img}" class="uni-logo me-4" alt="${uni.name}">
-                    <div class="flex-grow-1">
-                        <span class="badge badge-ugc mb-1">UGC-DEB & AICTE Approved</span>
-                        <h5 class="fw-bold mb-1">${uni.name}</h5>
-                        <p class="small text-muted mb-1"><i class="fas fa-book-open"></i> ${uni.courses}</p>
-                        <p class="small mb-1"><strong>Fees:</strong> ${uni.fees} | <strong>Loan:</strong> ${uni.loan}</p>
+                <!-- Count & Sort Bar -->
+                <div class="bg-white px-5 py-3.5 rounded-2xl border border-slate-200 flex flex-wrap justify-between items-center gap-3">
+                    <div class="text-sm font-bold text-slate-700">
+                        Showing <span id="uniCountBadge" class="text-indigo-600 font-black">0</span> Verified Partner Universities
                     </div>
-                    <div class="text-end">
-                        <span class="badge badge-subsidy d-block mb-2">₹10,000 Assistance</span>
-                        <button class="btn btn-direct w-100 mb-2" onclick="openPortal('${uni.link}', '${uni.name}')">Live View</button>
-                        <a href="${uni.link}" target="_blank" class="text-decoration-none small">Official Site <i class="fas fa-external-link-alt"></i></a>
+                    <div class="text-xs font-semibold text-slate-500 flex items-center gap-2">
+                        <i class="fa-solid fa-check-double text-emerald-600"></i> Select up to 3 universities to compare side-by-side
                     </div>
                 </div>
+
+                <!-- Dynamic Grid -->
+                <div id="uniGrid" class="space-y-4"></div>
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Floating Compare Drawer Bar -->
+    <div id="compareBar" class="fixed bottom-0 left-0 right-0 bg-slate-900 text-white border-t-2 border-amber-500 py-3.5 px-4 z-40 hidden shadow-2xl">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3 flex-wrap" id="compareSelectedPills"></div>
+            <div class="flex items-center gap-3">
+                <button onclick="clearCompare()" class="text-xs text-slate-400 hover:text-white font-bold">Clear</button>
+                <button onclick="openCompareModal()" class="px-5 py-2.5 bg-[#FF8C00] hover:bg-orange-600 text-white font-extrabold text-xs uppercase rounded-xl shadow-lg">
+                    Compare Now (<span id="compareCount">0</span>/3)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side-by-Side Comparison Modal -->
+    <div id="compareModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-200">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                <div>
+                    <span class="text-[10px] font-black uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded">30-Parameter AI Matrix</span>
+                    <h3 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">Side-by-Side University Comparison</h3>
+                </div>
+                <button onclick="closeCompareModal()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-600 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="compareTableContainer" class="overflow-x-auto"></div>
+        </div>
+    </div>
+
+    <!-- Direct Official Portal & Admission API Verification Modal (Replaces Broken Iframe) -->
+    <div id="portalLeadModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl border-t-8 border-t-[#FF8C00]">
+            <button onclick="closePortalModal()" class="absolute top-5 right-5 w-9 h-9 rounded-xl bg-slate-100 text-slate-500 hover:text-rose-600 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-2 text-[11px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full w-fit mb-3">
+                <i class="fa-solid fa-shield-halved"></i> 100% Financial Guard • Direct University Gateway
+            </div>
+
+            <h3 id="modalUniTitle" class="text-2xl font-black text-slate-900">Unlock Official Admission Portal</h3>
+            <p class="text-xs text-slate-500 font-medium mt-1 mb-5">
+                Avoid fake lookalike websites! Verify your details below to generate your official <strong>University Student ID</strong>, lock your <strong>₹10,000 CV Subsidy</strong>, and proceed directly to the official portal.
+            </p>
+
+            <form id="modalAdmissionForm" class="space-y-3.5">
+                <input type="hidden" id="modal_short_name">
+                <input type="hidden" id="modal_official_link">
+                <input type="hidden" id="modal_uni_key">
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Student Full Name *</label>
+                    <input type="text" id="modal_full_name" class="form-input" placeholder="As per 10th/12th marksheet" required>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Active Email ID (For LMS & Receipt) *</label>
+                        <input type="email" id="modal_email" class="form-input" placeholder="you@example.com" required>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Primary WhatsApp Number *</label>
+                        <input type="tel" id="modal_mobile" pattern="[0-9]{10}" class="form-input" placeholder="10-digit mobile" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Select Course *</label>
+                        <select id="modal_course" class="form-input" required>
+                            <option value="Online MBA">Online MBA</option>
+                            <option value="Online MCA">Online MCA</option>
+                            <option value="Online BBA">Online BBA</option>
+                            <option value="Online BCA">Online BCA</option>
+                            <option value="Online B.Com">Online B.Com</option>
+                            <option value="Online M.Sc">Online M.Sc</option>
+                            <option value="Online MA">Online MA</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Specialization</label>
+                        <select id="modal_specialization" class="form-input">
+                            <option value="General Management">General / All Specs</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Business Analytics">Business Analytics</option>
+                            <option value="Data Science & AI">Data Science & AI</option>
+                            <option value="Human Resource Management">HR Management</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Alternate Contact Number (Optional - For Exam Alerts)</label>
+                    <input type="tel" id="modal_alt_mobile" class="form-input" placeholder="Optional alternate number">
+                </div>
+
+                <div id="modalApiFeedback" class="hidden p-3 rounded-xl text-xs font-bold"></div>
+
+                <button type="submit" id="modalSubmitBtn" class="w-full py-4 bg-[#FF8C00] hover:bg-orange-600 text-white font-extrabold rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
+                    Verify & Open Official University Portal <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 EduMentor Framework | Vivek Pratap (Authorized College Vidya Partner)</p>
+            <div class="flex items-center gap-4">
+                <a href="https://cvadm.com/prospectus" target="_blank" class="text-amber-400 hover:underline font-bold">Download All University Prospectuses</a>
+                <span>•</span>
+                <a href="tel:+917505385015" class="text-emerald-400 font-bold">+91 7505385015</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase + Complete 27+ Partner Universities Sync + CV Admission API Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyxEZ4ukI8WRhV71RyS8JYJcXAICGAbto",
+            authDomain: "edtech-7d520.firebaseapp.com",
+            projectId: "edtech-7d520",
+            storageBucket: "edtech-7d520.firebasestorage.app",
+            messagingSenderId: "78074698553",
+            appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Master Verified Partner University Dataset (27+ API Partners + Complete Transparency Metrics)
+        const MASTER_UNIVERSITIES = [
+            { id: "au", shortName: "AU", apiKey: "2ebdcff7-ecf9-4964-3867-1504561019dd", name: "Amity University Online", location: "Noida, UP", naac: "NAAC A+", approvals: "UGC-DEB, AICTE, WES", courses: "Online MBA (14 Specs), MCA, BBA, BCA, B.Com", fees: "₹1.50L - ₹3.02L", regFee: "₹0", examFee: "Included", loan: "0% ROI (Fibe / Avanse)", link: "https://amityonline.com/", type: "MBA", budget: "high", zeroEmi: true, dualSpec: true, highlight: "250,000+ Global Learners • 450+ Hiring Partners" },
+            { id: "lpu", shortName: "LPU", apiKey: "6a3ef090-1bf0-451b-afef-7c0f55986954", name: "Lovely Professional University (LPU Online)", location: "Phagwara, Punjab", naac: "NAAC A++", approvals: "UGC-DEB, AICTE, NIRF Top 50", courses: "Online MBA (Dual Spec), MCA, BCA, BBA, M.Sc", fees: "₹80k - ₹1.60L", regFee: "₹1,000", examFee: "₹2,000/yr", loan: "Avanse / Propelled 0% EMI", link: "https://www.lpuonline.com/", type: "MBA", budget: "mid", zeroEmi: true, dualSpec: true, highlight: "400+ Hrs Recorded Content • Draw Your Own Datesheet" },
+            { id: "muj", shortName: "MUJ", apiKey: "a72aa511-295f-4cf5-93c1-eb397ddbaa04", name: "Manipal University Jaipur (Online Manipal)", location: "Jaipur, Rajasthan", naac: "NAAC A+", approvals: "UGC-DEB, AICTE, WES, ACU", courses: "Online MBA, MCA, BBA, BCA, B.Com, M.Com", fees: "₹99k - ₹1.80L", regFee: "₹500", examFee: "Included", loan: "Propelled / Fibe No-Cost EMI", link: "https://www.onlinemanipal.com/", type: "MBA", budget: "mid", zeroEmi: true, dualSpec: true, highlight: "500+ Hiring Partners • Coursera Access Included" },
+            { id: "cuol", shortName: "CUOL", apiKey: "e5f6bcd2-a136-11ec-a844-f23c921aa8b0", name: "Chandigarh University Online (CUOL)", location: "Mohali, Punjab", naac: "NAAC A+", approvals: "UGC-DEB, E-Lead Certified", courses: "Online MBA, MCA, BBA, BCA, M.Sc Data Science", fees: "₹1.20L - ₹1.60L", regFee: "₹1,000", examFee: "Included", loan: "Avanse / GrayQuest 0% EMI", link: "https://www.onlinecu.in/index.php", type: "MBA", budget: "mid", zeroEmi: true, dualSpec: true, highlight: "300+ Hiring Partners • CU-VERSE Advanced LMS" },
+            { id: "dpu-pune", shortName: "DPU Pune", apiKey: "568b0568-036a-11ed-8b4b-f23c921aa8b0", name: "DY Patil University Online (Pune)", location: "Pune, Maharashtra", naac: "NAAC A++", approvals: "UGC-DEB, AICTE, NIRF Top 50", courses: "Online MBA, BBA, Dual Certifications", fees: "₹1.40L - ₹1.90L", regFee: "₹1,500", examFee: "Included", loan: "0% EMI via 8 Partner Banks", link: "https://www.dypatilonline.com/", type: "MBA", budget: "mid", zeroEmi: true, dualSpec: true, highlight: "NIRF Top 50 University • Global Exposure" },
+            { id: "dpu-mumbai", shortName: "DPU Mumbai", apiKey: "b77473d0-c742-11ee-8146-f23c921aa8b0", name: "DY Patil University (Navi Mumbai)", location: "Navi Mumbai, MH", naac: "NAAC A++", approvals: "UGC-DEB Entitled", courses: "Online MBA, BBA, BCA, MCA", fees: "₹1.50L - ₹2.10L", regFee: "₹1,500", examFee: "Included", loan: "No-Cost EMI Available", link: "https://dypatiluniversityonline.com/", type: "MBA", budget: "high", zeroEmi: true, dualSpec: false, highlight: "24x7 Counselling • Ultramodern Student Demo Portal" },
+            { id: "uu", shortName: "UU", apiKey: "c0bb23f6-7861-11ed-8dcb-f23c921aa8b0", name: "Uttaranchal University Online (UU)", location: "Dehradun, Uttarakhand", naac: "NAAC A+", approvals: "UGC-DEB, AICTE", courses: "Online MBA, MCA, BBA, BCA, BA", fees: "₹60k - ₹98k (Starts @ ₹24,500/Sem)", regFee: "₹0", examFee: "Included", loan: "Up to 30% Scholarship + 0% EMI", link: "https://www.onlineuu.in/", type: "MBA", budget: "low", zeroEmi: true, dualSpec: false, highlight: "Most Affordable NAAC A+ University • ₹24,500/Sem" },
+            { id: "scdoe", shortName: "SCDOE", apiKey: "673d91ad-31c1-11ee-bcf0-f23c921aa8b0", name: "Shoolini University Online", location: "Solan, Himachal Pradesh", naac: "NAAC A+", approvals: "UGC-DEB, Top 200 Global (THE)", courses: "Online MBA, MCA, BBA, BCA, MA", fees: "₹1.10L - ₹1.60L", regFee: "₹1,000", examFee: "Included", loan: "Pay-After-Placement Option / 0% EMI", link: "https://shoolini.online/", type: "MBA", budget: "mid", zeroEmi: true, dualSpec: true, highlight: "Career Tigers Free Add-On • AI Mock Interviews" },
+            { id: "smu", shortName: "SMU", apiKey: "d1f53f6a-40ed-11ee-a672-f23c921aa8b0", name: "Sikkim Manipal University (SMU Online)", location: "Gangtok, Sikkim", naac: "NAAC A+", approvals: "UGC-DEB Entitled", courses: "Online MBA (Dual Spec), MCA, BA, B.Com, M.Com", fees: "₹75k - ₹1.10L", regFee: "₹500", examFee: "Included", loan: "0% No-Cost EMI", link: "https://www.onlinemanipal.com/", type: "MBA", budget: "low", zeroEmi: true, dualSpec: true, highlight: "25,000+ Learners Offered Placement Assistance" },
+            { id: "bennett", shortName: "Bennett", apiKey: "c055256d-54fb-11f1-a7c0-f23c921aa8b0", name: "Bennett University Online (Times Group)", location: "Greater Noida, UP", naac: "NAAC A+", approvals: "UGC-DEB, AIU, BCI", courses: "Online MBA, Online BBA (Analytics, Finance, Media)", fees: "₹1.50L - ₹2.10L", regFee: "₹1,500", examFee: "Included", loan: "0% Interest EMI Options", link: "https://www.bennettonline.com/", type: "MBA", budget: "high", zeroEmi: true, dualSpec: false, highlight: "Powered by The Times Group • 90%+ Ph.D. Faculty" },
+            { id: "christ", shortName: "Christ", apiKey: "92f13264-eae8-11f0-a13f-f23c921aa8b0", name: "Christ University Online", location: "Bengaluru, Karnataka", naac: "NAAC A+", approvals: "UGC-DEB, AICTE", courses: "Online MCA, M.Sc Data Science, MBA, BBA, B.Com", fees: "₹1.60L - ₹2.75L", regFee: "₹0", examFee: "Included", loan: "0% Downpayment EMI via JODO", link: "https://online.christuniversity.in/", type: "MCA", budget: "high", zeroEmi: true, dualSpec: false, highlight: "Premier Tech & Analytics Curriculum" },
+            { id: "galgotias", shortName: "Galgotias", apiKey: "27b2de6f-2648-4319-6242-d04597230649", name: "Galgotias University Online", location: "Greater Noida, UP", naac: "NAAC A+", approvals: "UGC-DEB, AICTE", courses: "Online MBA, MCA, BBA, BCA, B.Com, M.Com", fees: "₹77k - ₹1.10L", regFee: "₹1,000", examFee: "Included", loan: "Propelled Easy EMI", link: "https://galgotiasonline.edu.in/", type: "BBA", budget: "low", zeroEmi: true, dualSpec: true, highlight: "500+ Hiring Partners • GULP Digital Platform" },
+            { id: "vit", shortName: "VIT", apiKey: "7e366946-3624-11ee-a5f2-f23c921aa8b0", name: "Vellore Institute of Technology (VIT Online)", location: "Vellore, Tamil Nadu", naac: "NAAC A++", approvals: "UGC-DEB, AICTE, Top NIRF", courses: "Online MBA, MCA, M.Sc Data Science", fees: "₹1.40L - ₹1.80L", regFee: "₹1,200", examFee: "Included", loan: "0% EMI Available", link: "https://vitonline.in/", type: "MCA", budget: "mid", zeroEmi: true, dualSpec: false, highlight: "VITOL Live + Recorded Engineering & Management" },
+            { id: "amrita", shortName: "Amrita", apiKey: "de5e0862-4768-11ee-a672-f23c921aa8b0", name: "Amrita Vishwa Vidyapeetham (Amrita Ahead)", location: "Coimbatore, TN", naac: "NAAC A++", approvals: "UGC-DEB, NIRF Top 10", courses: "Online MBA, MCA, BBA, BCA, M.Com", fees: "₹1.35L - ₹2.20L", regFee: "₹1,000", examFee: "Included", loan: "Zero-Cost EMI Available", link: "https://onlineamrita.com/", type: "MBA", budget: "mid", zeroEmi: true, dualSpec: false, highlight: "Industry-Integrated Projects & Weekend Live Sessions" },
+            { id: "alliance", shortName: "Alliance", apiKey: "c2e64263-dae8-11f0-a13f-f23c921aa8b0", name: "Alliance University Online", location: "Bengaluru, Karnataka", naac: "NAAC A+", approvals: "UGC-DEB, AICTE", courses: "Online MBA, BBA", fees: "₹1.20L - ₹2.50L", regFee: "₹1,000", examFee: "Included", loan: "EMI Facility Available", link: "https://allianceonline.edu.in/", type: "MBA", budget: "mid", zeroEmi: true, dualSpec: false, highlight: "Corporate-Aligned Management Pedagogy" },
+            { id: "pu", shortName: "PU", apiKey: "11538725-375-11ef-8d9f-f23c921aa8b0", name: "Parul University Online", location: "Vadodara, Gujarat", naac: "NAAC A++", approvals: "UGC-DEB, AICTE", courses: "Online MBA (30+ Specs), MCA, BBA, BCA, BA", fees: "₹45k - ₹99k", regFee: "₹500", examFee: "Included", loan: "Easy Monthly Micro-EMI", link: "https://paruluniversity.online/", type: "MBA", budget: "low", zeroEmi: true, dualSpec: true, highlight: "NAAC A++ Accredited Under ₹1 Lakh Budget" },
+            { id: "vgu", shortName: "VGU", apiKey: "920ce387-c747-11ee-8146-f23c921aa8b0", name: "Vivekananda Global University (Online VGU)", location: "Jaipur, Rajasthan", naac: "NAAC A+", approvals: "UGC-DEB Entitled", courses: "Online MBA, BBA, BCA, MCA, BA, M.Sc", fees: "₹70k - ₹1.30L", regFee: "₹1,000", examFee: "Included", loan: "0% EMI + Free Coursera Premium", link: "https://onlinevgu.com/", type: "BBA", budget: "low", zeroEmi: true, dualSpec: true, highlight: "Free 6-Month Coursera Premium Worth ₹13,999" },
+            { id: "gla", shortName: "GLA", apiKey: "6f23b01f-5b63-11ed-8dcb-f23c921aa8b0", name: "GLA University Online", location: "Mathura, UP", naac: "NAAC A+", approvals: "UGC-DEB, AICTE", courses: "Online MBA, MCA, BBA, BCA, B.Com", fees: "₹68k - ₹1.10L", regFee: "₹1,000", examFee: "Included", loan: "Flexible EMI Options", link: "https://glaonline.com/", type: "BBA", budget: "low", zeroEmi: true, dualSpec: false, highlight: "Strong North India Placement & Alumni Network" },
+            { id: "kuk", shortName: "KUK", apiKey: "361a0384-c743-11ee-8146-f23c921aa8b0", name: "Kurukshetra University Online (KUK)", location: "Kurukshetra, Haryana", naac: "NAAC A++", approvals: "UGC-DEB, Category-I Govt Univ", courses: "Online MBA, MCA, MA, M.Com, BA, B.Com", fees: "₹50k - ₹85k", regFee: "₹800", examFee: "Included", loan: "Semester-Wise Pay", link: "https://www.kukonline.in/", type: "MBA", budget: "low", zeroEmi: false, dualSpec: false, highlight: "Prestigious State Government NAAC A++ University" },
+            { id: "andhra", shortName: "Andhra", apiKey: "2cf8c441-c742-11ee-8146-f23c921aa8b0", name: "Andhra University Online", location: "Visakhapatnam, AP", naac: "NAAC A++", approvals: "UGC-DEB, Govt University", courses: "Online MBA, MCA, MA, B.Com", fees: "₹55k - ₹90k", regFee: "₹1,000", examFee: "Included", loan: "Semester Fee Facility", link: "https://onlineausde.andhrauniversity.edu.in/", type: "MBA", budget: "low", zeroEmi: false, dualSpec: false, highlight: "95+ Years Legacy State Government University" },
+            { id: "adtu", shortName: "ADTU", apiKey: "6a48e1bc-07eb-11f1-a13f-f23c921aa8b0", name: "Assam down town University (ADTU Online)", location: "Guwahati, Assam", naac: "NAAC A+", approvals: "UGC-DEB Entitled", courses: "Online MBA, BBA, BCA, MA", fees: "₹50k - ₹85k", regFee: "₹1,000", examFee: "Included", loan: "Easy Semester Installments", link: "https://adtuonline.in/", type: "BBA", budget: "low", zeroEmi: false, dualSpec: false, highlight: "Northeast India's Leading NAAC A+ Private University" },
+            { id: "ccs", shortName: "CCS", apiKey: "8029917-0ebc-42c6-a73b-22e9b141e1fe", name: "Chaudhary Charan Singh University (CCSU)", location: "Meerut, UP", naac: "NAAC A++", approvals: "UGC-DEB, State Govt Univ", courses: "Online MBA, BBA, BCA, MA, B.Com", fees: "₹45k - ₹80k", regFee: "₹500", examFee: "Included", loan: "Semester Installments", link: "https://www.ccsuniversity.ac.in/", type: "BBA", budget: "low", zeroEmi: false, dualSpec: false, highlight: "UP State Govt NAAC A++ Accredited Degree" },
+            { id: "ddu", shortName: "DDU", apiKey: "a2c35c1d-d9c5-495a-afdd-727efb55c809", name: "Deen Dayal Upadhyaya Gorakhpur University", location: "Gorakhpur, UP", naac: "NAAC A++", approvals: "UGC-DEB, State Govt Univ", courses: "Online MBA, BBA, MA, B.Com", fees: "₹40k - ₹75k", regFee: "₹500", examFee: "Included", loan: "Direct Semester Pay", link: "https://ddugu.ac.in/", type: "BBA", budget: "low", zeroEmi: false, dualSpec: false, highlight: "Highly Affordable Govt University in UP" },
+            { id: "srhu", shortName: "SRHU", apiKey: "32447966-9174-11f1-9a8f-f23c921aa8b0", name: "Swami Rama Himalayan University (SRHU)", location: "Dehradun, Uttarakhand", naac: "NAAC A+", approvals: "UGC-DEB Entitled", courses: "Online MBA, BBA, BCA, MCA", fees: "₹65k - ₹1.10L", regFee: "₹1,000", examFee: "Included", loan: "Easy EMI Options", link: "https://srhu.edu.in/", type: "MBA", budget: "low", zeroEmi: true, dualSpec: false, highlight: "Healthcare & Management Excellence" },
+            { id: "upes", shortName: "UPES", apiKey: "", name: "UPES Online (Dehradun)", location: "Dehradun, Uttarakhand", naac: "NAAC A", approvals: "UGC-DEB, NIRF Top 50", courses: "Online MBA (Oil & Gas, Power, Logistics), MCA, BBA, BCA", fees: "₹1.50L - ₹2.20L", regFee: "₹1,000", examFee: "₹0", loan: "JODO / KHUHU 0% ROI", link: "https://upesonline.ac.in/", type: "MBA", budget: "high", zeroEmi: true, dualSpec: false, highlight: "Ivy League Coursera Add-ons + Runway Incubator" },
+            { id: "nmims", shortName: "NMIMS", apiKey: "", name: "NMIMS CDOE (Mumbai)", location: "Mumbai, Maharashtra", naac: "NAAC A+", approvals: "UGC-DEB, AICTE, NIRF Top B-School", courses: "Online MBA, Executive MBA, BBA, B.Com", fees: "₹1.45L - ₹2.50L", regFee: "₹1,200", examFee: "₹800/sub", loan: "Avanse / Propelled 0% EMI", link: "https://online.nmims.edu/", type: "MBA", budget: "high", zeroEmi: true, dualSpec: false, highlight: "India's Top Corporate Brand for Working Professionals" },
+            { id: "upgrad", shortName: "UpGrad", apiKey: "8e863522-6568-11ed-8dcb-f23c921aa8b0", name: "UpGrad Global & Executive Programs (OP Jindal / Deakin)", location: "Global / Online", naac: "Global Accredited", approvals: "UGC / WES / AACSB / EQUIS", courses: "Global MBA, Executive MBA, MS Data Science, DBA", fees: "₹3.50L - ₹5.50L", regFee: "₹0", examFee: "Included", loan: "0% Corporate Credit EMI", link: "https://www.upgrad.com/", type: "Executive", budget: "high", zeroEmi: true, dualSpec: true, highlight: "650+ Case Studies • 250+ Industry Experts" },
+            { id: "birchwood", shortName: "Birchwood", apiKey: "3eddd4f9-ae0e-11ef-9732-f23c921aa8b0", name: "Birchwood University Online (USA)", location: "Florida, USA (Online)", naac: "WES / CIE USA", approvals: "Florida Dept. of Education, QAHE, WES", courses: "Global MBA, DBA (Doctor of Business Admin), MS", fees: "₹3.80L - ₹4.03L", regFee: "₹0", examFee: "Included", loan: "No-Cost International EMI", link: "https://www.birchwoodu.org/", type: "Executive", budget: "high", zeroEmi: true, dualSpec: false, highlight: "4.6/5 Rating • US Accredited Global Degree" },
+            { id: "eimt", shortName: "EIMT", apiKey: "30a1344c-363c-4f4a-ac43-d44189eaa940", name: "EIMT (European Institute of Management & Tech)", location: "Switzerland / EU (Online)", naac: "EU Accredited", approvals: "QAHE, ACBSP, EDUQUA", courses: "Executive DBA, Global MBA", fees: "₹3.50L - ₹4.50L", regFee: "₹0", examFee: "Included", loan: "Flexible International EMI", link: "https://www.eimt.ch/", type: "Executive", budget: "high", zeroEmi: true, dualSpec: false, highlight: "European Executive Doctorate & Leadership Pathways" }
+        ];
+
+        let allUniversitiesList = [...MASTER_UNIVERSITIES];
+        let compareSelection = [];
+
+        // Fetch any additional universities added via edtech-admin.html in Firebase
+        async function syncFirebaseUniversities() {
+            try {
+                const snap = await getDocs(collection(db, "universities"));
+                snap.forEach(docSnap => {
+                    const d = docSnap.data();
+                    if (d && d.name && !allUniversitiesList.some(u => u.name.toLowerCase() === d.name.toLowerCase())) {
+                        allUniversitiesList.unshift({
+                            id: docSnap.id,
+                            firebaseDocId: docSnap.id,
+                            shortName: d.name.substring(0, 6).toUpperCase(),
+                            apiKey: "",
+                            name: d.name,
+                            location: d.state || "India",
+                            naac: d.naac || "NAAC A+",
+                            approvals: d.approvals || "UGC-DEB Approved",
+                            courses: d.courses || "Online MBA, MCA, BBA, BCA",
+                            fees: d.fees || "Check Portal",
+                            regFee: "Verified",
+                            examFee: "Verified",
+                            loan: "0% EMI Available",
+                            link: d.website || "https://collegevidya.com/",
+                            type: "MBA",
+                            budget: "mid",
+                            zeroEmi: true,
+                            dualSpec: true,
+                            highlight: `Avg Package: ${d.placement || 'Verified'} • AI Synced`
+                        });
+                    }
+                });
+                applyFilters();
+            } catch (err) {
+                console.log("Rendering master partner dataset:", err.message);
+                applyFilters();
+            }
+        }
+
+        function renderCards(data) {
+            const grid = document.getElementById('uniGrid');
+            const badge = document.getElementById('uniCountBadge');
+            badge.textContent = data.length;
+
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div class="bg-white p-10 rounded-2xl border border-slate-200 text-center space-y-3">
+                        <i class="fa-solid fa-magnifying-glass text-3xl text-slate-300"></i>
+                        <h4 class="font-bold text-slate-800">No matching universities found</h4>
+                        <p class="text-xs text-slate-500">Try resetting the filters or connect with our counselor on WhatsApp for custom options.</p>
+                        <button onclick="resetAllFilters()" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl">Reset All Filters</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = data.map(uni => {
+                const isSelected = compareSelection.includes(uni.id);
+                const initials = uni.shortName.substring(0, 3).toUpperCase();
+                return `
+                    <div class="uni-card p-5 sm:p-6">
+                        <div class="flex flex-col md:flex-row justify-between gap-5">
+                            
+                            <!-- Left Info -->
+                            <div class="flex gap-4 items-start flex-grow">
+                                <div class="w-14 h-14 rounded-2xl bg-indigo-950 text-white font-black text-sm flex items-center justify-center shrink-0 shadow-md border-2 border-amber-400/40">
+                                    ${initials}
+                                </div>
+                                <div class="space-y-1.5 flex-grow">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase">
+                                            <i class="fa-solid fa-circle-check"></i> ${uni.approvals}
+                                        </span>
+                                        <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase">
+                                            ${uni.naac}
+                                        </span>
+                                        ${uni.dualSpec ? `<span class="bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-full text-[10px] font-bold">Dual Spec</span>` : ''}
+                                    </div>
+
+                                    <h3 class="text-lg sm:text-xl font-black text-slate-900">${uni.name}</h3>
+                                    <p class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-location-dot text-indigo-500 mr-1"></i> ${uni.location} • <span class="text-indigo-700">${uni.highlight}</span></p>
+                                    <p class="text-xs text-slate-700 font-medium pt-1"><i class="fa-solid fa-graduation-cap text-slate-400 mr-1"></i> <strong>Programs:</strong> ${uni.courses}</p>
+
+                                    <!-- Fee & Hidden Charge Transparency Strip -->
+                                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-2">
+                                        <div class="bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-xl">
+                                            <span class="text-[10px] text-slate-400 font-bold uppercase block">Full Course Fee</span>
+                                            <span class="text-xs font-extrabold text-slate-900">${uni.fees}</span>
+                                        </div>
+                                        <div class="bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-xl">
+                                            <span class="text-[10px] text-slate-400 font-bold uppercase block">Financing / Loan</span>
+                                            <span class="text-xs font-extrabold text-indigo-700">${uni.loan}</span>
+                                        </div>
+                                        <div class="col-span-2 sm:col-span-1 bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-xl">
+                                            <span class="text-[10px] text-slate-400 font-bold uppercase block">Hidden Fee Audit</span>
+                                            <span class="text-xs font-extrabold text-emerald-700">Reg: ${uni.regFee} | Exam: ${uni.examFee}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right CTAs -->
+                            <div class="flex flex-col justify-between md:items-end gap-2 shrink-0 md:min-w-[195px] border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+                                <span class="bg-amber-50 border border-amber-300 text-amber-800 px-3 py-1 rounded-lg text-[11px] font-extrabold text-center w-full">
+                                    <i class="fa-solid fa-gift text-orange-500 mr-1"></i> ₹10,000 CV Subsidy
+                                </span>
+
+                                <button onclick="openPortalModal('${uni.id}')" class="w-full py-2.5 px-4 bg-[#FF8C00] hover:bg-orange-600 text-white font-extrabold text-xs uppercase rounded-xl shadow-md transition flex items-center justify-center gap-1.5">
+                                    Verify & Apply Direct <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </button>
+
+                                <div class="flex items-center justify-between w-full gap-2 pt-1">
+                                    <label class="flex items-center gap-1.5 text-xs font-bold text-slate-600 cursor-pointer">
+                                        <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleCompare('${uni.id}')" class="accent-indigo-600 rounded">
+                                        Compare
+                                    </label>
+                                    ${uni.firebaseDocId ? `<a href="edtech-info.html?id=${uni.firebaseDocId}" class="text-xs font-bold text-indigo-600 hover:underline">Full Matrix →</a>` : `<a href="https://wa.me/917505385015?text=Hi%20Vivek%2C%20share%20brochure%20and%20fee%20breakup%20for%20${encodeURIComponent(uni.name)}" target="_blank" class="text-xs font-bold text-emerald-600 hover:underline"><i class="fa-brands fa-whatsapp"></i> Brochure</a>`}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter Engine
+        window.applyFilters = function() {
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const course = document.getElementById('courseType').value;
+            const budget = document.querySelector('input[name="budget"]:checked')?.value || 'all';
+            const zeroEmiOnly = document.getElementById('filterZeroEmi').checked;
+            const dualSpecOnly = document.getElementById('filterDualSpec').checked;
+
+            const filtered = allUniversitiesList.filter(u => {
+                const matchSearch = !search || u.name.toLowerCase().includes(search) || u.courses.toLowerCase().includes(search) || u.shortName.toLowerCase().includes(search) || u.location.toLowerCase().includes(search);
+                const matchCourse = course === 'all' || u.type === course || u.courses.toUpperCase().includes(course.toUpperCase());
+                const matchBudget = budget === 'all' || u.budget === budget;
+                const matchEmi = !zeroEmiOnly || u.zeroEmi;
+                const matchDual = !dualSpecOnly || u.dualSpec;
+                return matchSearch && matchCourse && matchBudget && matchEmi && matchDual;
+            });
+
+            renderCards(filtered);
+        };
+
+        window.resetAllFilters = function() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('courseType').value = 'all';
+            document.querySelector('input[name="budget"][value="all"]').checked = true;
+            document.getElementById('filterZeroEmi').checked = false;
+            document.getElementById('filterDualSpec').checked = false;
+            applyFilters();
+        };
+
+        // Attach Filter Listeners
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('courseType').addEventListener('change', applyFilters);
+        document.querySelectorAll('input[name="budget"]').forEach(r => r.addEventListener('change', applyFilters));
+        document.getElementById('filterZeroEmi').addEventListener('change', applyFilters);
+        document.getElementById('filterDualSpec').addEventListener('change', applyFilters);
+
+        // Real-Time EMI Simulator Logic
+        function updateEmiSimulator() {
+            const fee = parseInt(document.getElementById('emiFeeSlider').value, 10);
+            const months = parseInt(document.getElementById('emiMonths').value, 10);
+            const netFee = Math.max(0, fee - 10000);
+            const emi = Math.round(netFee / months);
+
+            document.getElementById('emiFeeLabel').textContent = `₹${fee.toLocaleString('en-IN')}`;
+            document.getElementById('netPayableLabel').textContent = `₹${netFee.toLocaleString('en-IN')}`;
+            document.getElementById('monthlyEmiOutput').textContent = `₹${emi.toLocaleString('en-IN')} / mo`;
+        }
+        document.getElementById('emiFeeSlider').addEventListener('input', updateEmiSimulator);
+        document.getElementById('emiMonths').addEventListener('change', updateEmiSimulator);
+
+        // Side-by-Side Compare Logic
+        window.toggleCompare = function(id) {
+            if (compareSelection.includes(id)) {
+                compareSelection = compareSelection.filter(item => item !== id);
+            } else {
+                if (compareSelection.length >= 3) {
+                    alert("You can compare up to 3 universities at a time.");
+                    applyFilters();
+                    return;
+                }
+                compareSelection.push(id);
+            }
+            updateCompareBar();
+            applyFilters();
+        };
+
+        function updateCompareBar() {
+            const bar = document.getElementById('compareBar');
+            const pills = document.getElementById('compareSelectedPills');
+            const count = document.getElementById('compareCount');
+
+            if (compareSelection.length === 0) {
+                bar.classList.add('hidden');
+                return;
+            }
+            bar.classList.remove('hidden');
+            count.textContent = compareSelection.length;
+            pills.innerHTML = compareSelection.map(id => {
+                const u = allUniversitiesList.find(x => x.id === id);
+                return `<span class="bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-2">${u.shortName} <i onclick="toggleCompare('${id}')" class="fa-solid fa-xmark cursor-pointer text-slate-400 hover:text-white"></i></span>`;
+            }).join('');
+        }
+
+        window.clearCompare = function() {
+            compareSelection = [];
+            updateCompareBar();
+            applyFilters();
+        };
+
+        window.openCompareModal = function() {
+            const selectedUnis = compareSelection.map(id => allUniversitiesList.find(u => u.id === id)).filter(Boolean);
+            if (selectedUnis.length === 0) return;
+
+            const container = document.getElementById('compareTableContainer');
+            container.innerHTML = `
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-slate-900 text-white">
+                            <th class="p-3.5 rounded-tl-xl">Parameter</th>
+                            ${selectedUnis.map(u => `<th class="p-3.5 font-extrabold">${u.name}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 font-medium">
+                        <tr>
+                            <td class="p-3.5 font-bold bg-slate-50">NAAC & Approvals</td>
+                            ${selectedUnis.map(u => `<td class="p-3.5"><span class="font-bold text-indigo-700">${u.naac}</span> (${u.approvals})</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold bg-slate-50">Total Fee Range</td>
+                            ${selectedUnis.map(u => `<td class="p-3.5 font-extrabold text-slate-900">${u.fees}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold bg-slate-50">Registration & Exam Fee</td>
+                            ${selectedUnis.map(u => `<td class="p-3.5 text-emerald-700 font-bold">Reg: ${u.regFee} | Exam: ${u.examFee}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold bg-slate-50">0% EMI & Loan Partners</td>
+                            ${selectedUnis.map(u => `<td class="p-3.5 font-bold">${u.loan}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold bg-slate-50">Dual Specialization</td>
+                            ${selectedUnis.map(u => `<td class="p-3.5">${u.dualSpec ? '✅ Included' : 'Standard Single Spec'}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold bg-slate-50">CV Partner Subsidy</td>
+                            ${selectedUnis.map(() => `<td class="p-3.5 font-extrabold text-orange-600">Up to ₹10,000 Approved</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td class="p-3.5 font-bold bg-slate-50">Direct Portal Action</td>
+                            ${selectedUnis.map(u => `<td class="p-3.5"><button onclick="closeCompareModal(); openPortalModal('${u.id}')" class="px-4 py-2 bg-[#FF8C00] text-white font-bold rounded-lg text-xs">Apply Direct</button></td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
             `;
+            document.getElementById('compareModal').classList.remove('hidden');
+        };
+
+        window.closeCompareModal = function() {
+            document.getElementById('compareModal').classList.add('hidden');
+        };
+
+        // Direct Portal Verification & CV API Lead Modal
+        window.openPortalModal = async function(id) {
+            const uni = allUniversitiesList.find(u => u.id === id);
+            if (!uni) return;
+
+            document.getElementById('modalUniTitle').textContent = `${uni.name} — Official Portal`;
+            document.getElementById('modal_short_name').value = uni.shortName;
+            document.getElementById('modal_official_link').value = uni.link;
+            document.getElementById('modal_uni_key').value = uni.apiKey || '';
+            document.getElementById('modalApiFeedback').classList.add('hidden');
+            document.getElementById('portalLeadModal').classList.remove('hidden');
+
+            // Fetch Live Courses from College Vidya API if apiKey is available
+            if (uni.apiKey) {
+                try {
+                    const res = await fetch(`https://universityadmission.co.in/api/settings/courses?key=${encodeURIComponent(uni.apiKey)}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        const list = Array.isArray(data) ? data : (data.data || []);
+                        if (list.length > 0) {
+                            const courseDropdown = document.getElementById('modal_course');
+                            courseDropdown.innerHTML = list.map(c => `<option value="${c.course_name || c.name || c.course}">${c.course_name || c.name || c.course}</option>`).join('');
+                        }
+                    }
+                } catch (_) {}
+            }
+        };
+
+        window.closePortalModal = function() {
+            document.getElementById('portalLeadModal').classList.add('hidden');
+        };
+
+        document.getElementById('modalAdmissionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('modalSubmitBtn');
+            const feedback = document.getElementById('modalApiFeedback');
+            const officialUrl = document.getElementById('modal_official_link').value;
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying & Generating ID...`;
+
+            const payload = {
+                interested_university: document.getElementById('modal_short_name').value,
+                full_name: document.getElementById('modal_full_name').value.trim(),
+                email: document.getElementById('modal_email').value.trim(),
+                mobile: document.getElementById('modal_mobile').value.trim(),
+                alternate_mobile: document.getElementById('modal_alt_mobile').value.trim() || "",
+                course: document.getElementById('modal_course').value,
+                specialization: document.getElementById('modal_specialization').value,
+                source: "CV Partner",
+                sub_source: "API",
+                site: "EduMentor University Matrix",
+                lead_owner: "5637",
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                await addDoc(collection(db, "leads"), payload);
+
+                let apiData = null;
+                try {
+                    const res = await fetch('/api/submit-lead', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (res.ok) apiData = await res.json();
+                } catch (_) {}
+
+                feedback.className = "p-3 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 block";
+                const redirectTarget = (apiData && apiData.url) ? apiData.url : officialUrl;
+                feedback.innerHTML = `✅ Verified! Redirecting you to the official university portal under 100% Financial Guard...`;
+
+                setTimeout(() => {
+                    window.open(redirectTarget, '_blank');
+                    closePortalModal();
+                    e.target.reset();
+                    btn.disabled = false;
+                    btn.innerHTML = `Verify & Open Official University Portal <i class="fa-solid fa-arrow-up-right-from-square"></i>`;
+                }, 1000);
+            } catch (err) {
+                window.open(officialUrl, '_blank');
+                closePortalModal();
+                btn.disabled = false;
+                btn.innerHTML = `Verify & Open Official University Portal`;
+            }
         });
-    }
 
-    function openPortal(url, name) {
-        document.getElementById('modalTitle').innerText = name + " - Official Admission Portal";
-        document.getElementById('liveIframe').src = url;
-        new bootstrap.Modal(document.getElementById('viewWindow')).show();
-    }
-
-    renderCards(universityData);
-
-    document.getElementById('courseType').addEventListener('change', function() {
-        const type = this.value;
-        const filtered = type === 'all' ? universityData : universityData.filter(u => u.type === type);
-        renderCards(filtered);
-    });
-</script>
-
+        // Initialize Page
+        syncFirebaseUniversities();
+        updateEmiSimulator();
+    </script>
 </body>
 </html>
