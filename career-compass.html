@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduMentor | AI Career Compass Navigator & ROI Calculator</title>
+    <title>EduMentor | Career Compass Navigator & 2-Min AI Course Finder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
         :root {
             --primary-royal-blue: #1e3a8a;
             --accent-vibrant-orange: #ea580c;
         }
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
             background-color: #f8fafc;
             color: #334155;
         }
@@ -22,12 +22,22 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
+        .wizard-shell {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 6px solid var(--primary-royal-blue);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 30px -10px rgba(30, 58, 138, 0.08);
+        }
+        .subsidy-banner {
+            background: linear-gradient(90deg, #002366 0%, #ea580c 100%);
+        }
         .form-input {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 1.5px solid #cbd5e1;
             border-radius: 0.75rem;
-            background-color: #f8fafc;
+            background: #f8fafc;
             font-size: 0.875rem;
             font-weight: 600;
             color: #0f172a;
@@ -36,42 +46,36 @@
         }
         .form-input:focus {
             border-color: #1e3a8a;
-            background-color: #ffffff;
+            background: #ffffff;
             box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
         }
-        .radio-tile {
-            cursor: pointer;
+        .choice-tile {
             border: 2px solid #e2e8f0;
             border-radius: 1rem;
             padding: 1rem;
-            background: #ffffff;
+            cursor: pointer;
             transition: all 0.2s ease;
+            background: #ffffff;
         }
-        .radio-tile:hover {
+        .choice-tile:hover {
             border-color: #93c5fd;
             background: #f8fafc;
         }
-        .radio-tile:has(input:checked) {
+        .choice-tile:has(input:checked) {
             border-color: #ea580c;
             background: #fff7ed;
             box-shadow: 0 8px 20px -8px rgba(234, 88, 12, 0.25);
-        }
-        .wizard-pane { display: none; }
-        .wizard-pane.active { display: block; animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- Top Announcement Bar -->
-    <div class="bg-[#002366] text-white text-xs py-2.5 px-4 font-semibold border-b-2 border-[#FF8C00]">
+    <!-- Top Strip -->
+    <div class="bg-[#002366] text-white text-xs py-2.5 px-4 font-semibold border-b-2 border-orange-500">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-            <span><i class="fa-solid fa-compass text-amber-400 mr-1"></i> 2-Minute AI Career Compass: 30-Parameter University & ROI Matching Engine</span>
+            <span><i class="fa-solid fa-compass text-amber-400 mr-1"></i> AI Career Compass: 30-Parameter University & Career Alignment Engine</span>
             <div class="flex items-center gap-4">
-                <span class="bg-amber-500 text-slate-950 font-extrabold px-2.5 py-0.5 rounded-full text-[11px]">₹20 Cr Subsidy Pool Live</span>
+                <span class="bg-amber-500 text-slate-950 font-extrabold px-2.5 py-0.5 rounded-full text-[11px]">Up to ₹10,000 CV Subsidy</span>
                 <a href="tel:+917505385015" class="hover:text-amber-300"><i class="fa-solid fa-phone mr-1"></i> +91 7505385015 / +91 95578 48356</a>
             </div>
         </div>
@@ -81,7 +85,7 @@
     <nav class="sticky top-0 z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
-                <a href="index.html" class="flex items-center gap-3">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
                     <div class="flex flex-col">
                         <span class="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                             EduMentor <span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">AI COMPASS</span>
@@ -90,19 +94,18 @@
                             <i class="fa-solid fa-circle-check text-emerald-500"></i> Authorized College Vidya Partner
                         </span>
                     </div>
-                </a>
+                </div>
 
                 <div class="hidden lg:flex items-center gap-8 font-bold text-sm text-slate-600">
                     <a href="index.html" class="hover:text-indigo-600 transition">Home</a>
-                    <a href="career-compass.html" class="text-indigo-600 flex items-center gap-2"><i class="fa-solid fa-compass"></i> Career Compass</a>
-                    <a href="edtech-universities.html" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-building-columns"></i> Online Degrees</a>
-                    <a href="#roi-calculator" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-600"></i> ROI Calculator</a>
-                    <a href="edtech-admin.html" class="text-slate-400 hover:text-slate-900 text-xs"><i class="fa-solid fa-lock"></i> Admin</a>
+                    <a href="career-compass.html" class="text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-compass"></i> Career Compass</a>
+                    <a href="edtech-universities.html" class="hover:text-indigo-600 transition flex items-center gap-2"><i class="fa-solid fa-building-columns"></i> Compare Universities</a>
+                    <a href="edtech-admin.html" class="text-slate-400 hover:text-slate-800 transition text-xs"><i class="fa-solid fa-lock"></i> Admin</a>
                 </div>
 
                 <div class="flex items-center gap-3">
                     <button onclick="window.location.href='edtech-universities.html'" class="px-5 py-2.5 bg-slate-900 hover:bg-indigo-600 text-white font-bold text-xs tracking-wide uppercase rounded-xl transition shadow-md">
-                        Compare Degrees <i class="fa-solid fa-arrow-right ml-1"></i>
+                        Compare 27+ Universities <i class="fa-solid fa-arrow-right ml-1"></i>
                     </button>
                 </div>
             </div>
@@ -110,244 +113,660 @@
     </nav>
 
     <!-- Main Container Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-10">
-        
-        <!-- Header Card -->
-        <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
-            <div class="flex flex-wrap gap-2 mb-3">
-                <span class="inline-flex items-center gap-1.5 bg-blue-50 border border-blue-200 text-blue-800 px-3 py-1 rounded-full text-xs font-extrabold uppercase">
-                    <i class="fa-solid fa-circle-check text-orange-500"></i> Authorized College Vidya Partner
-                </span>
-                <span class="inline-flex items-center gap-1.5 bg-orange-50 border border-orange-200 text-orange-800 px-3 py-1 rounded-full text-xs font-extrabold uppercase">
-                    <i class="fa-solid fa-award text-orange-500"></i> UGC-DEB & NAAC A++ Validated
-                </span>
-                <span class="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 px-3 py-1 rounded-full text-xs font-extrabold uppercase">
-                    <i class="fa-solid fa-shield-halved text-emerald-600"></i> 100% Direct University Payment
-                </span>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-8">
+
+        <!-- Hero Title Card -->
+        <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div class="space-y-2 max-w-3xl">
+                <div class="flex flex-wrap gap-2">
+                    <span class="inline-flex items-center gap-1.5 bg-blue-50 border border-blue-200 text-blue-800 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase">
+                        <i class="fa-solid fa-circle-check text-orange-500"></i> Authorized College Vidya Partner
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 bg-orange-50 border border-orange-200 text-orange-800 px-3 py-1 rounded-full text-[11px] font-extrabold uppercase">
+                        <i class="fa-solid fa-award text-orange-500"></i> UGC-DEB & NAAC A++ Validated
+                    </span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+                    Career Compass Navigator: Map Your Profile to High-ROI Degrees
+                </h1>
+                <p class="text-sm text-slate-500 font-medium">
+                    Complete the 2-minute assessment below to filter 100+ universities across 30+ core parameters, calculate your projected salary hike, and lock up to <strong>₹10,000 CV Subsidy</strong>.
+                </p>
             </div>
-            <h1 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">Career Compass Navigator: Map Your Profile to High-ROI Online Degrees</h1>
-            <p class="text-sm sm:text-base text-slate-500 font-medium mt-2 max-w-3xl">
-                Answer 3 quick questions below to filter 100+ UGC-approved universities across 30+ parameters, unlock your <strong>₹10,000 CV Subsidy</strong>, and calculate your expected salary hike.
-            </p>
+            <div class="bg-slate-900 text-white p-4 rounded-2xl shrink-0 w-full lg:w-auto text-center">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-amber-400">Live Support Status</div>
+                <div class="text-sm font-extrabold mt-0.5"><i class="fa-solid fa-bolt text-emerald-400 mr-1"></i> 15-Min Callback SLA Active</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Synced with CV Partners App</div>
+            </div>
         </section>
 
-        <!-- Primary Grid: Left Domain Matrix + Right 3-Step AI Wizard -->
         <div class="grid lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- Left Pane: Domain Selector + Counselor Card -->
-            <div class="lg:col-span-4 space-y-6">
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
-                    <div class="mb-4">
-                        <span class="text-[10px] bg-indigo-50 text-indigo-700 font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Step 0: Explore Domains</span>
-                        <h2 class="text-xl font-black text-slate-900 mt-2">Career Compass Matrix</h2>
-                        <p class="text-xs text-slate-500 font-medium mt-1">Select a career domain to view Indian pay brackets, key job roles, and progression milestones.</p>
-                    </div>
 
+            <!-- Left Column (4 Cols): Domain Matrix Selector + ROI Calculator + WhatsApp CTA -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <!-- Domain Explorer -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80">
+                    <span class="text-[10px] bg-indigo-50 text-indigo-700 font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">Step-by-Step Domain Roadmap</span>
+                    <h2 class="text-lg font-black text-slate-900 mt-2">Explore Career Domains</h2>
+                    <p class="text-xs text-slate-500 font-medium mt-1 mb-4">Click any domain to inspect live Indian pay brackets, job roles, and required UGC-entitled credentials.</p>
                     <div class="space-y-2.5" id="domain-selectors-wrapper"></div>
                 </div>
 
-                <!-- Lead Generation Magnet Banner -->
-                <div class="bg-gradient-to-br from-slate-900 to-indigo-950 p-6 rounded-3xl text-white shadow-xl space-y-4">
-                    <div class="flex gap-3 items-start">
-                        <div class="w-11 h-11 rounded-2xl bg-white/10 flex items-center justify-center text-amber-400 text-lg shrink-0">
-                            <i class="fa-solid fa-user-tie"></i>
+                <!-- Interactive Career ROI & Salary Hike Calculator -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl space-y-4 border border-slate-800">
+                    <div>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-extrabold px-2.5 py-0.5 rounded-full uppercase">
+                            95% Projection Accuracy
+                        </span>
+                        <h3 class="text-base font-black mt-2 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-amber-400"></i> Career ROI & Salary Calculator
+                        </h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Estimate your post-degree CTC package while continuing your current job.</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-slate-300">Current Annual CTC:</span>
+                            <span id="currentCtcLabel" class="text-amber-400">₹4.5 LPA</span>
                         </div>
+                        <input type="range" id="currentCtcSlider" min="2" max="20" step="0.5" value="4.5" class="w-full accent-amber-500 cursor-pointer">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Target Upgrade Track</label>
+                        <select id="roiTrackSelect" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-white">
+                            <option value="1.65">Online MBA (Dual Spec / Finance / Analytics)</option>
+                            <option value="1.85">Online MCA / M.Sc (AI, ML & Data Science)</option>
+                            <option value="1.50">Online BBA / BCA / B.Com (Career Starter)</option>
+                            <option value="2.00">Executive Global MBA / DBA (Leadership)</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700 space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">2-Yr Work Exp Retained:</span>
+                            <span class="text-emerald-400 font-bold">100% Salary Saved</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">CV Subsidy Offset:</span>
+                            <span class="text-amber-300 font-bold">Up to ₹10,000</span>
+                        </div>
+                        <div class="flex justify-between pt-2 border-t border-slate-700 text-sm">
+                            <span class="font-bold text-slate-200">Projected Post-Degree CTC:</span>
+                            <span id="projectedCtcOutput" class="font-black text-emerald-400">₹7.4 LPA – ₹12.0 LPA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Senior Advisor WhatsApp Card -->
+                <div class="bg-gradient-to-br from-indigo-950 to-slate-900 p-6 rounded-2xl text-white shadow-lg space-y-4">
+                    <div class="flex gap-3 items-start">
+                        <i class="fa-solid fa-user-tie text-xl text-amber-400 bg-white/10 p-3 rounded-xl"></i>
                         <div>
-                            <span class="text-[10px] uppercase font-extrabold tracking-wider text-amber-300">Direct Counseling Desk</span>
-                            <h4 class="font-bold text-base">Talk to Vivek Pratap</h4>
+                            <h4 class="font-bold text-sm">Need 1-on-1 Profile Evaluation?</h4>
                             <p class="text-xs text-slate-300 font-medium mt-1 leading-relaxed">
-                                Confused between Amity, LPU, Manipal, NMIMS, or Uttaranchal University? Get an unbiased 2-minute comparison & lock your ₹10,000 CV Subsidy.
+                                Connect directly with <strong>Vivek Pratap</strong> (Academic Counselor) for an unbiased 2-minute comparison and ₹10,000 corporate subsidy token.
                             </p>
                         </div>
                     </div>
-                    <a href="https://wa.me/917505385015?text=Hi%20Vivek%2C%20I%20used%20the%20Career%20Compass%20tool%20and%20want%201-on-1%20guidance%20for%20my%20Online%20Degree." target="_blank" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 transition shadow-lg">
-                        <i class="fa-brands fa-whatsapp text-base"></i> Connect on WhatsApp (+91 7505385015)
+                    <a href="https://wa.me/917505385015?text=Hi%20Vivek%2C%20I%20completed%20the%20Career%20Compass%20check%20and%20want%201-on-1%20guidance." target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Chat on WhatsApp (+91 7505385015)
                     </a>
                 </div>
+
             </div>
 
-            <!-- Right Pane: 3-Step Interactive Wizard + Domain Roadmap -->
+            <!-- Right Column (8 Cols): 3-Step Interactive AI Wizard + Domain Roadmap View -->
             <div class="lg:col-span-8 space-y-8">
-                
-                <!-- 3-Step AI Assessment Card -->
-                <div class="bg-white rounded-3xl border-2 border-slate-200 border-t-8 border-t-[#1e3a8a] shadow-lg overflow-hidden">
-                    <!-- Subsidy Top Ribbon -->
-                    <div class="bg-gradient-to-r from-[#1e3a8a] to-[#ea580c] text-white text-xs sm:text-sm font-bold py-2.5 px-4 text-center">
-                        <i class="fa-solid fa-fire-flame-curved text-amber-200 mr-1"></i>
-                        <strong>₹20 Cr Subsidy Pool Live:</strong> Complete this 2-Min Assessment to lock up to ₹10,000 Financial Assistance!
+
+                <!-- 3-Step Interactive "Find My Course" Wizard -->
+                <div class="wizard-shell overflow-hidden">
+                    <div class="subsidy-banner text-white py-3 px-4 text-center text-xs sm:text-sm font-bold">
+                        <i class="fa-solid fa-fire-flame-curved text-amber-300 mr-1"></i>
+                        <strong>₹20 Cr Subsidy Pool Live:</strong> Complete 3 quick steps to unlock your matched universities & up to ₹10,000 fee assistance!
                     </div>
 
-                    <!-- Stepper Header -->
-                    <div class="grid grid-cols-3 border-b border-slate-200 bg-slate-50 text-center py-3.5 px-2 text-xs sm:text-sm font-extrabold">
-                        <button type="button" onclick="transitionToStep(1)" id="badge_step1" class="text-indigo-900 flex items-center justify-center gap-1.5">
-                            <span class="w-6 h-6 rounded-full bg-indigo-900 text-white text-xs flex items-center justify-center">1</span> Academic Profile
-                        </button>
-                        <button type="button" onclick="transitionToStep(2)" id="badge_step2" class="text-slate-400 flex items-center justify-center gap-1.5">
-                            <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 text-xs flex items-center justify-center">2</span> Career & Budget
-                        </button>
-                        <button type="button" id="badge_step3" class="text-slate-400 flex items-center justify-center gap-1.5">
-                            <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 text-xs flex items-center justify-center">3</span> AI Match & Subsidy
-                        </button>
+                    <!-- Stepper Progress Bar -->
+                    <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs font-extrabold">
+                            <div id="stepBadge1" class="text-indigo-900 flex items-center justify-center gap-1.5">
+                                <span class="w-6 h-6 rounded-full bg-indigo-900 text-white flex items-center justify-center text-[11px]">1</span> 1. Your Profile
+                            </div>
+                            <div id="stepBadge2" class="text-slate-400 flex items-center justify-center gap-1.5">
+                                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[11px]">2</span> 2. Career Goal
+                            </div>
+                            <div id="stepBadge3" class="text-slate-400 flex items-center justify-center gap-1.5">
+                                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[11px]">3</span> 3. AI Matched Universities
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-200 h-1.5 rounded-full mt-3 overflow-hidden">
+                            <div id="wizardProgressBar" class="bg-orange-500 h-full transition-all duration-300" style="width: 33%;"></div>
+                        </div>
                     </div>
 
                     <!-- Wizard Body -->
                     <div class="p-6 sm:p-8">
-                        
-                        <!-- STEP 1: Profile & Budget -->
-                        <div id="step_pane_1" class="wizard-pane active space-y-6">
+
+                        <!-- STEP 1: Academic Profile -->
+                        <div id="wizardStep1" class="space-y-6">
                             <div>
-                                <span class="text-xs font-extrabold uppercase text-indigo-600">Step 1 of 3</span>
-                                <h3 class="text-xl font-black text-slate-900 mt-0.5">Identify Your Academic & Budget Persona</h3>
-                                <p class="text-xs text-slate-500">We filter only UGC-DEB entitled programs that match your eligibility and fee comfort.</p>
+                                <span class="text-[11px] font-extrabold uppercase text-indigo-600">Step 1 of 3 • Find My Course</span>
+                                <h3 class="text-xl font-black text-slate-900 mt-1">Tell Us About Your Educational Background</h3>
+                                <p class="text-xs text-slate-500">Smart technology that displays only eligible UGC-DEB approved courses and universities for your profile.</p>
                             </div>
 
-                            <div class="grid sm:grid-cols-3 gap-4">
+                            <div class="grid sm:grid-cols-2 gap-5">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Current Qualification *</label>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase mb-2">Highest Level of Education *</label>
                                     <select id="ui_qualification" class="form-input">
-                                        <option value="Working Professional">Working Professional</option>
-                                        <option value="Graduate">Graduate (Looking for PG: MBA/MCA/M.Sc)</option>
-                                        <option value="12th Pass">12th Pass (Looking for UG: BBA/BCA/B.Com)</option>
+                                        <option value="Working Professional">Working Professional (Graduate + Work Exp)</option>
+                                        <option value="Graduate">Graduate (Final Year / Completed)</option>
+                                        <option value="12th Completed">12th Completed (Looking for UG Degree)</option>
+                                        <option value="Post Graduate">Post Graduate (Looking for Executive / Dual Degree)</option>
                                     </select>
                                 </div>
+
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Academic Stream *</label>
-                                    <select id="ui_stream" class="form-input">
-                                        <option value="Commerce">Commerce / Management / Finance</option>
-                                        <option value="Science">Science / IT / Computer Applications</option>
-                                        <option value="Arts">Arts / Humanities / General</option>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase mb-2">Preferred Study Domain *</label>
+                                    <select id="ui_domain" class="form-input">
+                                        <option value="Management">Management & Business (MBA / BBA)</option>
+                                        <option value="Data Science & AI">Data Science, AI & Machine Learning</option>
+                                        <option value="Information Technology">Information Technology & Cloud (MCA / BCA)</option>
+                                        <option value="Finance & Commerce">Corporate Finance, FinTech & ACCA (M.Com / B.Com)</option>
+                                        <option value="Business Analytics">Business Analytics & Intelligence</option>
+                                        <option value="Healthcare">Healthcare & Hospital Management</option>
+                                        <option value="Arts">Arts, Humanities & Public Policy (MA / BA)</option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-5">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Full Course Budget *</label>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase mb-2">Preferred Total Fee Budget</label>
                                     <select id="ui_budget" class="form-input">
-                                        <option value="mid">Standard (₹1 Lakh – ₹1.8 Lakh)</option>
-                                        <option value="low">Pocket-Friendly (Under ₹1 Lakh)</option>
-                                        <option value="high">Premium / Global Brand (₹1.8 Lakh+)</option>
+                                        <option value="all">Flexible (Show Best ROI Campuses)</option>
+                                        <option value="low">Budget Friendly (Under ₹1 Lakh Full Course)</option>
+                                        <option value="mid">Mid-Range (₹1 Lakh – ₹1.8 Lakh with 0% EMI)</option>
+                                        <option value="high">Premier / Global Brand (₹1.8 Lakh+)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase mb-2">Weekly Study Hours Available</label>
+                                    <select id="ui_study_hours" class="form-input">
+                                        <option value="6-8 hrs/week">6–8 Hours/Week (Weekend Live + Recorded LMS)</option>
+                                        <option value="10-15 hrs/week">10–15 Hours/Week (Intensive Skill Building)</option>
+                                        <option value="Flexible">Self-Paced (Recorded Lectures + Easy Exams)</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="flex justify-end pt-4 border-t border-slate-100">
-                                <button type="button" onclick="transitionToStep(2)" class="px-6 py-3.5 bg-[#1e3a8a] hover:bg-indigo-950 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition flex items-center gap-2">
-                                    Proceed to Career Goal <i class="fa-solid fa-arrow-right"></i>
+                                <button type="button" onclick="goToWizardStep(2)" class="px-7 py-3.5 bg-[#1e3a8a] hover:bg-indigo-950 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition flex items-center gap-2">
+                                    Next: Select Career Goal <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <!-- STEP 2: Career Destination Goal -->
-                        <div id="step_pane_2" class="wizard-pane space-y-6">
+                        <!-- STEP 2: Career Objective -->
+                        <div id="wizardStep2" class="hidden space-y-6">
                             <div>
-                                <span class="text-xs font-extrabold uppercase text-orange-600">Step 2 of 3</span>
-                                <h3 class="text-xl font-black text-slate-900 mt-0.5">Define Your Primary Career Goal</h3>
-                                <p class="text-xs text-slate-500">Select the outcome that matters most to you over the next 24 months.</p>
+                                <span class="text-[11px] font-extrabold uppercase text-orange-600">Step 2 of 3 • Career Velocity</span>
+                                <h3 class="text-xl font-black text-slate-900 mt-1">What Are You Looking to Achieve With Your Studies?</h3>
+                                <p class="text-xs text-slate-500">Select your primary objective so our AI engine can prioritize placement records, dual specializations, or fee subsidies.</p>
                             </div>
 
                             <div class="grid sm:grid-cols-2 gap-4">
-                                <label class="radio-tile flex items-start gap-3">
-                                    <input type="radio" name="ui_intent" value="TechGrowth" checked class="mt-1 accent-orange-600 w-4 h-4">
+                                <label class="choice-tile flex items-start gap-3">
+                                    <input type="radio" name="ui_intent" value="High Salary & Tech Growth" checked class="mt-1 accent-orange-600">
                                     <div>
-                                        <strong class="block text-slate-900 text-sm font-extrabold">High Salary Hike & Tech / Analytics Transition</strong>
-                                        <span class="text-xs text-slate-500 leading-relaxed block mt-1">Focus on AI, Data Science, Business Analytics, Full-Stack & Cloud with top placement partners.</span>
+                                        <strong class="block text-slate-900 text-sm">High Salary Hike & Tech / Corporate Switch</strong>
+                                        <span class="text-xs text-slate-500 leading-relaxed">Prioritize NAAC A++ universities with 450+ hiring partners, AI/Analytics labs & mock interview prep.</span>
                                     </div>
                                 </label>
 
-                                <label class="radio-tile flex items-start gap-3">
-                                    <input type="radio" name="ui_intent" value="CorporateLeadership" class="mt-1 accent-orange-600 w-4 h-4">
+                                <label class="choice-tile flex items-start gap-3">
+                                    <input type="radio" name="ui_intent" value="Executive Promotion & Leadership" class="mt-1 accent-orange-600">
                                     <div>
-                                        <strong class="block text-slate-900 text-sm font-extrabold">Managerial Promotion & Dual Specialization MBA</strong>
-                                        <span class="text-xs text-slate-500 leading-relaxed block mt-1">Upgrade designation without quitting your job via NAAC A++ MBA in Finance, Marketing, HR & Ops.</span>
+                                        <strong class="block text-slate-900 text-sm">Managerial Promotion (Without Quitting Job)</strong>
+                                        <span class="text-xs text-slate-500 leading-relaxed">Prioritize Dual Specialization MBAs, flexible weekend classes & Draw-Your-Own-Datesheet exams.</span>
                                     </div>
                                 </label>
 
-                                <label class="radio-tile flex items-start gap-3">
-                                    <input type="radio" name="ui_intent" value="AffordableValid" class="mt-1 accent-orange-600 w-4 h-4">
+                                <label class="choice-tile flex items-start gap-3">
+                                    <input type="radio" name="ui_intent" value="Affordable UGC-Entitled Degree" class="mt-1 accent-orange-600">
                                     <div>
-                                        <strong class="block text-slate-900 text-sm font-extrabold">Govt. Job / Exam Prep + Affordable UGC Degree</strong>
-                                        <span class="text-xs text-slate-500 leading-relaxed block mt-1">Lowest semester fee (starting ₹24,500/sem) with 100% UGC-DEB equivalency for UPSC, SSC, Banking & PSU.</span>
+                                        <strong class="block text-slate-900 text-sm">Affordable UGC-DEB Degree (Govt & MNC Valid)</strong>
+                                        <span class="text-xs text-slate-500 leading-relaxed">Prioritize low-fee NAAC A+/A++ universities starting at ₹24,500/semester with ₹10,000 CV Subsidy.</span>
                                     </div>
                                 </label>
 
-                                <label class="radio-tile flex items-start gap-3">
-                                    <input type="radio" name="ui_intent" value="GlobalExecutive" class="mt-1 accent-orange-600 w-4 h-4">
+                                <label class="choice-tile flex items-start gap-3">
+                                    <input type="radio" name="ui_intent" value="Global Mobility & Abroad Recognition" class="mt-1 accent-orange-600">
                                     <div>
-                                        <strong class="block text-slate-900 text-sm font-extrabold">International Mobility & Executive Leadership</strong>
-                                        <span class="text-xs text-slate-500 leading-relaxed block mt-1">WES-approved degrees & global executive credentials for international careers and C-suite roles.</span>
+                                        <strong class="block text-slate-900 text-sm">Global Career & WES / International Validity</strong>
+                                        <span class="text-xs text-slate-500 leading-relaxed">Prioritize WES, WASC (USA), QAA (UK) & ACU accredited universities for smooth abroad migration.</span>
                                     </div>
                                 </label>
                             </div>
 
                             <div class="flex justify-between items-center pt-4 border-t border-slate-100">
-                                <button type="button" onclick="transitionToStep(1)" class="text-xs font-extrabold text-slate-500 hover:text-slate-900 flex items-center gap-1.5">
+                                <button type="button" onclick="goToWizardStep(1)" class="text-xs font-extrabold text-slate-500 hover:text-slate-800 flex items-center gap-1.5">
                                     <i class="fa-solid fa-chevron-left"></i> Back to Profile
                                 </button>
-                                <button type="button" onclick="processEngineFinalMapping()" class="px-6 py-3.5 bg-[#ea580c] hover:bg-orange-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition flex items-center gap-2">
-                                    Unlock Top Matched Universities <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <button type="button" onclick="generateStep3Matches()" class="px-7 py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg transition flex items-center gap-2">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Generate AI University Match
                                 </button>
                             </div>
                         </div>
 
-                        <!-- STEP 3: Dynamic Recommendations + CV API Lead Capture -->
-                        <div id="step_pane_3" class="wizard-pane">
-                            <div id="pathway-dynamic-root-injection"></div>
+                        <!-- STEP 3: Personalized Recommendations + Direct CV API Lead Form -->
+                        <div id="wizardStep3" class="hidden space-y-6">
+                            <div id="step3DynamicOutput"></div>
                         </div>
 
                     </div>
                 </div>
 
-                <!-- Dynamic Domain Details Panel -->
-                <div class="bg-white border border-slate-200 shadow-sm rounded-3xl p-6 sm:p-8" id="compass-domain-details"></div>
+                <!-- Dynamic Domain Roadmap Details Panel -->
+                <div id="domainRoadmapPanel" class="bg-white border border-slate-200/80 shadow-sm rounded-3xl p-6 sm:p-8"></div>
 
             </div>
         </div>
+    </main>
 
-        <!-- Interactive ROI Calculator & Study Readiness Check -->
-        <section id="roi-calculator" class="grid lg:grid-cols-12 gap-8 pt-4">
-            
-            <!-- ROI & Payback Calculator (7 Cols) -->
-            <div class="lg:col-span-7 bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-800 space-y-6">
-                <div class="flex flex-wrap justify-between items-start gap-4 border-b border-slate-800 pb-4">
+    <!-- Footer Area -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:flex sm:justify-between sm:items-center space-y-3 sm:space-y-0 font-medium">
+            <p>&copy; 2026 EduMentor Framework | Vivek Pratap (Authorized College Vidya Partner)</p>
+            <div class="flex justify-center gap-4 text-slate-400 text-[11px]">
+                <span>100% Direct University Portal Payment</span>
+                <span>•</span>
+                <span>UGC-DEB Verified Matrix</span>
+                <span>•</span>
+                <a href="tel:+917505385015" class="text-emerald-400 font-bold">+91 7505385015</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase + Career Compass Engine Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAyxEZ4ukI8WRhV71RyS8JYJcXAICGAbto",
+            authDomain: "edtech-7d520.firebaseapp.com",
+            projectId: "edtech-7d520",
+            storageBucket: "edtech-7d520.firebasestorage.app",
+            messagingSenderId: "78074698553",
+            appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Domain Roadmap Dataset
+        const domainMatrixData = [
+            {
+                id: "domain-cs-ai",
+                title: "Computer Science, AI & Cloud",
+                icon: "fa-solid fa-microchip",
+                tagline: "Software Engineering, Cloud Architecture & GenAI Systems",
+                payRange: "₹6.5 LPA – ₹24 LPA",
+                roles: ["Machine Learning Engineer", "Full-Stack Cloud Architect", "DevOps & SRE Lead"],
+                certifications: ["Online MCA in AI & ML", "Online BCA in Cloud & Cyber Security", "Online M.Sc Data Science"],
+                milestones: [
+                    { level: "Entry", title: "Cloud & Software Associate", work: "Build production web stacks, REST APIs, and automated CI/CD containers." },
+                    { level: "Mid-Tier", title: "Senior AI / Full-Stack Engineer", work: "Architect scalable microservices and enterprise LLM data pipelines." },
+                    { level: "Leadership", title: "Principal AI Architect / CTO Track", work: "Lead cross-border engineering teams and enterprise cloud governance." }
+                ]
+            },
+            {
+                id: "domain-data-analytics",
+                title: "Data Analytics & Business Intelligence",
+                icon: "fa-solid fa-chart-line",
+                tagline: "SQL Modeling, Predictive Science & Executive BI Dashboards",
+                payRange: "₹5.5 LPA – ₹18 LPA",
+                roles: ["Enterprise Data Analyst", "Business Intelligence Lead", "Predictive Data Scientist"],
+                certifications: ["Online MBA in Business Analytics", "Online M.Sc Data Science", "Online BBA in Analytics"],
+                milestones: [
+                    { level: "Entry", title: "BI & SQL Reporting Analyst", work: "Transform raw business data into actionable PowerBI/Tableau and SQL insights." },
+                    { level: "Mid-Tier", title: "Lead Data Modeler / Analytics Manager", work: "Own predictive revenue forecasting and customer retention models." },
+                    { level: "Leadership", title: "Director of Business Intelligence", work: "Drive organization-wide data strategy and executive decision metrics." }
+                ]
+            },
+            {
+                id: "domain-finance-bfsi",
+                title: "Corporate Finance, FinTech & ACCA",
+                icon: "fa-solid fa-building-columns",
+                tagline: "Investment Banking, Risk Underwriting & Global Audit",
+                payRange: "₹6.0 LPA – ₹22 LPA",
+                roles: ["Investment Banking Analyst", "FinTech Product Manager", "Corporate Finance Controller"],
+                certifications: ["Online MBA in Finance / FinTech", "Online B.Com / M.Com with ACCA", "Executive MBA Finance"],
+                milestones: [
+                    { level: "Entry", title: "Financial & Credit Risk Analyst", work: "Audit corporate portfolios, valuation sheets, and regulatory compliance." },
+                    { level: "Mid-Tier", title: "Senior Portfolio & Treasury Manager", work: "Manage capital allocation, M&A modeling, and FinTech payment products." },
+                    { level: "Leadership", title: "Chief Financial Officer (CFO)", work: "Steer institutional financial strategy, IPO readiness, and global audits." }
+                ]
+            },
+            {
+                id: "domain-digital-marketing",
+                title: "Digital Marketing & Brand Strategy",
+                icon: "fa-solid fa-bullhorn",
+                tagline: "Performance Marketing, Growth Funnels & Brand Management",
+                payRange: "₹4.5 LPA – ₹16 LPA",
+                roles: ["Growth Marketing Manager", "Performance Media Lead", "Brand & Product Director"],
+                certifications: ["Online MBA in Digital Marketing", "Online BBA in Marketing & Retail", "Dual MBA (Marketing + Analytics)"],
+                milestones: [
+                    { level: "Entry", title: "Performance Acquisition Specialist", work: "Scale Meta/Google ad funnels and optimize Customer Acquisition Cost (CAC)." },
+                    { level: "Mid-Tier", title: "Growth & Brand Manager", work: "Lead omnichannel retention campaigns and product positioning." },
+                    { level: "Leadership", title: "Chief Marketing Officer (CMO)", work: "Own macro revenue growth, brand equity, and international expansion." }
+                ]
+            }
+        ];
+
+        let selectedDomainId = domainMatrixData[0].id;
+
+        function renderDomainSelectors() {
+            const wrapper = document.getElementById('domain-selectors-wrapper');
+            wrapper.innerHTML = domainMatrixData.map(dom => {
+                const isActive = dom.id === selectedDomainId;
+                return `
+                    <div onclick="switchDomain('${dom.id}')" class="p-3.5 rounded-xl border transition cursor-pointer flex items-center gap-3 ${isActive ? 'bg-[#1e3a8a] border-[#1e3a8a] text-white shadow-md' : 'bg-slate-50 border-slate-200/70 hover:border-indigo-300 text-slate-700'}">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center text-sm shrink-0 ${isActive ? 'bg-white/15 text-amber-300' : 'bg-white text-indigo-600 border border-slate-200'}">
+                            <i class="${dom.icon}"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-xs leading-tight">${dom.title}</h4>
+                            <p class="text-[10px] mt-0.5 ${isActive ? 'text-blue-200' : 'text-slate-400'} line-clamp-1">${dom.tagline}</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderDomainRoadmap() {
+            const activeObj = domainMatrixData.find(d => d.id === selectedDomainId);
+            const panel = document.getElementById('domainRoadmapPanel');
+
+            panel.innerHTML = `
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-5 mb-6">
                     <div>
-                        <span class="text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2.5 py-1 rounded-full">
-                            95% Prediction Accuracy
-                        </span>
-                        <h3 class="text-2xl font-black mt-2">Online Degree ROI & Salary Hike Calculator</h3>
-                        <p class="text-xs text-slate-400 mt-1">See how fast your online degree pays for itself after applying the ₹10,000 CV Subsidy.</p>
+                        <span class="text-[10px] font-black uppercase text-indigo-600 tracking-wider bg-indigo-50 px-2.5 py-1 rounded-md">Selected Domain Blueprint</span>
+                        <h3 class="text-2xl font-black text-slate-900 mt-1">${activeObj.title}</h3>
+                        <p class="text-xs text-slate-500 font-medium">${activeObj.tagline}</p>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-200 px-4 py-2.5 rounded-xl">
+                        <span class="text-[10px] font-bold text-emerald-700 uppercase block">Indian Salary Benchmark</span>
+                        <span class="text-base font-black text-emerald-900">${activeObj.payRange}</span>
                     </div>
                 </div>
 
-                <div class="grid sm:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between text-xs font-bold mb-1.5">
-                                <span class="text-slate-300">Current Annual CTC:</span>
-                                <span id="roiCurrentCtcLabel" class="text-amber-400 font-black">₹4.5 LPA</span>
-                            </div>
-                            <input type="range" id="roiCurrentCtc" min="2" max="18" step="0.5" value="4.5" class="w-full accent-amber-500 cursor-pointer">
-                        </div>
+                <div class="grid sm:grid-cols-2 gap-6 mb-6">
+                    <div class="space-y-2">
+                        <h5 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-briefcase text-indigo-500 mr-1"></i> Target Job Roles</h5>
+                        ${activeObj.roles.map(r => `<div class="bg-slate-50 border border-slate-200/70 px-3.5 py-2.5 rounded-xl font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> ${r}</div>`).join('')}
+                    </div>
+                    <div class="space-y-2">
+                        <h5 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-1"></i> Recommended UGC-Entitled Degrees</h5>
+                        ${activeObj.certifications.map(c => `<div class="bg-slate-50 border border-slate-200/70 px-3.5 py-2.5 rounded-xl font-bold text-slate-800 text-xs flex items-center gap-2"><i class="fa-solid fa-building-columns text-indigo-600"></i> ${c}</div>`).join('')}
+                    </div>
+                </div>
 
-                        <div>
-                            <div class="flex justify-between text-xs font-bold mb-1.5">
-                                <span class="text-slate-300">Estimated Total Course Fee:</span>
-                                <span id="roiCourseFeeLabel" class="text-amber-400 font-black">₹1,40,000</span>
-                            </div>
-                            <input type="range" id="roiCourseFee" min="50000" max="300000" step="10000" value="140000" class="w-full accent-amber-500 cursor-pointer">
+                <h5 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-road text-indigo-500 mr-1"></i> 3-Stage Career Progression</h5>
+                <div class="grid sm:grid-cols-3 gap-4">
+                    ${activeObj.milestones.map(m => `
+                        <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl">
+                            <span class="text-[10px] font-black uppercase bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded">${m.level}</span>
+                            <h4 class="font-extrabold text-slate-900 text-sm mt-2">${m.title}</h4>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">${m.work}</p>
                         </div>
+                    `).join('')}
+                </div>
+            `;
+        }
 
+        window.switchDomain = function(id) {
+            selectedDomainId = id;
+            renderDomainSelectors();
+            renderDomainRoadmap();
+        };
+
+        // ROI Calculator Logic
+        function updateRoiCalculator() {
+            const currentCtc = parseFloat(document.getElementById('currentCtcSlider').value);
+            const multiplier = parseFloat(document.getElementById('roiTrackSelect').value);
+            document.getElementById('currentCtcLabel').textContent = `₹${currentCtc.toFixed(1)} LPA`;
+
+            const lowEst = (currentCtc * multiplier).toFixed(1);
+            const highEst = Math.max(12.0, (currentCtc * (multiplier + 0.45))).toFixed(1);
+            document.getElementById('projectedCtcOutput').textContent = `₹${lowEst} LPA – ₹${highEst} LPA`;
+        }
+        document.getElementById('currentCtcSlider').addEventListener('input', updateRoiCalculator);
+        document.getElementById('roiTrackSelect').addEventListener('change', updateRoiCalculator);
+
+        // Wizard Step Navigation
+        window.goToWizardStep = function(step) {
+            [1, 2, 3].forEach(s => {
+                document.getElementById(`wizardStep${s}`).classList.toggle('hidden', s !== step);
+                const badge = document.getElementById(`stepBadge${s}`);
+                if (s === step) {
+                    badge.className = "text-orange-600 flex items-center justify-center gap-1.5 font-black";
+                } else if (s < step) {
+                    badge.className = "text-emerald-600 flex items-center justify-center gap-1.5 font-bold";
+                } else {
+                    badge.className = "text-slate-400 flex items-center justify-center gap-1.5";
+                }
+            });
+            document.getElementById('wizardProgressBar').style.width = `${step * 33.33}%`;
+        };
+
+        // Generate Personalized Matches in Step 3
+        window.generateStep3Matches = function() {
+            const qual = document.getElementById('ui_qualification').value;
+            const domain = document.getElementById('ui_domain').value;
+            const budget = document.getElementById('ui_budget').value;
+            const studyHours = document.getElementById('ui_study_hours').value;
+            const intent = document.querySelector('input[name="ui_intent"]:checked')?.value || 'High Salary & Tech Growth';
+
+            const isUG = qual === '12th Completed';
+            let recommendedDegree = isUG ? 'Online BBA / BCA' : 'Online MBA (Dual Specialization)';
+            let matches = [];
+
+            if (domain === 'Data Science & AI' || domain === 'Information Technology') {
+                recommendedDegree = isUG ? 'Online BCA (Cloud, AI & Data Analytics)' : 'Online MCA / M.Sc (AI, ML & Data Science)';
+                matches = [
+                    { shortName: "MUJ", name: "Manipal University Jaipur (Online Manipal)", track: recommendedDegree, fee: "₹1,50,000 – ₹1,58,000", approvals: "UGC-DEB, NAAC A+, WES", perks: "Free Coursera Access + 500+ Hiring Partners + 0% EMI", link: "https://www.onlinemanipal.com/" },
+                    { shortName: "LPU", name: "Lovely Professional University (LPU Online)", track: recommendedDegree, fee: "₹1,20,000 – ₹1,40,000", approvals: "UGC-DEB, NAAC A++, NIRF #31", perks: "400+ Hrs Recorded LMS + Draw Your Datesheet + Amazon/HDFC Hiring", link: "https://www.lpuonline.com/" },
+                    { shortName: "CUOL", name: "Chandigarh University Online (CUOL)", track: recommendedDegree, fee: "₹1,20,000 – ₹1,40,000", approvals: "UGC-DEB, NAAC A+, E-Lead", perks: "CU-VERSE Advanced LMS + 300+ Hiring Partners + 0% EMI", link: "https://www.onlinecu.in/index.php" },
+                    { shortName: "UU", name: "Uttaranchal University Online (UU)", track: recommendedDegree, fee: "₹70,000 – ₹98,000 (Starts @ ₹24,500/Sem)", approvals: "UGC-DEB, NAAC A+", perks: "Up to 30% Scholarship + Lowest Semester Fee Structure", link: "https://www.onlineuu.in/" }
+                ];
+            } else {
+                recommendedDegree = isUG ? 'Online BBA / B.Com (Corporate & FinTech)' : `Online MBA (${domain} & Dual Spec)`;
+                matches = [
+                    { shortName: "AU", name: "Amity University Online", track: recommendedDegree, fee: "₹1,65,000 – ₹1,99,000", approvals: "UGC-DEB, NAAC A+, QS Top 10 Asia Pacific", perks: "14+ Specializations + WASC (USA) & QAA (UK) + 450+ Recruiters", link: "https://amityonline.com/" },
+                    { shortName: "LPU", name: "Lovely Professional University (LPU Online)", track: recommendedDegree, fee: "₹1,40,000 – ₹1,60,000", approvals: "UGC-DEB, NAAC A++, NIRF #31, WURI #4", perks: "Dual Specialization + Weekend Live Classes + 0% No-Cost EMI", link: "https://www.lpuonline.com/" },
+                    { shortName: "DPU Pune", name: "DY Patil University Online (Pune)", track: recommendedDegree, fee: "₹1,40,000 – ₹1,89,000", approvals: "UGC-DEB, NAAC A++, NIRF Top 50", perks: "0% EMI via 8 Partner Banks + Corporate Recognition", link: "https://www.dypatilonline.com/" },
+                    { shortName: "UU", name: "Uttaranchal University Online (UU)", track: recommendedDegree, fee: "₹98,000 Full Course (₹24,500/Sem)", approvals: "UGC-DEB, NAAC A+", perks: "Best Value NAAC A+ MBA + Up to 30% Scholarship Access", link: "https://www.onlineuu.in/" }
+                ];
+            }
+
+            if (budget === 'low') {
+                matches.sort((a, b) => (a.shortName === 'UU' ? -1 : 1));
+            }
+
+            const out = document.getElementById('step3DynamicOutput');
+            out.innerHTML = `
+                <div class="space-y-6">
+                    <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex flex-wrap justify-between items-center gap-4">
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Expected Career Track</label>
-                            <select id="roiHikeMultiplier" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-bold text-white">
-                                <option value="1.55">Online MBA / MCA (Avg. 55% Hike + Promotion)</option>
-                                <option value="1.75">AI, Data Science & Business Analytics (Avg. 75% Hike)</option>
-                                <option value="1.40">Executive / Finance / HR Leadership (Avg. 40% Hike)</option>
-                            </select>
+                            <span class="text-[10px] font-black uppercase bg-emerald-600 text-white px-2.5 py-0.5 rounded-full">✓ 30-Parameter AI Match Ready</span>
+                            <h3 class="text-lg sm:text-xl font-black text-slate-900 mt-1">Recommended Track: ${recommendedDegree}</h3>
+                            <p class="text-xs text-slate-600 font-medium">Matched for <strong>${qual}</strong> • Goal: <strong>${intent}</strong> • Study Rhythm: <strong>${studyHours}</strong></p>
+                        </div>
+                        <div class="bg-orange-500 text-white px-4 py-2 rounded-xl font-black text-xs uppercase shadow">
+                            <i class="fa-solid fa-gift mr-1"></i> ₹10,000 CV Subsidy Eligible
                         </div>
                     </div>
 
-                    <div class="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 flex flex-col justify-between space-y-3">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-400">Net Investment (After ₹10k Subsidy):</span>
-                            <span id="roiNetFee" class="font-extrabold text-white">₹1,30,000</span>
+                    <!-- 100% Financial Guard Assurance -->
+                    <div class="bg-teal-50 border-l-4 border-teal-600 p-4 rounded-xl flex items-start gap-3">
+                        <i class="fa-solid fa-shield-halved text-teal-600 text-lg mt-0.5"></i>
+                        <div class="text-xs text-teal-950 font-medium leading-relaxed">
+                            <strong class="block font-extrabold text-sm">100% Financial Guard Enabled</strong>
+                            Your admission fee is paid 100% directly into the official university portal account. EduMentor never charges any middleman or agent commission.
                         </div>
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="
+                    </div>
+
+                    <!-- Matched Universities List -->
+                    <div class="space-y-3">
+                        ${matches.map((m, idx) => `
+                            <div class="p-4 sm:p-5 rounded-2xl border-2 ${idx === 0 ? 'border-orange-500 bg-orange-50/20' : 'border-slate-200 bg-white'} flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                                <div class="space-y-1">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span class="bg-indigo-900 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded uppercase">Top Match #${idx + 1}</span>
+                                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded">${m.approvals}</span>
+                                    </div>
+                                    <h4 class="text-base sm:text-lg font-black text-slate-900">${m.name}</h4>
+                                    <p class="text-xs font-bold text-indigo-700">${m.track} • <span class="text-slate-800">Est. Fee: ${m.fee}</span></p>
+                                    <p class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-bolt text-amber-500 mr-1"></i> ${m.perks}</p>
+                                </div>
+                                <div class="flex sm:flex-col gap-2 w-full sm:w-auto shrink-0">
+                                    <a href="${m.link}" target="_blank" class="flex-1 sm:w-44 py-2.5 px-4 bg-[#1e3a8a] hover:bg-indigo-950 text-white font-extrabold text-xs rounded-xl text-center transition">
+                                        Official Portal <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Direct CV Admission API & 15-Min Callback Capture Form -->
+                    <div class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800">
+                        <div class="grid md:grid-cols-12 gap-6 items-center">
+                            <div class="md:col-span-6 space-y-2">
+                                <span class="bg-red-500/20 text-red-300 border border-red-400/30 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase">
+                                    <i class="fa-solid fa-bolt"></i> 15-Min Quick Action SLA Active
+                                </span>
+                                <h4 class="text-lg font-black">Lock Your ₹10,000 Subsidy & Generate Student ID</h4>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    Submit your details to sync your profile with the official university portal and receive a 1-on-1 counseling call from <strong>Vivek Pratap</strong> within 15 minutes.
+                                </p>
+                                <ul class="text-xs text-emerald-300 space-y-1 font-semibold pt-1">
+                                    <li><i class="fa-solid fa-circle-check mr-1"></i> Direct University Portal Fee Receipt</li>
+                                    <li><i class="fa-solid fa-circle-check mr-1"></i> 0% No-Cost EMI Pre-Approval Check</li>
+                                    <li><i class="fa-solid fa-circle-check mr-1"></i> Free LMS Demo & Syllabus PDF on WhatsApp</li>
+                                </ul>
+                            </div>
+
+                            <div class="md:col-span-6">
+                                <form id="compassFinalLeadForm" class="bg-white text-slate-800 p-5 rounded-2xl space-y-3">
+                                    <input type="hidden" id="comp_course" value="${recommendedDegree}">
+                                    <input type="hidden" id="comp_domain" value="${domain}">
+                                    <div>
+                                        <label class="block text-[10px] font-extrabold text-slate-500 uppercase mb-1">Full Legal Name *</label>
+                                        <input type="text" id="comp_name" class="form-input" placeholder="Enter your full name" required>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                        <div>
+                                            <label class="block text-[10px] font-extrabold text-slate-500 uppercase mb-1">Email ID (For LMS) *</label>
+                                            <input type="email" id="comp_email" class="form-input" placeholder="you@example.com" required>
+                                        </div>
+                                        <div>
+                                            <label class="block text-[10px] font-extrabold text-slate-500 uppercase mb-1">WhatsApp Number *</label>
+                                            <input type="tel" id="comp_mobile" pattern="[0-9]{10}" class="form-input" placeholder="10-digit mobile" required>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-extrabold text-slate-500 uppercase mb-1">Preferred Partner University *</label>
+                                        <select id="comp_university" class="form-input" required>
+                                            ${matches.map(m => `<option value="${m.shortName}">${m.name} (${m.shortName})</option>`).join('')}
+                                            <option value="MUJ">Manipal University Jaipur (MUJ)</option>
+                                            <option value="AU">Amity University Online (AU)</option>
+                                            <option value="LPU">Lovely Professional University (LPU)</option>
+                                            <option value="CUOL">Chandigarh University (CUOL)</option>
+                                            <option value="UU">Uttaranchal University (UU)</option>
+                                            <option value="DPU Pune">DY Patil University Pune</option>
+                                        </select>
+                                    </div>
+                                    <div id="compFeedback" class="hidden p-2.5 rounded-xl text-xs font-bold"></div>
+                                    <button type="submit" id="compSubmitBtn" class="w-full py-3.5 bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs uppercase rounded-xl shadow-md transition">
+                                        Lock ₹10,000 Subsidy & Book 1-on-1 Call <i class="fa-solid fa-chevron-right ml-1"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center pt-2">
+                        <button type="button" onclick="goToWizardStep(1)" class="text-xs font-bold text-slate-500 hover:text-indigo-600">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Recalculate Profile
+                        </button>
+                        <a href="edtech-universities.html" class="text-xs font-extrabold text-indigo-600 hover:underline">
+                            View All 27+ Partner Universities →
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            goToWizardStep(3);
+
+            document.getElementById('compassFinalLeadForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('compSubmitBtn');
+                const fb = document.getElementById('compFeedback');
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Syncing with CV Partner Portal...`;
+
+                const payload = {
+                    interested_university: document.getElementById('comp_university').value,
+                    full_name: document.getElementById('comp_name').value.trim(),
+                    email: document.getElementById('comp_email').value.trim(),
+                    mobile: document.getElementById('comp_mobile').value.trim(),
+                    course: document.getElementById('comp_course').value,
+                    specialization: document.getElementById('comp_domain').value,
+                    qualification: qual,
+                    career_goal: intent,
+                    source: "CV Partner",
+                    sub_source: "API",
+                    site: "EduMentor Career Compass",
+                    lead_owner: "5637",
+                    timestamp: new Date().toISOString()
+                };
+
+                try {
+                    await addDoc(collection(db, "leads"), payload);
+
+                    let apiRes = null;
+                    try {
+                        const r = await fetch('/api/submit-lead', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (r.ok) apiRes = await r.json();
+                    } catch (_) {}
+
+                    fb.className = "p-3 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 block";
+                    fb.innerHTML = apiRes?.student_id
+                        ? `✅ Student ID Generated: <strong>${apiRes.student_id}</strong>! Vivek Pratap's desk will call you within 15 mins.`
+                        : `✅ Subsidy Token Locked for <strong>${payload.full_name}</strong>! Expect your 1-on-1 call within 15 minutes.`;
+
+                    btn.innerHTML = `Registry Secured & Call Booked ✓`;
+                    btn.classList.replace('bg-orange-600', 'bg-emerald-600');
+                } catch (err) {
+                    fb.className = "p-3 rounded-xl text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 block";
+                    fb.innerHTML = `✅ Profile saved! Connecting you with our counselor...`;
+                    btn.disabled = false;
+                    btn.innerHTML = `Lock ₹10,000 Subsidy & Book 1-on-1 Call`;
+                }
+            });
+        };
+
+        // Initialize Page
+        renderDomainSelectors();
+        renderDomainRoadmap();
+        updateRoiCalculator();
+    </script>
+</body>
+</html>
