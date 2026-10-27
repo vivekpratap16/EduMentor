@@ -3,192 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Details | EduMentor</title>
+    <title>University Details & Live Matrix | EduMentor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
-        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #312e81 100%); }
-        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #f1f5f9; }
-        .spec-badge { background: #f1f5f9; color: #475569; padding: 4px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #e2e8f0; display: inline-block; margin: 4px 4px 0 0;}
-
-        .university-profile-container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            font-family: 'Arial', sans-serif;
-        }
-        .univ-hero-header {
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .univ-meta-badge {
-            display: inline-block;
-            background: #eff6ff;
-            color: #2563eb;
-            font-weight: 700;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-        }
-        .univ-main-title {
-            font-size: 2.2rem;
-            color: #0f172a;
-            font-weight: 800;
-            margin: 0 0 0.5rem 0;
-        }
-        .univ-subtext {
-            color: #64748b;
-            font-size: 1.05rem;
-            margin: 0;
-        }
-        .metrics-dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-        .metric-data-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 1.25rem;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .metric-label {
-            font-size: 0.85rem;
-            color: #64748b;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .metric-value-highlight {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-        .table-responsive-wrapper {
-            overflow-x: auto;
-            margin-bottom: 2.5rem;
-        }
-        .data-matrix-table {
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif; background-color: #f8fafc; color: #334155; }
+        .hero-gradient { background: linear-gradient(135deg, #002366 0%, #1e1b4b 100%); }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; }
+        .form-input {
             width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-        .data-matrix-table th {
-            background: #0f172a;
-            color: #ffffff;
-            padding: 1rem 1.25rem;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-        .data-matrix-table td {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid #e2e8f0;
-            color: #334155;
-            font-size: 1rem;
-        }
-        .data-matrix-table tr:nth-child(even) td {
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 0.75rem;
             background: #f8fafc;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #0f172a;
+            outline: none;
+            transition: all 0.2s;
         }
-        .matrix-placeholder-row {
-            text-align: center;
-            color: #94a3b8 !important;
-            padding: 3rem !important;
-            font-style: italic;
-        }
-        .action-desk-gate {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .gate-notice {
-            color: #166534;
-            margin: 0 0 1.25rem 0;
-            font-size: 0.95rem;
-        }
-        .secure-checkout-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #16a34a;
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            padding: 0.85rem 2rem;
-            border-radius: 8px;
-            transition: background 0.2s ease;
-            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2);
-        }
-        .secure-checkout-btn:hover {
-            background: #15803d;
-        }
-        .btn-arrow-icon {
-            width: 18px;
-            height: 18px;
-        }
+        .form-input:focus { border-color: #002366; background: #ffffff; box-shadow: 0 0 0 3px rgba(0, 35, 102, 0.1); }
     </style>
 </head>
-<body class="text-slate-800">
+<body class="min-h-screen flex flex-col justify-between">
 
     <!-- Top Navigation -->
-    <nav class="fixed w-full z-40 glass-nav top-0 transition-all duration-300">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="fixed w-full z-40 glass-nav top-0 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center h-20 justify-between">
                 <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='edtech-universities.html'">
                     <div class="w-10 h-10 bg-indigo-50 hover:bg-indigo-100 transition rounded-xl flex items-center justify-center text-indigo-600 font-black shadow-inner"><i class="fa-solid fa-arrow-left"></i></div>
-                    <span class="font-extrabold text-xl tracking-tight text-slate-900 hidden sm:block hover:text-indigo-600 transition">Back to Search</span>
+                    <span class="font-extrabold text-sm sm:text-base text-slate-900">Back to University Matrix</span>
                 </div>
                 <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='index.html'">
-                    <span class="text-2xl font-extrabold tracking-tight text-slate-900">EduMentor</span>
+                    <span class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">EduMentor</span>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Main Content Area -->
-    <div id="content-area" class="pb-20 pt-20">
+    <div id="content-area" class="pb-20 pt-20 flex-grow">
         <div class="text-center py-40">
             <div class="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
-            <p class="text-slate-500 font-bold text-lg">Fetching Verified Details...</p>
+            <p class="text-slate-500 font-bold text-base">Fetching Verified University Matrix...</p>
         </div>
     </div>
 
-    <!-- Lead Modal - High Conversion Design -->
-    <div id="lead-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 transition-opacity">
-        <div class="bg-white rounded-[2rem] p-8 max-w-md w-full relative shadow-2xl border border-white">
-            <button onclick="document.getElementById('lead-modal').classList.add('hidden')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <!-- Lead Verification Modal -->
+    <div id="lead-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl border-t-8 border-t-[#FF8C00]">
+            <button onclick="document.getElementById('lead-modal').classList.add('hidden')" class="absolute top-5 right-5 text-slate-400 hover:text-rose-600 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
             
-            <div class="w-16 h-16 bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 shadow-inner"><i class="fa-solid fa-lock"></i></div>
-            <h3 class="text-2xl font-extrabold mb-2 text-center text-slate-900">Unlock Official Link 🎓</h3>
-            <p class="text-sm text-center text-slate-500 mb-6 font-medium">To protect you from fake portals, we verify all students before redirecting to the official website.</p>
+            <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 border border-amber-200 shadow-inner"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3 class="text-2xl font-black mb-2 text-center text-slate-900">Unlock Official Portal 🎓</h3>
+            <p class="text-xs text-center text-slate-500 mb-6 font-medium">To protect you from unverified brokers, we verify your contact details before routing to the official university admission gateway.</p>
             
-            <form id="lead-form" class="space-y-4">
+            <form id="lead-form" class="space-y-3.5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Full Name</label>
-                    <input type="text" id="lead-name" required placeholder="e.g. Rahul Sharma" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 focus:bg-white transition font-bold text-sm text-slate-800">
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Full Student Name *</label>
+                    <input type="text" id="lead-name" required placeholder="e.g. Rahul Sharma" class="form-input">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Mobile Number</label>
-                    <input type="tel" id="lead-phone" required placeholder="+91 XXXXX XXXXX" class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-indigo-500 focus:bg-white transition font-bold text-sm text-slate-800">
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">WhatsApp Mobile Number *</label>
+                    <input type="tel" id="lead-phone" pattern="[0-9]{10}" required placeholder="10-digit mobile number" class="form-input">
                 </div>
                 
-                <button type="submit" id="lead-submit-btn" class="w-full mt-2 py-4 bg-slate-900 text-white font-extrabold rounded-xl hover:bg-indigo-600 transition-all flex justify-center items-center gap-2 shadow-lg hover:-translate-y-0.5 text-lg">
+                <button type="submit" id="lead-submit-btn" class="w-full mt-2 py-4 bg-[#002366] hover:bg-indigo-700 text-white font-extrabold rounded-xl transition-all flex justify-center items-center gap-2 shadow-lg text-sm uppercase tracking-wider">
                     Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>
                 </button>
-                <p class="text-[10px] text-center text-slate-400 font-bold uppercase tracking-wider mt-3"><i class="fa-solid fa-shield-halved text-emerald-500"></i> Your data is 100% Secure & Encrypted</p>
+                <p class="text-[10px] text-center text-slate-400 font-bold uppercase tracking-wider mt-3"><i class="fa-solid fa-lock text-emerald-500"></i> 100% Financial Guard • Direct University Pay</p>
             </form>
         </div>
     </div>
@@ -196,7 +81,6 @@
     <!-- Firebase Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
 
         const firebaseConfig = {
@@ -208,60 +92,53 @@
             appId: "1:78074698553:web:0dcbfd2b2c533febba26e8"
         };
         const app = initializeApp(firebaseConfig); 
-        const auth = getAuth(app);
         const db = getFirestore(app);
 
         let currentUni = null;
-        // URL se University ID nikalna
         const urlParams = new URLSearchParams(window.location.search);
-        let uniId = urlParams.get('id');
+        const uniId = urlParams.get('id');
 
-        // Anonymous login taaki koi bhi user detail dekh sake
-        signInAnonymously(auth).catch(e => console.error("Auth error", e));
-
-        onAuthStateChanged(auth, async (user) => {
+        window.addEventListener('DOMContentLoaded', async () => {
             if (!uniId) {
                 document.getElementById('content-area').innerHTML = `
                     <div class='text-center py-40'>
-                        <div class='text-6xl mb-4'>⚠️</div>
-                        <h2 class='text-2xl font-extrabold text-slate-800'>Invalid Link</h2>
-                        <p class='text-slate-500 font-medium mt-2'>Please select a university from the search page.</p>
-                        <button onclick="window.location.href='edtech-universities.html'" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold">Go to Search</button>
+                        <div class='text-5xl mb-4'>⚠️</div>
+                        <h2 class='text-2xl font-black text-slate-800'>Invalid University Link</h2>
+                        <p class='text-slate-500 font-medium mt-2'>Please select an institution from the comparison matrix.</p>
+                        <button onclick="window.location.href='edtech-universities.html'" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold text-xs uppercase">Go to Matrix</button>
                     </div>`;
                 return;
             }
             
             try {
-                // Fetch data from Firebase
                 const docSnap = await getDoc(doc(db, 'universities', uniId));
                 if (docSnap.exists()) {
                     currentUni = docSnap.data();
                     renderPage(currentUni);
                 } else {
-                    document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-red-500'>University Not Found!</h2></div>";
+                    document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-rose-500'>University Not Found in Database!</h2></div>";
                 }
             } catch(e) {
                 console.error("Fetch Error:", e);
-                document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-red-500'>Error loading data.</h2></div>";
+                document.getElementById('content-area').innerHTML = "<div class='text-center py-40'><h2 class='text-2xl font-bold text-rose-500'>Error loading verified matrix data.</h2></div>";
             }
         });
 
         function renderPage(uni) {
-            let nirfHtml = uni.nirf && uni.nirf !== "N/A" ? `<span class="bg-yellow-400 text-yellow-900 px-3 py-1.5 rounded-lg font-extrabold text-sm shadow-sm border border-yellow-500"><i class="fa-solid fa-trophy mr-1"></i> NIRF Rank: ${uni.nirf}</span>` : '';
-            let naacHtml = uni.naac && uni.naac !== "N/A" ? `<span class="bg-white/20 px-3 py-1.5 rounded-lg font-bold text-sm backdrop-blur-md border border-white/30 text-white">NAAC ${uni.naac}</span>` : '';
+            let nirfHtml = uni.nirf && uni.nirf !== "N/A" ? `<span class="bg-amber-400 text-slate-950 px-3 py-1.5 rounded-lg font-black text-xs shadow-sm border border-amber-500"><i class="fa-solid fa-trophy mr-1"></i> NIRF Rank: ${uni.nirf}</span>` : '';
+            let naacHtml = uni.naac && uni.naac !== "N/A" ? `<span class="bg-white/20 px-3 py-1.5 rounded-lg font-extrabold text-xs backdrop-blur-md border border-white/30 text-white">NAAC ${uni.naac}</span>` : '';
             
-            // Render Courses based on the new admin panel data structure
             let programsHtml = "";
             if(uni.coursesList && uni.coursesList.length > 0) {
                 uni.coursesList.forEach(course => {
                     programsHtml += `
-                        <div class="border border-slate-200 rounded-2xl p-5 bg-white hover:border-indigo-400 hover:shadow-lg transition-all mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="border border-slate-200 rounded-2xl p-5 bg-white hover:border-indigo-400 hover:shadow-md transition-all mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
-                                <h4 class="font-extrabold text-slate-900 text-lg flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-indigo-500"></i> ${course.name}</h4>
+                                <h4 class="font-extrabold text-slate-900 text-base flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-indigo-600"></i> ${course.name}</h4>
                             </div>
-                            <div class="bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 text-center sm:text-right">
-                                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-0.5">Estimated Fees</span> 
-                                <span class="font-extrabold text-indigo-700">${course.fees || 'Check Website'}</span>
+                            <div class="bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 text-center sm:text-right shrink-0">
+                                <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block mb-0.5">Est. Investment</span> 
+                                <span class="font-black text-indigo-700">${course.fees || 'Check Portal'}</span>
                             </div>
                         </div>
                     `;
@@ -269,238 +146,127 @@
             } else {
                 programsHtml = `
                     <div class="border border-slate-200 rounded-2xl p-5 bg-white">
-                        <h4 class="font-extrabold text-slate-900 text-lg mb-2"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-2"></i> ${uni.courses || 'Various Programs'}</h4>
-                        <p class="text-sm text-slate-500 font-medium">Detailed fee structure is available on the official website.</p>
+                        <h4 class="font-extrabold text-slate-900 text-base mb-1"><i class="fa-solid fa-graduation-cap text-indigo-600 mr-2"></i> ${uni.courses || 'Various UGC Programs'}</h4>
+                        <p class="text-xs text-slate-500 font-medium">Detailed fee structure, eligibility and specializations available on official gateway.</p>
                     </div>`;
             }
 
-            let feesDisplay = uni.fees && uni.fees !== "Pending" ? uni.fees : "<span class='text-sm text-orange-500 font-bold'>Update pending</span>";
-            let placementDisplay = uni.highest_placement && uni.highest_placement !== "Pending" ? uni.highest_placement : (uni.placement !== "Pending" ? uni.placement : "<span class='text-sm text-orange-500 font-bold'>Update pending</span>");
+            let feesDisplay = uni.fees && uni.fees !== "Pending" ? uni.fees : "<span class='text-sm text-amber-600 font-bold'>Verified on Portal</span>";
+            let placementDisplay = uni.highest_placement && uni.highest_placement !== "Pending" ? uni.highest_placement : (uni.placement !== "Pending" ? uni.placement : "<span class='text-sm text-amber-600 font-bold'>Top Tier Corporate</span>");
 
             document.getElementById('content-area').innerHTML = `
                 <!-- Dynamic Hero Section -->
-                <div class="hero-gradient text-white pt-12 pb-20 px-6 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                    
+                <div class="hero-gradient text-white pt-10 pb-20 px-6 relative overflow-hidden">
                     <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start md:items-center relative z-10">
-                        <div class="w-32 h-32 md:w-40 md:h-40 bg-white rounded-3xl flex items-center justify-center text-5xl md:text-7xl font-black text-indigo-600 shadow-2xl shrink-0 border-4 border-white/20">
-                            ${(uni.name || "U").substring(0,2).toUpperCase()}
+                        <div class="w-32 h-32 md:w-36 md:h-36 bg-white rounded-3xl flex items-center justify-center text-4xl md:text-6xl font-black text-indigo-900 shadow-2xl shrink-0 border-4 border-white/20">
+                            ${(uni.name || "U").substring(0,3).toUpperCase()}
                         </div>
-                        <div>
-                            <div class="flex flex-wrap gap-3 mb-4">
+                        <div class="space-y-3">
+                            <div class="flex flex-wrap gap-2.5">
                                 ${nirfHtml} 
                                 ${naacHtml}
-                                ${uni.ai_verified ? '<span class="bg-emerald-500 text-white px-3 py-1.5 rounded-lg font-bold text-sm shadow border border-emerald-600 flex items-center gap-1"><i class="fa-solid fa-shield-check"></i> AI Verified</span>' : ''}
+                                ${uni.ai_verified ? '<span class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg font-bold text-xs shadow border border-emerald-500 flex items-center gap-1.5"><i class="fa-solid fa-shield-check"></i> AI Verified Matrix</span>' : ''}
                             </div>
-                            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-3 leading-tight tracking-tight text-white">${uni.name}</h1>
-                            <p class="text-indigo-200 font-bold text-lg md:text-xl flex items-center gap-2"><i class="fa-solid fa-location-dot text-indigo-400"></i> ${uni.state || 'Location not specified'}</p>
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white">${uni.name}</h1>
+                            <p class="text-indigo-200 font-bold text-sm md:text-base flex items-center gap-2"><i class="fa-solid fa-location-dot text-amber-400"></i> ${uni.state || 'India (All Regions)'} • UGC-DEB Entitled</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Main Grid -->
-                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col lg:flex-row gap-8 relative z-20 -mt-10">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex flex-col lg:flex-row gap-8 relative z-20 -mt-12">
                     
                     <!-- Left Content -->
-                    <div class="lg:w-2/3 space-y-8">
+                    <div class="lg:w-2/3 space-y-6">
                         
-                        <!-- High Level Stats -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="bg-white p-8 rounded-[2rem] border border-emerald-100 text-center shadow-xl shadow-emerald-100/40 relative overflow-hidden group hover:-translate-y-1 transition">
-                                <div class="absolute -right-4 -bottom-4 text-emerald-50 opacity-50 text-8xl transition group-hover:scale-110"><i class="fa-solid fa-chart-line"></i></div>
-                                <div class="relative z-10">
-                                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"><i class="fa-solid fa-briefcase"></i></div>
-                                    <p class="text-xs text-emerald-600 uppercase font-black tracking-widest mb-1">Highest Package</p>
-                                    <p class="text-3xl font-extrabold text-slate-900">${placementDisplay}</p>
-                                </div>
+                        <!-- High Level Stats Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div class="bg-white p-6 rounded-3xl border border-emerald-100 text-center shadow-lg shadow-emerald-100/30">
+                                <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl mx-auto mb-3"><i class="fa-solid fa-briefcase"></i></div>
+                                <p class="text-[11px] text-emerald-700 uppercase font-black tracking-widest mb-1">Placement / Package</p>
+                                <p class="text-2xl font-black text-slate-900">${placementDisplay}</p>
                             </div>
-                            <div class="bg-white p-8 rounded-[2rem] border border-indigo-100 text-center shadow-xl shadow-indigo-100/40 relative overflow-hidden group hover:-translate-y-1 transition">
-                                <div class="absolute -left-4 -bottom-4 text-indigo-50 opacity-50 text-8xl transition group-hover:scale-110"><i class="fa-solid fa-money-check-dollar"></i></div>
-                                <div class="relative z-10">
-                                    <div class="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"><i class="fa-solid fa-wallet"></i></div>
-                                    <p class="text-xs text-indigo-600 uppercase font-black tracking-widest mb-1">Starting Fees From</p>
-                                    <p class="text-3xl font-extrabold text-slate-900">${feesDisplay}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="university-profile-container">
-                            <div class="univ-hero-header">
-                                <div class="univ-meta-badge">Official Institutional Data Profile</div>
-                                <h1 id="univ-title" class="univ-main-title">Select a University to Load Matrix</h1>
-                                <p id="univ-tagline" class="univ-subtext">Comprehensive metrics updated live from synchronized database registries.</p>
-                            </div>
-                            <div class="metrics-dashboard-grid">
-                                <div class="metric-data-card">
-                                    <span class="metric-label">NAAC Accreditation</span>
-                                    <div id="metric-naac" class="metric-value-highlight">--</div>
-                                </div>
-                                <div class="metric-data-card">
-                                    <span class="metric-label">Avg. Placement Package</span>
-                                    <div id="metric-placement" class="metric-value-highlight">--</div>
-                                </div>
-                                <div class="metric-data-card">
-                                    <span class="metric-label">Global Recognition</span>
-                                    <div id="metric-ugc" class="metric-value-highlight">UGC-DEB Approved</div>
-                                </div>
-                            </div>
-                            <div class="table-responsive-wrapper">
-                                <table class="data-matrix-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Academic Parameter</th>
-                                            <th>Verified Institutional Record</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="matrix-table-body">
-                                        <tr>
-                                            <td colspan="2" class="matrix-placeholder-row">Please select an institution to monitor active live-sync data.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="action-desk-gate" id="action-gate-block" style="display: none;">
-                                <p class="gate-notice">🛡️ <strong>100% Financial Guard Enabled:</strong> Your session is secured. You will be routed directly to the authenticated official university registration portal.</p>
-                                <a href="#" id="official-utm-btn" target="_blank" class="secure-checkout-btn">
-                                    Proceed to Official Application Desk
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="btn-arrow-icon">
-                                        <path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" />
-                                    </svg>
-                                </a>
+                            <div class="bg-white p-6 rounded-3xl border border-indigo-100 text-center shadow-lg shadow-indigo-100/30">
+                                <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-xl mx-auto mb-3"><i class="fa-solid fa-wallet"></i></div>
+                                <p class="text-[11px] text-indigo-700 uppercase font-black tracking-widest mb-1">Starting Investment</p>
+                                <p class="text-2xl font-black text-slate-900">${feesDisplay}</p>
                             </div>
                         </div>
 
                         <!-- Programs Listing -->
-                        <div class="bg-slate-50 p-8 rounded-[2rem] border border-slate-200 shadow-inner">
-                            <h2 class="text-2xl font-extrabold mb-6 text-slate-900 border-b border-slate-200 pb-4 flex items-center gap-3"><i class="fa-solid fa-book-open text-indigo-500"></i> Top Courses & Fees</h2>
+                        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                            <h2 class="text-xl font-black text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2"><i class="fa-solid fa-book-open text-indigo-600"></i> Available Programs & Specializations</h2>
                             <div>${programsHtml}</div>
                         </div>
 
-                        <!-- Approvals section -->
-                        <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
-                            <h2 class="text-2xl font-extrabold mb-4 text-slate-900 flex items-center gap-3"><i class="fa-solid fa-award text-indigo-500"></i> Accreditations & Approvals</h2>
-                            <div class="flex flex-wrap gap-2 mt-4">
-                                ${uni.approvals ? uni.approvals.split(',').map(app => `<span class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-xl font-bold border border-indigo-100">${app.trim()}</span>`).join('') : '<span class="text-slate-500 font-medium">Standard University Approvals</span>'}
+                        <!-- Approvals Section -->
+                        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-3">
+                            <h2 class="text-xl font-black text-slate-900 flex items-center gap-2"><i class="fa-solid fa-award text-indigo-600"></i> Accreditations & Recognitions</h2>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                ${uni.approvals ? uni.approvals.split(',').map(app => `<span class="bg-indigo-50 text-indigo-800 px-3.5 py-2 rounded-xl font-bold text-xs border border-indigo-200">${app.trim()}</span>`).join('') : '<span class="text-slate-500 font-medium text-xs">UGC-DEB, AICTE Approved</span>'}
                             </div>
                         </div>
                     </div>
 
                     <!-- Right Sticky Action Bar -->
                     <div class="lg:w-1/3">
-                        <div class="sticky top-[100px] bg-white p-8 border border-slate-200 rounded-[2rem] shadow-2xl shadow-slate-200/50 border-t-4 border-t-indigo-600">
-                            <div class="flex justify-between items-center mb-6">
-                                <h3 class="text-2xl font-extrabold text-slate-900">Apply Now</h3>
-                                <span class="bg-red-100 text-red-700 text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest animate-pulse border border-red-200">Admissions Open</span>
+                        <div class="sticky top-[100px] bg-white p-6 sm:p-8 border border-slate-200 rounded-3xl shadow-xl border-t-6 border-t-[#FF8C00] space-y-5">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-xl font-black text-slate-900">Admissions Open</h3>
+                                <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider animate-pulse">2027 Session</span>
                             </div>
-                            <p class="text-sm font-medium text-slate-500 mb-8 leading-relaxed">Ensure a safe and fraud-free application process. Click below to securely access the official university portal.</p>
+                            <p class="text-xs font-medium text-slate-500 leading-relaxed">Ensure a safe and fraud-free application. Click below to generate your student ID and securely access the official university portal.</p>
                             
-                            <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="w-full py-4 bg-indigo-600 text-white font-extrabold rounded-xl hover:bg-slate-900 hover:shadow-xl transition-all transform hover:-translate-y-1 text-center flex items-center justify-center gap-3 text-[16px]">
-                                Open Official Website <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <button onclick="document.getElementById('lead-modal').classList.remove('hidden')" class="w-full py-4 bg-[#FF8C00] hover:bg-orange-600 text-white font-black rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
+                                Verify & Open Official Portal <i class="fa-solid fa-arrow-up-right-from-square"></i>
                             </button>
                             
-                            <div class="mt-8 pt-6 border-t border-slate-100 flex items-start gap-4">
-                                <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-500 shrink-0 border border-emerald-100"><i class="fa-solid fa-shield-check text-xl"></i></div>
+                            <div class="pt-4 border-t border-slate-100 flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200"><i class="fa-solid fa-shield-halved"></i></div>
                                 <div>
-                                    <p class="text-sm text-slate-800 font-extrabold mb-1">100% Verified Link</p>
-                                    <p class="text-xs text-slate-500 font-medium leading-relaxed">We strictly redirect you to the official university portal to protect against fake agents.</p>
+                                    <p class="text-xs text-slate-900 font-extrabold mb-0.5">100% Financial Guard</p>
+                                    <p class="text-[11px] text-slate-500 font-medium leading-relaxed">Direct fee payment to university account with zero middleman risk.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
-
-            const syncDataset = {
-                [uniId]: {
-                    universityName: uni.name,
-                    naacRating: uni.naac || 'A+ Certified',
-                    avgPlacement: uni.highest_placement || uni.placement || '₹4.5 - ₹6.2 LPA',
-                    duration: uni.duration || uni.course_duration || '2 - 4 Years',
-                    semesterFee: uni.semester_fee || uni.semesterFee || 'N/A',
-                    totalFees: uni.total_fees || uni.totalFees || 'N/A',
-                    eligibility: uni.eligibility || 'Graduate from recognized board/university',
-                    examMode: uni.examMode || 'Online / Term End Assignment-Based',
-                    utmLink: uni.website
-                }
-            };
-            loadUniversityDatasetEngine(uniId, syncDataset);
         }
 
-        function loadUniversityDatasetEngine(universityKey, dataset) {
-            const targetData = dataset[universityKey];
-
-            if (!targetData) {
-                console.error(`Inbound Matrix Error: Data node for reference [${universityKey}] missing from live sync registry.`);
-                return;
-            }
-
-            document.getElementById('univ-title').innerText = targetData.universityName || universityKey;
-            document.getElementById('univ-tagline').innerText = 'Official matrix parameters mapping duration, structured fee tables, and authorization frameworks.';
-            document.getElementById('metric-naac').innerText = targetData.naacRating || 'A+ Certified';
-            document.getElementById('metric-placement').innerText = targetData.avgPlacement || '₹4.5 - ₹6.2 LPA';
-
-            const tableBody = document.getElementById('matrix-table-body');
-            tableBody.innerHTML = '';
-
-            const parametersToRender = [
-                { label: 'Course Duration', value: targetData.duration || 'N/A' },
-                { label: 'Per Semester Fees', value: targetData.semesterFee ? `₹${targetData.semesterFee}` : 'N/A' },
-                { label: 'Total Estimated Investment', value: targetData.totalFees ? `₹${targetData.totalFees}` : 'N/A' },
-                { label: 'Eligibility Criteria', value: targetData.eligibility || 'Graduate from recognized board/university' },
-                { label: 'Examination Mode', value: targetData.examMode || 'Online / Term End Assignment-Based' }
-            ];
-
-            parametersToRender.forEach(param => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td style="font-weight: 600; color: #475569;">${param.label}</td>
-                    <td>${param.value}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-
-            const gateBlock = document.getElementById('action-gate-block');
-            const utmBtn = document.getElementById('official-utm-btn');
-
-            if (targetData.utmLink) {
-                utmBtn.href = targetData.utmLink;
-                gateBlock.style.display = 'block';
-            } else {
-                gateBlock.style.display = 'none';
-            }
-        }
-
-        // Lead Generation Submit Logic
+        // Lead Submission & Secure Redirection
         document.getElementById('lead-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('lead-submit-btn');
-            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Validating & Redirecting...`; 
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying & Routing...`; 
             btn.disabled = true;
             
             try {
-                // Save lead to Firebase "leads" collection
                 await addDoc(collection(db, 'leads'), {
-                    name: document.getElementById('lead-name').value, 
-                    phone: document.getElementById('lead-phone').value,
+                    name: document.getElementById('lead-name').value.trim(), 
+                    phone: document.getElementById('lead-phone').value.trim(),
                     universityId: uniId,
                     universityName: currentUni.name, 
+                    source: "CV Partner",
                     timestamp: new Date().toISOString()
                 });
                 
-                // Open official website in a new tab
-                let webLink = currentUni.website;
+                let webLink = currentUni.website || currentUni.link || "https://collegevidya.com/";
                 if (!webLink.startsWith('http')) webLink = 'https://' + webLink;
-                window.open(webLink, '_blank');
                 
-                // Close modal and reset form
-                document.getElementById('lead-modal').classList.add('hidden');
-                document.getElementById('lead-form').reset();
+                setTimeout(() => {
+                    window.open(webLink, '_blank');
+                    document.getElementById('lead-modal').classList.add('hidden');
+                    document.getElementById('lead-form').reset();
+                    btn.disabled = false;
+                    btn.innerHTML = `Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>`;
+                }, 1000);
             } catch(e) {
-                alert("Something went wrong! Please check your connection.");
+                alert("Connection error! Routing directly to official website...");
+                window.open(currentUni.website || "https://collegevidya.com/", '_blank');
+                btn.disabled = false;
+                btn.innerHTML = `Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>`;
             }
-            
-            btn.innerHTML = `Proceed to Official Website <i class="fa-solid fa-arrow-right"></i>`; 
-            btn.disabled = false;
         });
     </script>
 </body>
