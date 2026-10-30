@@ -282,6 +282,308 @@
         </div>
     </section>
 
+<!-- ==================== LIVE NEWS, UNIVERSITY POSTERS & JOB UPDATES HUB ==================== -->
+<section id="live-updates-hub" class="bg-white border-b border-slate-200 relative z-10">
+    
+    <!-- 1. Breaking News & Admission Ticker Bar -->
+    <div class="bg-slate-900 text-white py-2.5 px-4 overflow-hidden border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex items-center gap-3">
+            <span class="bg-red-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-md shrink-0 flex items-center gap-1.5 animate-pulse">
+                <i class="fa-solid fa-tower-broadcast"></i> Live Updates
+            </span>
+            <marquee behavior="scroll" direction="left" scrollamount="6" class="text-xs font-semibold text-slate-200">
+                🔥 <strong>Admissions Open (2026-27 Batch):</strong> Amity University Online (Early-Bird Scholarship Active) &nbsp;|&nbsp; 
+                🎓 <strong>LPU Online:</strong> MBA/MCA starting @ ₹6,733/Month (0% EMI) + Free LinkedIn Learning Access &nbsp;|&nbsp; 
+                💰 <strong>Uttaranchal University (UU):</strong> Online MBA @ ₹24,500/Sem + Up to 30% Scholarship &nbsp;|&nbsp; 
+                💼 <strong>Corporate Hiring Alert:</strong> Virtual Placement Drives live with Amazon.in, HDFC Bank, Axis Bank & Bajaj Finserv &nbsp;|&nbsp; 
+                🎁 <strong>Refer & Earn:</strong> Refer a friend for Online UG/PG Degree & earn up to ₹10,000 reward!
+            </marquee>
+        </div>
+    </div>
+
+    <!-- 2. Main Updates, Posters & Jobs Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        
+        <!-- Header & Category Filter Pills -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
+            <div>
+                <span class="text-xs font-black text-orange-600 uppercase tracking-widest bg-orange-50 border border-orange-200 px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-bolt mr-1"></i> Real-Time Campus & Career Pulse
+                </span>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight mt-2">
+                    Latest University Promotions, Admissions & Job Drives
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-500 font-medium mt-1">
+                    Verified admission notifications, promotional offers, corporate placement openings, and official UGC-DEB notices.
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap gap-2">
+                <button onclick="filterUpdates('all')" id="up-btn-all" class="up-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold bg-[#002366] text-white shadow-sm transition">
+                    All Updates
+                </button>
+                <button onclick="filterUpdates('poster')" id="up-btn-poster" class="up-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                    <i class="fa-solid fa-image text-orange-500 mr-1"></i> Univ Posters & Offers
+                </button>
+                <button onclick="filterUpdates('admission')" id="up-btn-admission" class="up-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                    <i class="fa-solid fa-graduation-cap text-indigo-600 mr-1"></i> Admissions Open
+                </button>
+                <button onclick="filterUpdates('job')" id="up-btn-job" class="up-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                    <i class="fa-solid fa-briefcase text-emerald-600 mr-1"></i> Job Postings & Drives
+                </button>
+                <button onclick="filterUpdates('notice')" id="up-btn-notice" class="up-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                    <i class="fa-solid fa-bell text-rose-600 mr-1"></i> Exam & DEB Notices
+                </button>
+            </div>
+        </div>
+
+        <!-- Featured Promotional Posters Carousel / Grid -->
+        <div id="updatesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+    </div>
+</section>
+
+<script>
+    // ==================== EASY UPDATE DATA MANAGER ====================
+    // Aap jab chahein yahan naya poster, job posting ya admission alert add kar sakte hain:
+    const LIVE_UPDATES_DATA = [
+        {
+            type: "poster",
+            badge: "Featured Campaign • 2026-27",
+            badgeColor: "bg-orange-500 text-white",
+            uniShort: "LPU",
+            title: "LPU Online: MBA & MCA @ ₹6,733/Month (0% EMI)",
+            subtitle: "NIRF #31 | WURI Rank #4 | NAAC A++ Accredited",
+            highlights: [
+                "Free LinkedIn Learning Access (10,000+ Courses)",
+                "Top Recruiters: Amazon.in, HDFC Bank, Axis Bank, Bajaj Finserv",
+                "Up to 20% Student Grant + ₹10,000 CV Subsidy"
+            ],
+            themeBg: "from-[#0A192F] to-[#1e3a8a]",
+            accentText: "Admissions Open — Apply Direct",
+            ctaText: "Select LPU & Lock Subsidy",
+            externalLink: "https://www.lpuonline.com/"
+        },
+        {
+            type: "poster",
+            badge: "Global Ranked • 2027 Intake",
+            badgeColor: "bg-amber-400 text-slate-950",
+            uniShort: "AU",
+            title: "Amity University Online: QS Asia Pacific Top 10 MBA",
+            subtitle: "UGC-DEB Approved | WASC (USA) & QAA (UK) Accredited",
+            highlights: [
+                "PG: MBA (14+ Specs), MCA (AI & Cloud), M.Com, M.Sc",
+                "UG & Integrated: BBA, BCA, B.Com (ACCA), BBA+MBA",
+                "450+ Hiring Partners & AI-Powered 24/7 LMS"
+            ],
+            themeBg: "from-[#002147] to-[#1e293b]",
+            accentText: "Early-Bird Scholarship Active",
+            ctaText: "Select Amity & Apply",
+            externalLink: "https://amityonline.com/"
+        },
+        {
+            type: "admission",
+            badge: "Lowest Fee NAAC A+ • 30% Off",
+            badgeColor: "bg-emerald-500 text-white",
+            uniShort: "UU",
+            title: "Uttaranchal University (Online UU): MBA @ ₹24,500/Sem",
+            subtitle: "UGC & AICTE Entitled | WES Standardized | ₹0 Reg Fee",
+            highlights: [
+                "Avail Up to 30% Merit, Defense & Alumni Scholarship",
+                "8+ High-Demand Specs: Analytics, Digital Marketing, Finance, HR",
+                "Easy Monthly EMI via Fibe & Propelled"
+            ],
+            themeBg: "from-emerald-950 to-teal-900",
+            accentText: "Limited Scholarship Seats Left",
+            ctaText: "Claim UU 30% Scholarship",
+            externalLink: "https://www.onlineuu.in/mba.php"
+        },
+        {
+            type: "job",
+            badge: "Corporate Placement Drive",
+            badgeColor: "bg-indigo-600 text-white",
+            uniShort: "LPU",
+            title: "Virtual Hiring Drive: Banking, IT & E-Commerce Roles",
+            subtitle: "Package Bracket: ₹4.5 LPA – ₹18.0 LPA | Pan-India & Remote",
+            highlights: [
+                "Hiring Partners: Amazon.in, HDFC Bank, Axis Bank, Kotak Young",
+                "Tech & Analytics: Cvent, Leverage Edu, Bajaj Finserv, Celcius",
+                "Free CV Workshop & AI Mock Interview Prep for Enrolled Learners"
+            ],
+            themeBg: "from-slate-900 to-indigo-950",
+            accentText: "For Online MBA / MCA / BCA / BBA Learners",
+            ctaText: "Book Placement Readiness Call",
+            externalLink: "https://www.lpuonline.com/placement"
+        },
+        {
+            type: "job",
+            badge: "Pay-After-Placement • AI Jobs",
+            badgeColor: "bg-purple-600 text-white",
+            uniShort: "SCDOE",
+            title: "Shoolini Online + Career Tigers ₹50,000 Placement Suite",
+            subtitle: "India's 1st Pay-After-Placement Online Degree Ecosystem",
+            highlights: [
+                "2 Years Free Access to Career Tigers AI Placement Platform",
+                "Pay 80% Tuition Now & Remaining 20% Only After Placement",
+                "Dedicated Corporate Internships with Internshala Tie-Up"
+            ],
+            themeBg: "from-purple-950 to-slate-900",
+            accentText: "100% Career Assurance Track",
+            ctaText: "Check Eligibility for Shoolini",
+            externalLink: "https://shoolini.online/"
+        },
+        {
+            type: "poster",
+            badge: "Refer & Earn ₹10,000",
+            badgeColor: "bg-rose-600 text-white",
+            uniShort: "MUJ",
+            title: "Student Referral Program: Earn ₹5,000 to ₹10,000!",
+            subtitle: "Valid on LPU, Amity, NMIMS, Manipal & O.P. Jindal Admissions",
+            highlights: [
+                "Refer a friend, colleague or relative for BA, BBA, BCA, MBA, MCA",
+                "Your friend gets up to ₹10,000 CV Subsidy + 0% No-Cost EMI",
+                "Instant Referral Payout upon Confirmed University Enrollment"
+            ],
+            themeBg: "from-rose-950 to-slate-900",
+            accentText: "Unlimited Referrals Allowed",
+            ctaText: "Refer a Friend on WhatsApp",
+            externalLink: "https://wa.me/917505385015?text=Hi%20Vivek%2C%20I%20want%20to%20refer%20a%20friend%20and%20claim%20the%20referral%20reward."
+        },
+        {
+            type: "admission",
+            badge: "AI & Agentic AI Track",
+            badgeColor: "bg-sky-500 text-slate-950",
+            uniShort: "CUOL",
+            title: "Chandigarh University & DPU: Online MBA / MCA with AI",
+            subtitle: "NAAC A+ / A++ | Harvard ManageMentor & edX Subjects",
+            highlights: [
+                "Specializations in Agentic AI, Data Science, FinTech & AI Marketing",
+                "CUOL Semester Fee @ ₹45,100 | NMIMS Sem Fee @ ₹55,000",
+                "100% Direct Payment to Official University Portal"
+            ],
+            themeBg: "from-blue-950 to-slate-900",
+            accentText: "Admissions Open — Zero Cost EMI",
+            ctaText: "Compare AI Universities",
+            externalLink: "https://www.onlinecu.in/index.php"
+        },
+        {
+            type: "notice",
+            badge: "Mandatory UGC Notice",
+            badgeColor: "bg-red-600 text-white",
+            uniShort: "LPU",
+            title: "UGC DEB-ID Generation & Official Portal Verification",
+            subtitle: "Mandatory for All 2026-27 Online & ODL Degree Applicants",
+            highlights: [
+                "Generate your official UGC DEB-ID before final admission",
+                "60% Fake Website Alert: Always pay on verified university URLs",
+                "Galgotias, NMIMS & CUOL Academic Calendars & ETE Notices Live"
+            ],
+            themeBg: "from-slate-800 to-slate-950",
+            accentText: "Free DEB-ID Assistance Available",
+            ctaText: "Get Free DEB-ID Help",
+            externalLink: "https://www.lpuonline.com/deb-id-generation"
+        },
+        {
+            type: "job",
+            badge: "Hiring Alert • EduMentor",
+            badgeColor: "bg-teal-500 text-slate-950",
+            uniShort: "AU",
+            title: "Join as Campus Ambassador / Career Referral Partner",
+            subtitle: "Work From Home | Flexible Hours | Per-Admission Incentives",
+            highlights: [
+                "Ideal for HR Professionals, Coaching Owners & College Seniors",
+                "Earn ₹5,000–₹10,000 per successful student enrollment",
+                "Full counseling & documentation handled by EduMentor Desk"
+            ],
+            themeBg: "from-teal-950 to-slate-900",
+            accentText: "Partner with Vivek Pratap",
+            ctaText: "Apply as Partner on WhatsApp",
+            externalLink: "https://wa.me/917505385015?text=Hi%20Vivek%2C%20I%20want%20to%20collaborate%20as%20a%20Referral%20Partner."
+        }
+    ];
+
+    function renderLiveUpdates(filterType = 'all') {
+        const grid = document.getElementById('updatesGrid');
+        const filtered = filterType === 'all'
+            ? LIVE_UPDATES_DATA
+            : LIVE_UPDATES_DATA.filter(item => item.type === filterType);
+
+        grid.innerHTML = filtered.map(item => `
+            <div class="rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+                
+                <!-- Visual Poster Header -->
+                <div class="bg-gradient-to-br ${item.themeBg} text-white p-6 relative">
+                    <div class="flex justify-between items-center gap-2 mb-3">
+                        <span class="${item.badgeColor} text-[10px] font-black uppercase px-2.5 py-1 rounded-full tracking-wider">
+                            ${item.badge}
+                        </span>
+                        <span class="bg-white/10 border border-white/20 text-[10px] font-bold px-2.5 py-0.5 rounded-md">
+                            <i class="fa-solid fa-shield-halved text-amber-400 mr-1"></i> Verified
+                        </span>
+                    </div>
+                    <h3 class="text-lg font-black leading-snug">${item.title}</h3>
+                    <p class="text-xs text-slate-300 font-semibold mt-1.5">${item.subtitle}</p>
+                </div>
+
+                <!-- Poster Body Highlights -->
+                <div class="p-6 flex-grow flex flex-col justify-between space-y-5">
+                    <ul class="space-y-2 text-xs text-slate-600 font-semibold">
+                        ${item.highlights.map(h => `
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 shrink-0"></i>
+                                <span>${h}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+
+                    <div class="pt-4 border-t border-slate-100 space-y-2.5">
+                        <div class="text-[11px] font-extrabold text-orange-600 uppercase tracking-wider flex items-center justify-between">
+                            <span><i class="fa-solid fa-fire mr-1"></i> ${item.accentText}</span>
+                            <a href="${item.externalLink}" target="_blank" class="text-indigo-600 hover:underline">Official Link ↗</a>
+                        </div>
+                        <button onclick="selectPromoUniversity('${item.uniShort}', '${item.externalLink}')" class="w-full py-3 bg-[#002366] hover:bg-orange-600 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                            ${item.ctaText} <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        `).join('');
+    }
+
+    window.filterUpdates = function(type) {
+        document.querySelectorAll('.up-filter-btn').forEach(btn => {
+            btn.className = "up-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+        });
+        const activeBtn = document.getElementById('up-btn-' + type);
+        if (activeBtn) {
+            activeBtn.className = "up-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold bg-[#002366] text-white shadow-sm transition";
+        }
+        renderLiveUpdates(type);
+    };
+
+    // Auto-select university in Hero Admission Form & scroll smoothly
+    window.selectPromoUniversity = function(uniShort, fallbackUrl) {
+        if (fallbackUrl && fallbackUrl.startsWith('https://wa.me/')) {
+            window.open(fallbackUrl, '_blank');
+            return;
+        }
+        const uniDropdown = document.getElementById('interested_university');
+        if (uniDropdown && uniShort) {
+            uniDropdown.value = uniShort;
+            uniDropdown.dispatchEvent(new Event('change'));
+            uniDropdown.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('full_name')?.focus();
+        } else if (fallbackUrl) {
+            window.open(fallbackUrl, '_blank');
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => renderLiveUpdates('all'));
+</script>
+<!-- ==================== END LIVE NEWS, POSTERS & JOB HUB ==================== -->
+
     <!-- The EduMentor Trust Engine (4 Pillars) -->
     <section class="bg-white py-16 border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
